@@ -23,3 +23,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'Grade distribution';
+
+$string['gradeitem'] = 'Grading column';
+$string['coursesum'] = 'Sum for the course';
+
+$string['gradeletter'] = 'Grade letters';
+
+$string['gradeboundary'] = 'Lower boundary in %';
+$string['gradeboundary_new'] = 'New lower boundary in %';

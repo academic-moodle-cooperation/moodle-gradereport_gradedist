@@ -23,3 +23,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'Notenverteilung';
+
+$string['gradeitem'] = 'Bewertungsspalte';
+$string['coursesum'] = 'Summe für den Kurs';
+
+$string['gradeletter'] = 'Notenstufen';
+
+$string['gradeboundary'] = 'Untere Grenze in %';
+$string['gradeboundary_new'] = 'Neue untere Grenze in %';
