@@ -31,3 +31,13 @@ $string['gradeletter'] = 'Grade letters';
 
 $string['gradeboundary'] = 'Lower boundary in %';
 $string['gradeboundary_new'] = 'New lower boundary in %';
+
+$string['chartsettings'] = 'Chart settings';
+
+$string['description'] = 'Description';
+$string['absolute'] = 'Absolute';
+$string['percent'] = 'Percent';
+
+$string['columns'] = 'Columns';
+$string['actualcolumns'] = 'actual grade letters';
+$string['newcolumns'] = 'new grade letters';

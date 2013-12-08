@@ -56,6 +56,23 @@ class edit_form extends moodleform {
         $mform->setType('grp_gradeboundaries', PARAM_TEXT);
         $mform->addGroup($gradeboundaries_new, 'grp_gradeboundaries_new', get_string('gradeboundary_new', 'gradereport_gradedist'), array(''));
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
+        
+        $mform->addElement('header', 'chartsettings', get_string('chartsettings', 'gradereport_gradedist'));
+        
+        $description = array();
+        $description[] =& $mform->createElement('radio', 'description', '', get_string('absolute', 'gradereport_gradedist'), false);
+        $description[] =& $mform->createElement('radio', 'description', '', get_string('percent', 'gradereport_gradedist'), true);
+        $mform->setDefault('description', 0);
+        
+        $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), array(''));
+        
+        $columns = array();
+        $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '', get_string('actualcolumns', 'gradereport_gradedist'));
+        $columns[] =& $mform->createElement('advcheckbox', 'newcolumns', '', get_string('newcolumns', 'gradereport_gradedist'));
+        $mform->setDefault('grp_columns[actualcolumns]', true);
+        $mform->setDefault('grp_columns[newcolumns]', false);
+        
+        $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
 
         // hidden params
         $mform->addElement('hidden', 'id');

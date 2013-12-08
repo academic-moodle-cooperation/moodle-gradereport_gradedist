@@ -32,15 +32,24 @@ require_once($CFG->dirroot.'/grade/report/grader/lib.php');
 class grade_report_gradedist extends grade_report_grader {
 
     /**
+     * The grade letters
+     * @var array $letters
+     */
+    private $letters;
+    
+    /**
      * Constructor.
      * @param int $courseid
      * @param object $gpr grade plugin return tracking object
      * @param string $context
+     * @param array $letters
      * @param int $page The current page being viewed (when report is paged)
      * @param int $sortitemid The id of the grade_item by which to sort the table
      */
-    public function __construct($courseid, $gpr, $context, $page=null, $sortitemid=null) {
+    public function __construct($courseid, $gpr, $context, $letters, $page=null, $sortitemid=null) {
         parent::__construct($courseid, $gpr, $context, $page, $sortitemid);
+        
+        $this->letters = $letters;
     }
     
     /**
@@ -58,5 +67,75 @@ class grade_report_gradedist extends grade_report_grader {
         ksort ($gradeitems);
         return $gradeitems;
     }
+
+    /**
+     * We supply the letters and gradeitem in this query, and get the distribution
+     */
+    public function load_distribution($newletters, $gradeitem=0) {
+        global $CFG, $DB;
+
+        if (empty($this->users)) {
+            $this->load_users();
+        }
+        
+        // please note that we must fetch all grade_grades fields if we want to construct grade_grade object from it!
+        $wheresql = "";
+        $params = array_merge(array('courseid'=>$this->courseid), $this->userselect_params);
+        if ($gradeitem != 0) {
+            $wheresql = " AND g.itemid = :gradeitem";
+            $params['gradeitem'] = $gradeitem;
+        }
+        $sql = "SELECT g.*, gi.grademax, gi.grademin
+                  FROM {grade_items} gi,
+                       {grade_grades} g
+                 WHERE g.itemid = gi.id AND gi.courseid = :courseid"
+                .$wheresql;
+        
+        krsort($this->letters); // Just to be sure
+        $userids = array_keys($this->users);
+        $distribution = array_fill_keys($this->letters, null);
+        $total = 0;
+        
+        foreach($this->letters as $letter) {
+            $gradedist = new stdClass();
+            $gradedist->count       = 0;
+            $gradedist->percentage  = 0;
+            $distribution[$letter] = $gradedist;
+        }
+        
+        if ($grades = $DB->get_records_sql($sql, $params)) {
+            foreach ($grades as $graderec) {
+                if (in_array($graderec->userid, $userids) and array_key_exists($graderec->itemid, $this->gtree->get_items())) { // some items may not be present!!
+                    if ($graderec->hidden || !$graderec->finalgrade) {
+                        continue;
+                    }
+                    $total++;
+                    
+                    // Map to percentage
+                    $gradeint = $graderec->grademax - $graderec->grademin;
+                    if ($gradeint != 100 || $graderec->grademin != 0) {
+                        $grade = ($graderec->finalgrade - $graderec->grademin) * 100 / $gradeint;
+                    } else {
+                        $grade = $graderec->finalgrade;
+                    }
+                    
+                    // Calculate gradeletter
+                    reset($newletters);
+                    $letter = current($newletters);
+                    while ($grade < key($newletters)) {
+                        $letter = next($newletters);
+                    }
+                    if ($letter !== false) {
+                        $distribution[$letter]->count++;
+                    }
+                }
+            }
+            if ($total > 0) {
+                foreach($distribution as $gradedist) {
+                    $gradedist->percentage = round($gradedist->count * 100 / $total, 2);
+                }
+            }
+        }
+        return $distribution;
+    }
 }
-?>
