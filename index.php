@@ -80,7 +80,9 @@ $jsmodule = array(
     'requires' => array('io-form'),
     'strings'  => array(array('interval', 'gradereport_gradedist'),
                         array('decimals', 'gradereport_gradedist'),
-                        array('predecessor', 'gradereport_gradedist')
+                        array('predecessor', 'gradereport_gradedist'),
+                        array('absolut', 'gradereport_gradedist'),
+                        array('percent', 'gradereport_gradedist')
     ));
 $PAGE->requires->js_init_call('M.gradereport_gradedist.init',
         array($data), true, $jsmodule);
@@ -91,9 +93,6 @@ $o = '';
 
 // Gradedist settings.
 $o .= $mform->render();
-
-// Chart container
-$o .= html_writer::div(null, null, array('id'=>'chart_container'));
 
 echo $o;
 

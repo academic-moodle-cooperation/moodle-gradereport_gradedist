@@ -34,10 +34,10 @@ $string['gradeboundary_help'] = 'Eine prozentuale Grenze über der die Bewertung
 $string['gradeboundary_new'] = 'Neue untere Grenze in %';
 $string['gradeboundary_new_help'] = 'Unter neue untere Grenze wird die Auswirkung dieser auf die Notenverteilung angezeigt. Nur die Eingabe von Dezimalzahlen mit bis zu 2 Nachkommastellen im Bereich 0-100 ist möglich.';
 
-$string['chartsettings'] = 'Diagrammeinstellungen';
+$string['chart'] = 'Diagramm';
 
 $string['description'] = 'Beschreibung';
-$string['absolute'] = 'Absolut';
+$string['absolut'] = 'Absolut';
 $string['percent'] = 'Prozent';
 
 $string['columns'] = 'Balken';
@@ -47,3 +47,5 @@ $string['newcolumns'] = 'neue Notenstufen';
 $string['interval'] = 'Sie können als untere Grenze nur Werte zwischen 0-100 eingeben.';
 $string['decimals'] = 'Sie können als untere Grenze nur Dezimalzahlen mit bis zu 2 Nachkommastellen eingeben.';
 $string['predecessor'] = 'Jede Notenstufe muss eine niedrigere untere Grenze haben als die nächsthöhere Notenstufe.';
+
+$string['changeletters'] = 'Notenstufen ändern';
