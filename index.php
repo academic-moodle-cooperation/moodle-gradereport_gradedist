@@ -75,11 +75,13 @@ $data->gradeitem = 0;
 
 // Start output
 $jsmodule = array(
-        'name' => 'gradereport_gradedist',
-        'fullpath' => '/grade/report/gradedist/js/gradedist.js',
-        'requires' => array('io-form'),
-        'strings'  => array(array('interval', 'gradereport_gradedist'),
-                            array('decimals', 'gradereport_gradedist')));
+    'name' => 'gradereport_gradedist',
+    'fullpath' => '/grade/report/gradedist/js/gradedist.js',
+    'requires' => array('io-form'),
+    'strings'  => array(array('interval', 'gradereport_gradedist'),
+                        array('decimals', 'gradereport_gradedist'),
+                        array('predecessor', 'gradereport_gradedist')
+    ));
 $PAGE->requires->js_init_call('M.gradereport_gradedist.init',
         array($data), true, $jsmodule);
 

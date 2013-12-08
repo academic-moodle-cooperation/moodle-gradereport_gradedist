@@ -124,8 +124,11 @@ M.gradereport_gradedist = {
             
             var errdec = false;
             var errint = false;
+            var errpre = false;
             
             var decimals = /^\d+(\.\d{1,2})?$/;
+            var pre = 100;
+            
             boundaries.each(function(boundary) {
                 var value = boundary.get('value');
                 if (value != '') {
@@ -133,11 +136,16 @@ M.gradereport_gradedist = {
                         errdec = true;
                     if (value > 100)
                         errint = true;
+                    if (value >= pre)
+                        errpre = true;
+                    
+                    pre = value;
                 }
             });
             
             var errdecdiv = Y.one('#b_decimals');
             var errintdiv = Y.one('#b_interval');
+            var errprediv = Y.one('#b_predecessor');
             
             if (errdec) {
                 if (!errdecdiv) {
@@ -145,9 +153,8 @@ M.gradereport_gradedist = {
                 }
                 return false;
             } else {
-                if (errdecdiv) {
+                if (errdecdiv)
                     errdecdiv.remove();
-                }
             }
             if (errint) {
                 if (!errintdiv) {
@@ -155,9 +162,17 @@ M.gradereport_gradedist = {
                 }
                 return false;
             } else {
-                if (errintdiv) {
+                if (errintdiv)
                     errintdiv.remove();
+            }
+            if (errpre) {
+                if (!errprediv) {
+                    Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_predecessor"><span>' + M.str.gradereport_gradedist.predecessor + '</span></div>');
                 }
+                return false;
+            } else {
+                if (errprediv)
+                    errprediv.remove();
             }
             Y.io(uri, cfg); 
         });

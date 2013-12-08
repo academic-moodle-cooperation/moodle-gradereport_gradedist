@@ -9,6 +9,14 @@
     color: #993300;
 }
 
+#id_grp_description_description_1 {
+    margin-left: 10px;
+}
+
+#id_grp_columns_newcolumns {
+    margin-left: 10px;
+}
+
 #fgroup_id_grp_columns fieldset span:first-child label {
     color: #993300;
 }
