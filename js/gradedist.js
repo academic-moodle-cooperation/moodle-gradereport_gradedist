@@ -130,5 +130,15 @@ M.gradereport_gradedist = {
             chart.series[0].setData(values);
             chart.series[1].setData(values_new);
         });
+        
+        var cols = Y.all('#fgroup_id_grp_columns input[type=checkbox]');
+        cols.on('click', function (e) {
+            var column = (e.currentTarget.get('id') == 'id_grp_columns_actualcolumns') ? 0 : 1;
+            if(e.currentTarget.get('checked')) {
+                chart.series[column].show();
+            } else {
+                chart.series[column].hide();
+            }
+        });
     }
 }
