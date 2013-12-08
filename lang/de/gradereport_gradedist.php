@@ -31,3 +31,13 @@ $string['gradeletter'] = 'Notenstufen';
 
 $string['gradeboundary'] = 'Untere Grenze in %';
 $string['gradeboundary_new'] = 'Neue untere Grenze in %';
+
+$string['chartsettings'] = 'Diagrammeinstellungen';
+
+$string['description'] = 'Beschreibung';
+$string['absolute'] = 'Absolut';
+$string['percent'] = 'Prozent';
+
+$string['columns'] = 'Balken';
+$string['actualcolumns'] = 'aktuelle Notenstufen';
+$string['newcolumns'] = 'neue Notenstufen';
