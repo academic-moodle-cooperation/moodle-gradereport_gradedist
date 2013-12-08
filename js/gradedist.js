@@ -31,14 +31,16 @@ M.gradereport_gradedist = {
                 type: 'column'
             },
             title: {
-                text: 'Grade distribution'
+                style: {
+                    display: 'none'
+                }
             },
             xAxis: {
                 categories: letters
             },
             yAxis: {
                 title: {
-                    text: 'Absolute'
+                    text: M.str.gradereport_gradedist.absolut
                 }
             },
             legend: {
@@ -49,7 +51,6 @@ M.gradereport_gradedist = {
             },
             series:
                 [{
-                    name: 'Actual boundaries',
                     data: absolut,
                     color: '#993300',
                     dataLabels: {
@@ -58,7 +59,6 @@ M.gradereport_gradedist = {
                         backgroundColor: '#FFFFFF',
                     }
                 }, {
-                    name: 'New boundaries',
                     data: absolut_new,
                     color: '#006600',
                     dataLabels: {
@@ -180,8 +180,21 @@ M.gradereport_gradedist = {
         var desc = Y.all('#fgroup_id_grp_description input[type=radio]');
         desc.on('change', function (e) {
             mode = e.currentTarget.get('value');
-            var values = (mode) ? percent : absolut;
-            var values_new = (mode) ? percent_new : absolut_new;
+            var values, values_new;
+            
+            if (mode) {
+                values = percent;
+                values_new = percent_new;
+                chart.yAxis[0].axisTitle.attr({
+                    text: M.str.gradereport_gradedist.percent
+                });
+            } else {
+                values = absolut;
+                values_new = absolut_new;
+                chart.yAxis[0].axisTitle.attr({
+                    text: M.str.gradereport_gradedist.absolut
+                });
+            }
             chart.series[0].setData(values);
             chart.series[1].setData(values_new);
         });

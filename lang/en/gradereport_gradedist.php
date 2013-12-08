@@ -34,10 +34,10 @@ $string['gradeboundary_help'] = 'The setting determines the minimum percentage o
 $string['gradeboundary_new'] = 'New lower boundary in %';
 $string['gradeboundary_new_help'] = 'You can see the effects of new lower boundaries on the distribution of grades. Lower boundaries have to be numbers with max. 2 decimal points.';
 
-$string['chartsettings'] = 'Chart settings';
+$string['chart'] = 'Chart';
 
 $string['description'] = 'Description';
-$string['absolute'] = 'Absolute';
+$string['absolut'] = 'Absolute';
 $string['percent'] = 'Percent';
 
 $string['columns'] = 'Columns';
@@ -47,3 +47,5 @@ $string['newcolumns'] = 'new grade letters';
 $string['interval'] = 'The lower boundary has to be in between 0 and 100.';
 $string['decimals'] = 'The lower boundary has to be a floating point number with max 2 decimal places.';
 $string['predecessor'] = 'The lower boundary of a grade letter has to be smaller than the boundary of his predecessor.';
+
+$string['changeletters'] = 'Change grade letters';

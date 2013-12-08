@@ -59,10 +59,10 @@ class edit_form extends moodleform {
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries_new', 'gradeboundary_new', 'gradereport_gradedist');
         
-        $mform->addElement('header', 'chartsettings', get_string('chartsettings', 'gradereport_gradedist'));
+        $mform->addElement('header', 'chart', get_string('chart', 'gradereport_gradedist'));
         
         $description = array();
-        $description[] =& $mform->createElement('radio', 'description', '', get_string('absolute', 'gradereport_gradedist'), false);
+        $description[] =& $mform->createElement('radio', 'description', '', get_string('absolut', 'gradereport_gradedist'), false);
         $description[] =& $mform->createElement('radio', 'description', '', get_string('percent', 'gradereport_gradedist'), true);
         $mform->setDefault('description', 0);
         
@@ -75,9 +75,14 @@ class edit_form extends moodleform {
         $mform->setDefault('grp_columns[newcolumns]', true);
         
         $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
+        
+        $mform->addElement('html', '<div id="chart_container" />');
 
         // hidden params
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
+        
+        // buttons
+        $this->add_action_buttons(false, get_string('changeletters', 'gradereport_gradedist'));
     }
 }
