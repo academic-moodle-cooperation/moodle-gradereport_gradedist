@@ -121,5 +121,14 @@ M.gradereport_gradedist = {
         boundaries.on('change', function (e) {
             Y.io(uri, cfg); 
         });
+        
+        var desc = Y.all('#fgroup_id_grp_description input[type=radio]');
+        desc.on('change', function (e) {
+            mode = e.currentTarget.get('value');
+            var values = (mode) ? percent : absolut;
+            var values_new = (mode) ? percent_new : absolut_new;
+            chart.series[0].setData(values);
+            chart.series[1].setData(values_new);
+        });
     }
 }
