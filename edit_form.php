@@ -57,6 +57,7 @@ class edit_form extends moodleform {
         $mform->addHelpButton('grp_gradeboundaries', 'gradeboundary', 'gradereport_gradedist');
         $mform->addGroup($gradeboundaries_new, 'grp_gradeboundaries_new', get_string('gradeboundary_new', 'gradereport_gradedist'), array(''));
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
+        $mform->addHelpButton('grp_gradeboundaries_new', 'gradeboundary_new', 'gradereport_gradedist');
         
         $mform->addElement('header', 'chartsettings', get_string('chartsettings', 'gradereport_gradedist'));
         
