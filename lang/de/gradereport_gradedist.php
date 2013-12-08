@@ -30,6 +30,7 @@ $string['coursesum'] = 'Summe für den Kurs';
 $string['gradeletter'] = 'Notenstufen';
 
 $string['gradeboundary'] = 'Untere Grenze in %';
+$string['gradeboundary_help'] = 'Eine prozentuale Grenze über der die Bewertung einer bestimmten Notenstufe zugeordnet wird.';
 $string['gradeboundary_new'] = 'Neue untere Grenze in %';
 
 $string['chartsettings'] = 'Diagrammeinstellungen';

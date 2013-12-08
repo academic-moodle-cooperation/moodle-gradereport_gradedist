@@ -30,6 +30,7 @@ $string['coursesum'] = 'Sum for the course';
 $string['gradeletter'] = 'Grade letters';
 
 $string['gradeboundary'] = 'Lower boundary in %';
+$string['gradeboundary_help'] = 'The setting determines the minimum percentage over which grades will be assigned the grade letter.';
 $string['gradeboundary_new'] = 'New lower boundary in %';
 
 $string['chartsettings'] = 'Chart settings';
