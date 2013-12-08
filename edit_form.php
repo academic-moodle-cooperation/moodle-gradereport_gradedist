@@ -70,7 +70,7 @@ class edit_form extends moodleform {
         $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '', get_string('actualcolumns', 'gradereport_gradedist'));
         $columns[] =& $mform->createElement('advcheckbox', 'newcolumns', '', get_string('newcolumns', 'gradereport_gradedist'));
         $mform->setDefault('grp_columns[actualcolumns]', true);
-        $mform->setDefault('grp_columns[newcolumns]', false);
+        $mform->setDefault('grp_columns[newcolumns]', true);
         
         $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
 
