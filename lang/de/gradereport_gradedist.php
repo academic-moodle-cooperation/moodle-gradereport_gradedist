@@ -41,3 +41,6 @@ $string['percent'] = 'Prozent';
 $string['columns'] = 'Balken';
 $string['actualcolumns'] = 'aktuelle Notenstufen';
 $string['newcolumns'] = 'neue Notenstufen';
+
+$string['interval'] = 'Sie können als untere Grenze nur Werte zwischen 0-100 eingeben.';
+$string['decimals'] = 'Sie können als untere Grenze nur Dezimalzahlen mit bis zu 2 Nachkommastellen eingeben.';

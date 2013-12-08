@@ -121,6 +121,44 @@ M.gradereport_gradedist = {
         
         var boundaries = Y.all('#fgroup_id_grp_gradeboundaries_new input[type=text]');
         boundaries.on('change', function (e) {
+            
+            var errdec = false;
+            var errint = false;
+            
+            var decimals = /^\d+(\.\d{1,2})?$/;
+            boundaries.each(function(boundary) {
+                var value = boundary.get('value');
+                if (value != '') {
+                    if (!decimals.test(value))
+                        errdec = true;
+                    if (value > 100)
+                        errint = true;
+                }
+            });
+            
+            var errdecdiv = Y.one('#b_decimals');
+            var errintdiv = Y.one('#b_interval');
+            
+            if (errdec) {
+                if (!errdecdiv) {
+                    Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_decimals"><span>' + M.str.gradereport_gradedist.decimals + '</span></div>');
+                }
+                return false;
+            } else {
+                if (errdecdiv) {
+                    errdecdiv.remove();
+                }
+            }
+            if (errint) {
+                if (!errintdiv) {
+                    Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_interval"><span>' + M.str.gradereport_gradedist.interval + '</span></div>');
+                }
+                return false;
+            } else {
+                if (errintdiv) {
+                    errintdiv.remove();
+                }
+            }
             Y.io(uri, cfg); 
         });
         
