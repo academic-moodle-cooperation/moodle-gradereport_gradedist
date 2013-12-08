@@ -54,6 +54,7 @@ class edit_form extends moodleform {
         $mform->setType('grp_gradeletters', PARAM_TEXT);
         $mform->addGroup($gradeboundaries, 'grp_gradeboundaries', get_string('gradeboundary', 'gradereport_gradedist'), array(''));
         $mform->setType('grp_gradeboundaries', PARAM_TEXT);
+        $mform->addHelpButton('grp_gradeboundaries', 'gradeboundary', 'gradereport_gradedist');
         $mform->addGroup($gradeboundaries_new, 'grp_gradeboundaries_new', get_string('gradeboundary_new', 'gradereport_gradedist'), array(''));
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
         
