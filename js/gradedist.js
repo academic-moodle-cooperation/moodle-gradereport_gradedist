@@ -116,5 +116,10 @@ M.gradereport_gradedist = {
             cfg.data = 'updateall=1';
             Y.io(uri, cfg);
         });
+        
+        var boundaries = Y.all('#fgroup_id_grp_gradeboundaries_new input[type=text]');
+        boundaries.on('change', function (e) {
+            Y.io(uri, cfg); 
+        });
     }
 }
