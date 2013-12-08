@@ -51,18 +51,20 @@ M.gradereport_gradedist = {
                 [{
                     name: 'Actual boundaries',
                     data: absolut,
+                    color: '#993300',
                     dataLabels: {
                         enabled: true,
-                        color: '#000',
-                        backgroundColor: '#FFF',
+                        color: '#000000',
+                        backgroundColor: '#FFFFFF',
                     }
                 }, {
                     name: 'New boundaries',
                     data: absolut_new,
+                    color: '#006600',
                     dataLabels: {
                         enabled: true,
-                        color: '#000',
-                        backgroundColor: '#FFF',
+                        color: '#000000',
+                        backgroundColor: '#FFFFFF',
                         align: 'center',
                     }
                 }]
