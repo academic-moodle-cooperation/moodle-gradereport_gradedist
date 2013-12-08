@@ -41,3 +41,6 @@ $string['percent'] = 'Percent';
 $string['columns'] = 'Columns';
 $string['actualcolumns'] = 'actual grade letters';
 $string['newcolumns'] = 'new grade letters';
+
+$string['interval'] = 'The lower boundary has to be in between 0 and 100.';
+$string['decimals'] = 'The lower boundary has to be a floating point number with max 2 decimal places.';
