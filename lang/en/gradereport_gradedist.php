@@ -18,8 +18,8 @@
 /**
  * Strings for gradedist
  *
- * @package   gradedist
- * @copyright  2013 Günther Bernsteiner (guetar@gmx.at)
+ * @package   gradereport_gradedist
+ * @copyright 2013 Günther Bernsteiner (guetar@gmx.at)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'Grade distribution';
@@ -49,3 +49,9 @@ $string['decimals'] = 'The lower boundary has to be a floating point number with
 $string['predecessor'] = 'The lower boundary of a grade letter has to be smaller than the boundary of his predecessor.';
 
 $string['changeletters'] = 'Change grade letters';
+$string['confirm'] = 'Change grade letters';
+
+$string['notification'] = 'Note: The definition of grade letters applies to all grade items in the course.';
+
+$string['boundaryerror'] = 'Some entries for new grade letters may be invalid. There must be input on each field';
+$string['saved'] = 'Grade letters successfully changed.';

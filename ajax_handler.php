@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Ajax handler for grade distribution chart.
+ * Ajax handler for grade distribution chart
  *
  * @package   gradereport_gradedist
  * @copyright 2013 Günther Bernsteiner (guetar@gmx.at)
@@ -28,13 +28,13 @@ require_once $CFG->dirroot.'/grade/lib.php';
 require_once($CFG->dirroot.'/grade/report/gradedist/lib.php');
 require_once($CFG->dirroot.'/grade/report/gradedist/edit_form.php');
 
-$courseid  = required_param('courseid', PARAM_INT);
+$courseid  = required_param('id', PARAM_INT);
 $gradeitem = optional_param('gradeitem', null, PARAM_INT);
 $updateall = optional_param('updateall', false, PARAM_BOOL);
 
-$gradeletters = $_POST['grp_gradeletters'];
-$boundaries  = $_POST['grp_gradeboundaries'];
-$boundaries_new = $_POST['grp_gradeboundaries_new'];
+$gradeletters   = optional_param_array('grp_gradeletters', array(), PARAM_TEXT);
+$boundaries     = optional_param_array('grp_gradeboundaries', array(), PARAM_TEXT);
+$boundaries_new = optional_param_array('grp_gradeboundaries_new', array(), PARAM_TEXT);
 
 // Basic access checks
 if (!$course = $DB->get_record('course', array('id' => $courseid))) {
@@ -44,28 +44,27 @@ require_login($course);
 $context = context_course::instance($course->id);
 require_capability('moodle/grade:manageletters', $context);
 
-$PAGE->set_url('/grade/report/gradedist/gradedist.php', array('id' => $courseid));
+$PAGE->set_url('/grade/report/gradedist/ajax_handler.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard');//calling this here to make blocks display
 
 $gpr = new grade_plugin_return(array('type'=>'report', 'plugin'=>'gradedist', 'courseid'=>$course->id));
-$returnurl = $gpr->get_return_url('index.php?id='.$course->id);
+$returnurl = $gpr->get_return_url('index.php', array('id'=>$course->id));
 
-$data = new stdClass();
 $letters = grade_get_letters($context);
 $newletters = array();
 
 $i = 1;
 foreach ($letters as $letter) {
-    $oldletters[$boundaries[$i]] = $letter;
-    if (!empty($boundaries_new[$i])) {
+    if ($boundaries_new[$i] != '') {
         $newletters[$boundaries_new[$i]] = $letter;
     }
     $i++;
 }
 
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
+$data   = new stdClass();
 
-$data->olddist = $grader->load_distribution($oldletters, $gradeitem);
+$data->olddist = $grader->load_distribution($letters, $gradeitem);
 $data->newdist = $grader->load_distribution($newletters, $gradeitem);
 
 $data->courseid = $courseid;

@@ -18,8 +18,8 @@
 /**
  * Strings for gradedist
  *
- * @package   gradedist
- * @copyright  2013 Günther Bernsteiner (guetar@gmx.at)
+ * @package   gradereport_gradedist
+ * @copyright 2013 Günther Bernsteiner (guetar@gmx.at)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'Notenverteilung';
@@ -49,3 +49,9 @@ $string['decimals'] = 'Sie können als untere Grenze nur Dezimalzahlen mit bis z
 $string['predecessor'] = 'Jede Notenstufe muss eine niedrigere untere Grenze haben als die nächsthöhere Notenstufe.';
 
 $string['changeletters'] = 'Notenstufen ändern';
+$string['confirm'] = 'Notenstufen wirklich ändern';
+
+$string['notification'] = 'Hinweis: Die Notenstufen werden für alle Spalten Ihres Kurses übernommen und können nur für den gesamten Kurs gesetzt werden.';
+
+$string['boundaryerror'] = 'Die Eingabe für neue Notenstufen enthält ungültige Werte. Es müssen alle Notenstufen ausgefüllt sein.';
+$string['saved'] = 'Die Notenstufen wurden erfolgreich geändert.';

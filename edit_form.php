@@ -28,7 +28,7 @@ if (!defined('MOODLE_INTERNAL')) {
 
 require_once $CFG->libdir.'/formslib.php';
 
-class edit_form extends moodleform {
+class edit_letter_form extends moodleform {
 
     public function definition() {
         $mform      =&$this->_form;
@@ -81,8 +81,11 @@ class edit_form extends moodleform {
         // hidden params
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
+        $mform->addElement('hidden', 'confirm');
+        $mform->setType('confirm', PARAM_BOOL);
         
         // buttons
-        $this->add_action_buttons(false, get_string('changeletters', 'gradereport_gradedist'));
+        $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'), array('disabled'=>true));
+        $mform->closeHeaderBefore('submitbutton');
     }
 }

@@ -1,3 +1,9 @@
+#page-grade-report-gradedist-index .notifyproblem,
+#page-grade-report-gradedist-index .notifysuccess {
+    margin-left:10px;
+    margin-bottom:10px;
+}
+
 #fgroup_id_grp_gradeboundaries_new .b_error {
     margin-top:5px;
     padding-left:16%;
