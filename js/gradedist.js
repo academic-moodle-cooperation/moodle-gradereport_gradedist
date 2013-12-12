@@ -97,7 +97,7 @@ M.gradereport_gradedist = {
             chart.series[1].setData(newvalues);
         }
         
-        var uri = M.cfg.wwwroot+'/grade/report/gradedist/ajax_handler.php?courseid=' + data.courseid;
+        var uri = M.cfg.wwwroot+'/grade/report/gradedist/ajax_handler.php';
         var cfg = {
             method: 'POST',
             headers: {
@@ -122,30 +122,43 @@ M.gradereport_gradedist = {
         var boundaries = Y.all('#fgroup_id_grp_gradeboundaries_new input[type=text]');
         boundaries.on('change', function (e) {
             
+            var notifications = Y.all('#page-grade-report-gradedist-index .notifyproblem, #page-grade-report-gradedist-index .notifysuccess');
+            if (notifications) {
+                notifications.remove();
+            }
+            
             var errdec = false;
             var errint = false;
             var errpre = false;
+            var erremp = false;
             
             var decimals = /^\d+(\.\d{1,2})?$/;
-            var pre = 100;
+            var pre = 100.01;
             
             boundaries.each(function(boundary) {
                 var value = boundary.get('value');
                 if (value != '') {
                     if (!decimals.test(value))
                         errdec = true;
-                    if (value > 100)
+                    if (Number(value) > 100)
                         errint = true;
-                    if (value >= pre)
+                    if (Number(value) >= Number(pre)) {
                         errpre = true;
+                    }
                     
                     pre = value;
+                } else {
+                    erremp = true;
                 }
             });
             
             var errdecdiv = Y.one('#b_decimals');
             var errintdiv = Y.one('#b_interval');
             var errprediv = Y.one('#b_predecessor');
+            
+            if(!errdec && !errint && !errpre && !erremp) {
+                Y.one('#id_submitbutton').set('disabled', false);
+            }
             
             if (errdec) {
                 if (!errdecdiv) {

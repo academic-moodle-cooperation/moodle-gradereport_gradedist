@@ -106,7 +106,7 @@ class grade_report_gradedist extends grade_report_grader {
         if ($grades = $DB->get_records_sql($sql, $params)) {
             foreach ($grades as $graderec) {
                 if (in_array($graderec->userid, $userids) and array_key_exists($graderec->itemid, $this->gtree->get_items())) { // some items may not be present!!
-                    if ($graderec->hidden || !$graderec->finalgrade) {
+                    if ($graderec->hidden || is_null($graderec->finalgrade)) {
                         continue;
                     }
                     $total++;
