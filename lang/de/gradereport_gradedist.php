@@ -24,6 +24,9 @@
  */
 $string['pluginname'] = 'Notenverteilung';
 
+$string['gradedist:view'] = 'Notenverteilung anzeigen';
+$string['gradedist:edit'] = 'Notenverteilung bearbeiten';
+
 $string['gradeitem'] = 'Bewertungsspalte';
 $string['coursesum'] = 'Summe für den Kurs';
 

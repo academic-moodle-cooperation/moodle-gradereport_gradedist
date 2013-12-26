@@ -24,6 +24,9 @@
  */
 $string['pluginname'] = 'Grade distribution';
 
+$string['gradedist:view'] = 'View grade distribution';
+$string['gradedist:edit'] = 'Manage grade distribution';
+
 $string['gradeitem'] = 'Grading column';
 $string['coursesum'] = 'Sum for the course';
 
