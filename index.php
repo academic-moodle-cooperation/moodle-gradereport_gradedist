@@ -41,7 +41,7 @@ if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 }
 require_login($course);
 $context = context_course::instance($course->id);
-require_capability('moodle/grade:manageletters', $context);
+require_capability('gradereport/gradedist:edit', $context);
 
 $PAGE->set_url('/grade/report/gradedist/index.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display
