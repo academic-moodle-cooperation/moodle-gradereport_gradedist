@@ -56,9 +56,16 @@ class grade_report_gradedist extends grade_report_grader {
      * We get gradeitems for select here
      */
     public function get_gradeitems() {
+        global $CFG;
+        
         $gradeitems = array();
-        foreach ($this->gtree->get_items() as $gradeitem) {
-            if(empty($gradeitems[0]) && strcmp($gradeitem->itemtype, 'course') == 0) {
+        $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
+        
+        foreach($this->gtree->get_items() as $gradeitem) {
+            if (!in_array($gradeitem->display, $gradetypes)) {
+                continue;
+            }
+            if (empty($gradeitems[0]) && strcmp($gradeitem->itemtype, 'course') == 0) {
                 $gradeitems[0] = get_string('coursesum', 'gradereport_gradedist');
                 continue;
             }
