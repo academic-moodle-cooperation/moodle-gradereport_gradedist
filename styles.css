@@ -4,29 +4,38 @@
     margin-bottom:10px;
 }
 
-#fgroup_id_grp_gradeboundaries_new .b_error {
+#page-grade-report-gradedist-index .b_error {
     margin-top:5px;
     padding-left:16%;
     color: #993300;
 }
 
-#fgroup_id_grp_gradeboundaries_new .b_error span {
+#page-grade-report-gradedist-index .b_error span {
     margin-left: 10px;
     color: #993300;
 }
 
-#id_grp_description_description_1 {
+#page-grade-report-gradedist-index .actcoverage {
+    color:#993300;
+}
+
+#page-grade-report-gradedist-index .newcoverage,
+#page-grade-report-gradedist-index .b_error .newcoverage {
+    color:#006600;
+}
+
+#page-grade-report-gradedist-index #id_grp_description_description_1 {
     margin-left: 10px;
 }
 
-#id_grp_columns_newcolumns {
+#page-grade-report-gradedist-index #id_grp_columns_newcolumns {
     margin-left: 10px;
 }
 
-#fgroup_id_grp_columns fieldset span:first-child label {
+#page-grade-report-gradedist-index #fgroup_id_grp_columns fieldset span:first-child label {
     color: #993300;
 }
 
-#fgroup_id_grp_columns fieldset span label {
+#page-grade-report-gradedist-index #fgroup_id_grp_columns fieldset span label {
     color: #006600;
 }

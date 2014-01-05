@@ -50,6 +50,10 @@ $string['newcolumns'] = 'neue Notenstufen';
 $string['interval'] = 'Sie können als untere Grenze nur Werte zwischen 0-100 eingeben.';
 $string['decimals'] = 'Sie können als untere Grenze nur Dezimalzahlen mit bis zu 2 Nachkommastellen eingeben.';
 $string['predecessor'] = 'Jede Notenstufe muss eine niedrigere untere Grenze haben als die nächsthöhere Notenstufe.';
+$string['coverage'] = 'Die neue Notenverteilung erfasst nicht alle Bewertungen!';
+
+$string['actcoverage'] = 'Durch aktuelle untere Grenze noch nicht erfasste Bewertungen: ';
+$string['newcoverage'] = 'Durch neue untere Grenze noch nicht erfasste Bewertungen: ';
 
 $string['changeletters'] = 'Notenstufen ändern';
 $string['confirm'] = 'Notenstufen wirklich ändern';

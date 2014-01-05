@@ -64,8 +64,12 @@ foreach ($letters as $letter) {
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
 $data   = new stdClass();
 
-$data->olddist = $grader->load_distribution($letters, $gradeitem);
-$data->newdist = $grader->load_distribution($newletters, $gradeitem);
+$actdist = $grader->load_distribution($letters, $gradeitem);
+$newdist = $grader->load_distribution($newletters, $gradeitem);
+$data->actdist = $actdist->distribution;
+$data->newdist = $newdist->distribution;
+$data->actcoverage = $actdist->coverage;
+$data->newcoverage = $newdist->coverage;
 
 $data->courseid = $courseid;
 $data->gradeitem = $gradeitem;
