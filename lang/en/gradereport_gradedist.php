@@ -62,3 +62,6 @@ $string['notification'] = 'Note: The definition of grade letters applies to all 
 
 $string['boundaryerror'] = 'Some entries for new grade letters may be invalid. There must be input on each field';
 $string['saved'] = 'Grade letters successfully changed.';
+
+$string['showgradeitem'] = 'Display grade item';
+$string['showgradeitem_description'] = 'Show grade display type as choice for grade item.';
