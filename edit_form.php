@@ -31,9 +31,11 @@ require_once $CFG->libdir.'/formslib.php';
 class edit_letter_form extends moodleform {
 
     public function definition() {
-        $mform      =&$this->_form;
-        $num        = $this->_customdata['num'];
-        $gradeitems = $this->_customdata['gradeitems'];
+        $mform       =&$this->_form;
+        $num         = $this->_customdata['num'];
+        $gradeitems  = $this->_customdata['gradeitems'];
+        $actcoverage = $this->_customdata['actcoverage'];
+        $newcoverage = $this->_customdata['newcoverage'];
 
         $mform->addElement('header', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
         
@@ -76,8 +78,11 @@ class edit_letter_form extends moodleform {
         
         $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
         
-        $mform->addElement('html', '<div id="chart_container" />');
-
+        $mform->addElement('html', '<div id="chart_container"></div>');
+        
+        $mform->addElement('html', html_writer::div(get_string('actcoverage', 'gradereport_gradedist').html_writer::span($actcoverage[0].'/'.$actcoverage[1], 'actcoverage')));
+        $mform->addElement('html', html_writer::div(get_string('newcoverage', 'gradereport_gradedist').html_writer::span($newcoverage[0].'/'.$newcoverage[1], 'newcoverage')));
+        
         // hidden params
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);

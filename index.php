@@ -79,7 +79,16 @@ foreach ($letters as $boundary=>$letter) {
 
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
 $gradeitems = $grader->get_gradeitems($letters);
-$mform = new edit_letter_form($returnurl, array('num'=>count($letters), 'gradeitems'=>$gradeitems));
+
+$actdist = $grader->load_distribution($letters);
+$newdist = $grader->load_distribution(array());
+
+$mform = new edit_letter_form($returnurl, array(
+                 'num'=>count($letters),
+                 'gradeitems'=>$gradeitems,
+                 'actcoverage'=>$actdist->coverage,
+                 'newcoverage'=>$newdist->coverage
+));
 $mform->set_data($mdata);
 
 if ($confirm && !$boundaryerror) {
@@ -156,8 +165,10 @@ if ($confirm && !$boundaryerror) {
 } else {
     // Gradedist main view
     $data = new stdClass();
-    $data->olddist = $grader->load_distribution($letters);
-    $data->newdist = $grader->load_distribution(array());
+    $data->actdist = $actdist->distribution;
+    $data->newdist = $newdist->distribution;
+    $data->actcoverage = $actdist->coverage;
+    $data->newcoverage = $newdist->coverage;
 
     // Start output
     $jsmodule = array(
@@ -167,6 +178,7 @@ if ($confirm && !$boundaryerror) {
         'strings'  => array(array('interval', 'gradereport_gradedist'),
                             array('decimals', 'gradereport_gradedist'),
                             array('predecessor', 'gradereport_gradedist'),
+                            array('coverage', 'gradereport_gradedist'),
                             array('absolut', 'gradereport_gradedist'),
                             array('percent', 'gradereport_gradedist')
         ));

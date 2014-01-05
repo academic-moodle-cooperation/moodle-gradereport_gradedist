@@ -93,14 +93,18 @@ class grade_report_gradedist extends grade_report_grader {
         
         krsort($this->letters); // Just to be sure
         $userids = array_keys($this->users);
-        $distribution = array_fill_keys($this->letters, null);
+        
         $total = 0;
+        $count = 0;
+        
+        $return = new stdClass();
+        $return->distribution = array_fill_keys($this->letters, null);
         
         foreach($this->letters as $letter) {
             $gradedist = new stdClass();
             $gradedist->count       = 0;
             $gradedist->percentage  = 0;
-            $distribution[$letter] = $gradedist;
+            $return->distribution[$letter] = $gradedist;
         }
         
         if ($grades = $DB->get_records_sql($sql, $params)) {
@@ -126,16 +130,18 @@ class grade_report_gradedist extends grade_report_grader {
                         $letter = next($newletters);
                     }
                     if ($letter !== false) {
-                        $distribution[$letter]->count++;
+                        $return->distribution[$letter]->count++;
+                        $count++;
                     }
                 }
             }
             if ($total > 0) {
-                foreach($distribution as $gradedist) {
+                foreach($return->distribution as $gradedist) {
                     $gradedist->percentage = round($gradedist->count * 100 / $total, 2);
                 }
             }
+            $return->coverage = array($count, $total);
         }
-        return $distribution;
+        return $return;
     }
 }
