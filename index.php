@@ -41,7 +41,7 @@ if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 }
 require_login($course);
 $context = context_course::instance($course->id);
-require_capability('gradereport/gradedist:edit', $context);
+$edit = has_capability('gradereport/gradedist:edit', $context);
 
 $PAGE->set_url('/grade/report/gradedist/index.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display
@@ -85,6 +85,7 @@ $newdist = $grader->load_distribution(array());
 
 $mform = new edit_letter_form($returnurl, array(
                  'num'=>count($letters),
+                 'edit'=>$edit,
                  'gradeitems'=>$gradeitems,
                  'actcoverage'=>$actdist->coverage,
                  'newcoverage'=>$newdist->coverage

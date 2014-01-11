@@ -33,6 +33,7 @@ class edit_letter_form extends moodleform {
     public function definition() {
         $mform       =&$this->_form;
         $num         = $this->_customdata['num'];
+        $edit        = $this->_customdata['edit'];
         $gradeitems  = $this->_customdata['gradeitems'];
         $actcoverage = $this->_customdata['actcoverage'];
         $newcoverage = $this->_customdata['newcoverage'];
@@ -45,11 +46,12 @@ class edit_letter_form extends moodleform {
         $gradeboundaries = array();
         $gradeboundaries_new = array();
         $attributes = array('size' => 2, 'style' => 'margin-right:10px');
+        $attributes_new = ($edit) ? $attributes : array_merge($attributes, array('disabled' => 'disabled'));
         
         for($i=1; $i<$num+1; $i++) {
             $gradeletters[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeletters', 'disabled'=>'disabled'), $attributes));
             $gradeboundaries[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeboundaries', 'disabled'=>'disabled'), $attributes));
-            $gradeboundaries_new[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeboundaries_new'), $attributes));
+            $gradeboundaries_new[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeboundaries_new'), $attributes_new));
         }
         
         $mform->addGroup($gradeletters, 'grp_gradeletters', get_string('gradeletter', 'gradereport_gradedist'), array(''));
