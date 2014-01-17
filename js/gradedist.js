@@ -108,7 +108,7 @@ M.gradereport_gradedist = {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             },
             form: {
-                id: 'mform1',
+                id: 'letterform',
                 useDisabled: true,
                 upload: false
             },

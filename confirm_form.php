@@ -32,7 +32,9 @@ class confirm_letter_form extends moodleform {
     
     protected function definition() {
         $mform     =&$this->_form;
+        $id        = $this->_customdata['id'];
         $num       = $this->_customdata['num'];
+        $gradeitem = $this->_customdata['gradeitem'];
         $tabledata = $this->_customdata['tabledata'];
         
         $table = new html_table();
@@ -44,21 +46,18 @@ class confirm_letter_form extends moodleform {
         $table->tablealign  = 'center';
         $mform->addElement('html', html_writer::table($table));
         
-        $gradeletters = array();
-        $gradeboundaries = array();
-        $gradeboundaries_new = array();
-        $attributes = array('style' => 'display:none;');
+        // hidden params
+        $mform->addElement('hidden', 'id', $id);
+        $mform->setType('id', PARAM_INT);
+        $mform->addElement('hidden', 'confirm', true);
+        $mform->setType('confirm', PARAM_BOOL);
+        $mform->addElement('hidden', 'gradeitem', $gradeitem);
+        $mform->setType('gradeitem', PARAM_INT);
         
         for($i=1; $i<$num+1; $i++) {
-            $mform->addElement('hidden', 'grp_gradeboundaries_new['.$i.']', '', array_merge(array('class' => 'gradeboundaries_new'), $attributes));
+            $mform->addElement('hidden', 'grp_gradeboundaries_new['.$i.']', '');
             $mform->setType('grp_gradeboundaries_new['.$i.']', PARAM_TEXT);
         }
-        
-        // hidden params
-        $mform->addElement('hidden', 'id');
-        $mform->setType('id', PARAM_INT);
-        $mform->addElement('hidden', 'confirm');
-        $mform->setType('confirm', PARAM_BOOL);
         
         // buttons
         $this->add_action_buttons(true, get_string('confirm', 'gradereport_gradedist'));
