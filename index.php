@@ -28,6 +28,7 @@ require_once $CFG->dirroot.'/grade/lib.php';
 require_once($CFG->dirroot.'/grade/report/gradedist/lib.php');
 require_once($CFG->dirroot.'/grade/report/gradedist/edit_form.php');
 require_once($CFG->dirroot.'/grade/report/gradedist/confirm_form.php');
+require_once('mtablepdf.php');
 
 $courseid = required_param('id', PARAM_INT);
 $boundaries_new = optional_param_array('grp_gradeboundaries_new', array(), PARAM_TEXT);
