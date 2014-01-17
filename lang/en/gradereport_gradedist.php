@@ -63,5 +63,13 @@ $string['notification'] = 'Note: The definition of grade letters applies to all 
 $string['boundaryerror'] = 'Some entries for new grade letters may be invalid. There must be input on each field';
 $string['saved'] = 'Grade letters successfully changed.';
 
+$string['export'] = 'Download data as';
+$string['download'] = 'Download';
+
 $string['showgradeitem'] = 'Display grade item';
 $string['showgradeitem_description'] = 'Show grade display type as choice for grade item.';
+
+$string['category'] = 'Gradecategory';
+$string['a'] = ' (absolute)';
+$string['p'] = ' (%)';
+$string['sum'] = 'Sum';

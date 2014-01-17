@@ -32,6 +32,7 @@ class edit_letter_form extends moodleform {
 
     public function definition() {
         $mform       =&$this->_form;
+        $id          = $this->_customdata['id'];
         $num         = $this->_customdata['num'];
         $edit        = $this->_customdata['edit'];
         $gradeitems  = $this->_customdata['gradeitems'];
@@ -86,9 +87,9 @@ class edit_letter_form extends moodleform {
         $mform->addElement('html', html_writer::div(get_string('newcoverage', 'gradereport_gradedist').html_writer::span($newcoverage[0].'/'.$newcoverage[1], 'newcoverage')));
         
         // hidden params
-        $mform->addElement('hidden', 'id');
+        $mform->addElement('hidden', 'id', $id);
         $mform->setType('id', PARAM_INT);
-        $mform->addElement('hidden', 'confirm');
+        $mform->addElement('hidden', 'confirm', true);
         $mform->setType('confirm', PARAM_BOOL);
         
         // buttons

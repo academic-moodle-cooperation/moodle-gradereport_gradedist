@@ -63,5 +63,13 @@ $string['notification'] = 'Hinweis: Die Notenstufen werden für alle Spalten Ihr
 $string['boundaryerror'] = 'Die Eingabe für neue Notenstufen enthält ungültige Werte. Es müssen alle Notenstufen ausgefüllt sein.';
 $string['saved'] = 'Die Notenstufen wurden erfolgreich geändert.';
 
+$string['export'] = 'Information herunterladen als';
+$string['download'] = 'Herunterladen';
+
 $string['showgradeitem'] = 'Auswahl Bewertungsspalte';
 $string['showgradeitem_description'] = 'Zeige Bewertungsaspekte mit folgenden Bewertungsanzeige-Typen als Auswahlmöglichkeit unter Bewertungsspatle an.';
+
+$string['category'] = 'Notenkategorie';
+$string['a'] = ' (absolut)';
+$string['p'] = ' (%)';
+$string['sum'] = 'Summe';
