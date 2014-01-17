@@ -62,5 +62,14 @@ class confirm_letter_form extends moodleform {
         
         // buttons
         $this->add_action_buttons(true, get_string('confirm', 'gradereport_gradedist'));
+        
+        $export = array();
+        $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
+                               MTablePDF::OUTPUT_FORMAT_CSV_TAB => 'txt',
+                               MTablePDF::OUTPUT_FORMAT_XLS     => 'xls');
+        
+        $export[] =& $mform->createElement('select', 'exportformat', '', $exportformats);
+        $export[] =& $mform->createElement('submit', 'export', get_string('download', 'gradereport_gradedist'));
+        $mform->addGroup($export, 'grp_export', get_string('export', 'gradereport_gradedist'), array(''));
     }
 }
