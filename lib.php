@@ -109,6 +109,7 @@ class grade_report_gradedist extends grade_report_grader {
         
         $return = new stdClass();
         $return->distribution = array_fill_keys($this->letters, null);
+        $return->coverage = array(0, 0);
         
         foreach($this->letters as $letter) {
             $gradedist = new stdClass();

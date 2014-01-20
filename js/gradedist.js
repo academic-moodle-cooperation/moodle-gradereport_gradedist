@@ -96,7 +96,6 @@ M.gradereport_gradedist = {
             var newvalues = (mode) ? percent_new : absolut_new;
             chart.series[1].setData(newvalues);
             
-            checkforerrors();
             Y.one('.actcoverage').setContent(data.actcoverage[0] + '/' + data.actcoverage[1]);
             Y.one('.newcoverage').setContent(data.newcoverage[0] + '/' + data.newcoverage[1]);
         }
@@ -129,11 +128,11 @@ M.gradereport_gradedist = {
             if (notifications) {
                 notifications.remove();
             }
-            checkforerrors();
-            Y.io(uri, cfg);
+            
+            if(validate()) Y.io(uri, cfg);
         });
         
-        var checkforerrors = function() {
+        var validate = function() {
             
             var errdec = false;
             var errint = false;
@@ -204,6 +203,7 @@ M.gradereport_gradedist = {
             } else if (!erremp && errcovdiv) {
                 errcovdiv.remove();
             }
+            return true;
         };
         
         var desc = Y.all('#fgroup_id_grp_description input[type=radio]');
