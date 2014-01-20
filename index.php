@@ -30,7 +30,6 @@ require_once $CFG->dirroot.'/grade/lib.php';
 
 require_once('lib.php');
 require_once('edit_form.php');
-require_once('export_form.php');
 require_once('confirm_form.php');
 
 require_once('mtablepdf.php');
