@@ -81,7 +81,7 @@ foreach ($letters as $boundary=>$letter) {
 }
 
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
-$gradeitems = $grader->get_gradeitems($letters);
+$gradeitems = $grader->get_gradeitems();
 reset($gradeitems);
 $gradeitem = optional_param('gradeitem', key($gradeitems), PARAM_INT);
 
