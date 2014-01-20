@@ -61,15 +61,18 @@ class grade_report_gradedist extends grade_report_grader {
         $gradeitems = array();
         $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
         
-        foreach($this->gtree->get_items() as $gradeitem) {
-            if (!in_array($gradeitem->display, $gradetypes)) {
+        foreach($this->gtree->get_items() as $g) {
+            if (empty($gradeitems[0]) && strcmp($g->itemtype, 'course') == 0) {
+                $gradeitem = new stdClass();
+                $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
+                $gradeitem->disable = false;
+                $gradeitems[0] = $gradeitem;
                 continue;
             }
-            if (empty($gradeitems[0]) && strcmp($gradeitem->itemtype, 'course') == 0) {
-                $gradeitems[0] = get_string('coursesum', 'gradereport_gradedist');
-                continue;
-            }
-            $gradeitems[$gradeitem->id] = $gradeitem->itemname;
+            $gradeitem = new stdClass();
+            $gradeitem->name = $g->itemname;
+            $gradeitem->disable = (!in_array($g->display, $gradetypes));
+            $gradeitems[$g->id] = $gradeitem;
         }
         ksort ($gradeitems);
         return $gradeitems;
