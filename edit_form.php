@@ -41,7 +41,11 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('header', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
         
-        $mform->addElement('select', 'gradeitem', get_string('gradeitem', 'gradereport_gradedist'), $gradeitems);
+        $select = $mform->createElement('select', 'gradeitem', get_string('gradeitem', 'gradereport_gradedist'));
+        foreach($gradeitems as $index => $gradeitem) {
+            $select->addOption($gradeitem->name, $index, ($gradeitem->disable) ? array( 'disabled' => 'disabled') : null);
+        }
+        $mform->addElement($select);
 
         $gradeletters = array();
         $gradeboundaries = array();
