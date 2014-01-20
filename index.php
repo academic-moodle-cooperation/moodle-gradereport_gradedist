@@ -203,6 +203,7 @@ if ($confirm && !$boundaryerror) {
 } else {
     // Gradedist main view
     $data = new stdClass();
+    $data->courseid = $course->id;
     $data->actdist = $actdist->distribution;
     $data->newdist = $newdist->distribution;
     $data->actcoverage = $actdist->coverage;

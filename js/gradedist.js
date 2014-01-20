@@ -101,7 +101,7 @@ M.gradereport_gradedist = {
             Y.one('.newcoverage').setContent(data.newcoverage[0] + '/' + data.newcoverage[1]);
         }
         
-        var uri = M.cfg.wwwroot+'/grade/report/gradedist/ajax_handler.php';
+        var uri = M.cfg.wwwroot+'/grade/report/gradedist/ajax_handler.php?id=' + data.courseid;
         var cfg = {
             method: 'POST',
             headers: {

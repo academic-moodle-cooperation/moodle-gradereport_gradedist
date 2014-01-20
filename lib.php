@@ -71,7 +71,7 @@ class grade_report_gradedist extends grade_report_grader {
             }
             $gradeitem = new stdClass();
             $gradeitem->name = $g->itemname;
-            $gradeitem->disable = (!in_array($g->display, $gradetypes));
+            $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
             $gradeitems[$g->id] = $gradeitem;
         }
         ksort ($gradeitems);
