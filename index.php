@@ -158,7 +158,7 @@ if ($confirm && !$boundaryerror) {
                             $actdist,
                             $newdist,
                             $exportformat,
-                            'gradeletters_'.$gradeitems[$gradeitem]);
+                            'gradeletters_'.$gradeitems[$gradeitem]->name);
             
         } else {
             // Save the changes to db
