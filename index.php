@@ -98,6 +98,32 @@ $mform = new edit_letter_form($returnurl, array(
             'post', '', array('id'=>'letterform'));
 $mform->set_data($mdata);
 
+if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
+    // Export
+    $newletters = array();
+
+    $i = 1;
+    foreach ($letters as $letter) {
+        if ($data->grp_gradeboundaries_new[$i] != '') {
+            $newletters[$data->grp_gradeboundaries_new[$i]] = $letter;
+        }
+        $i++;
+    }
+
+    $actdist = $grader->load_distribution($letters, $gradeitem);
+    $newdist = $grader->load_distribution($newletters, $gradeitem);
+
+    $export = new exportworkbook();
+    $gradeitem = $data->gradeitem;
+    $exportformat = $data->grp_export['exportformat'];
+    $export->export($course,
+                    $gradeitem,
+                    $actdist,
+                    $newdist,
+                    $exportformat,
+                    'gradeletters_'.$gradeitems[$gradeitem]->name);
+}
+
 if ($confirm && !$boundaryerror) {
     
     $letters = grade_get_letters($context);
@@ -121,7 +147,7 @@ if ($confirm && !$boundaryerror) {
         $i++;
     }
 
-    $cform = new confirm_letter_form(null, array(
+    $cform = new confirm_letter_form($returnurl, array(
                 'id'=>$course->id,
                 'num'=>count($letters),
                 'gradeitem'=>$gradeitem,
@@ -130,64 +156,35 @@ if ($confirm && !$boundaryerror) {
         
     if ($cform->is_cancelled()) {
         // Cancel
-        $returnurl = $gpr->get_return_url('index.php', array('id'=>$course->id, 'boundaryerror'=>$boundaryerror));
         redirect($returnurl);
 
     } else if ($data = $cform->get_data()) {
-        
-        if (isset($data->grp_export['export'])) {
-            // Export
-            $newletters = array();
-
-            $i = 1;
-            foreach ($letters as $letter) {
-                if ($data->grp_gradeboundaries_new[$i] != '') {
-                    $newletters[$data->grp_gradeboundaries_new[$i]] = $letter;
-                }
-                $i++;
-            }
-            
-            $actdist = $grader->load_distribution($letters, $gradeitem);
-            $newdist = $grader->load_distribution($newletters, $gradeitem);
-            
-            $export = new exportworkbook();
-            $gradeitem = $data->gradeitem;
-            $exportformat = $data->grp_export['exportformat'];
-            $export->export($course,
-                            $gradeitem,
-                            $actdist,
-                            $newdist,
-                            $exportformat,
-                            'gradeletters_'.$gradeitems[$gradeitem]->name);
-            
-        } else {
-            // Save the changes to db
-            $old_ids = array();
-            if ($records = $DB->get_records('grade_letters', array('contextid' => $context->id), 'lowerboundary ASC', 'id')) {
-                $old_ids = array_keys($records);
-            }
-
-            $i = 1;
-            foreach($letters as $letter) {
-                $boundary = $data->grp_gradeboundaries_new[$i];
-
-                $record = new stdClass();
-                $record->letter        = $letter;
-                $record->lowerboundary = $boundary;
-                $record->contextid     = $context->id;
-
-                if ($old_id = array_pop($old_ids)) {
-                    $record->id = $old_id;
-                    $DB->update_record('grade_letters', $record);
-                } else {
-                    $DB->insert_record('grade_letters', $record);
-                }
-                $i++;
-            }
-        
-            $returnurl = $gpr->get_return_url('index.php', array('id'=>$course->id, 'saved'=>true));
-            redirect($returnurl);
+        // Save the changes to db
+        $old_ids = array();
+        if ($records = $DB->get_records('grade_letters', array('contextid' => $context->id), 'lowerboundary ASC', 'id')) {
+            $old_ids = array_keys($records);
         }
+
+        $i = 1;
+        foreach($letters as $letter) {
+            $boundary = $data->grp_gradeboundaries_new[$i];
+
+            $record = new stdClass();
+            $record->letter        = $letter;
+            $record->lowerboundary = $boundary;
+            $record->contextid     = $context->id;
+
+            if ($old_id = array_pop($old_ids)) {
+                $record->id = $old_id;
+                $DB->update_record('grade_letters', $record);
+            } else {
+                $DB->insert_record('grade_letters', $record);
+            }
+            $i++;
+        }
+
+        $returnurl = $gpr->get_return_url('index.php', array('id'=>$course->id, 'saved'=>true));
+        redirect($returnurl);
     
     } else {
         // Show confirm table
