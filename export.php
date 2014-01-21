@@ -58,21 +58,27 @@ class exportworkbook {
             4 => get_string('newcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist')
         ));
         
+        $acttotal = 0;
+        $newtotal = 0;
+        
         foreach ($actdist->distribution as $letter => $gradedist) {
+            $acttotal += $actdist->distribution[$letter]->percentage;
+            $newtotal += $newdist->distribution[$letter]->percentage;
+            
             $export->addRow(array(
                 0 => $letter,
-                1 => $actdist->distribution[$letter]->percentage,
+                1 => round($actdist->distribution[$letter]->percentage),
                 2 => $actdist->distribution[$letter]->count,
-                3 => $newdist->distribution[$letter]->percentage,
+                3 => round($newdist->distribution[$letter]->percentage),
                 4 => $newdist->distribution[$letter]->count
             ));
         }
         $export->addRow(array(
             0 => get_string('sum', 'gradereport_gradedist'),
-            1 => 100,
-            2 => $actdist->coverage[1],
-            3 => 100,
-            4 => $newdist->coverage[1]));
+            1 => round($acttotal),
+            2 => $actdist->coverage[0],
+            3 => round($newtotal),
+            4 => $newdist->coverage[0]));
         
         $export->generate($filename);
         exit;
