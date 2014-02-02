@@ -88,20 +88,14 @@ class grade_report_gradedist extends grade_report_grader {
             $this->load_users();
         }
         
-        // please note that we must fetch all grade_grades fields if we want to construct grade_grade object from it!
-        $wheresql = "";
-        $params = array_merge(array('courseid'=>$this->courseid), $this->userselect_params);
-        if ($gradeitem != 0) {
-            $wheresql = " AND g.itemid = :gradeitem";
-            $params['gradeitem'] = $gradeitem;
-        }
         $sql = "SELECT g.*, gi.grademax, gi.grademin
                   FROM {grade_items} gi,
                        {grade_grades} g
-                 WHERE g.itemid = gi.id AND gi.courseid = :courseid"
-                .$wheresql;
+                WHERE g.itemid = gi.id AND gi.courseid = :courseid
+                AND g.itemid = :gradeitem";
+        $params = array('gradeitem'=>$gradeitem, 'courseid'=>$this->courseid);
         
-        krsort($this->letters); // Just to be sure
+        krsort($this->letters); // just to be sure
         $userids = array_keys($this->users);
         
         $total = 0;
