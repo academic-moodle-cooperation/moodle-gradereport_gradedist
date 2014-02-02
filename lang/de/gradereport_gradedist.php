@@ -69,7 +69,7 @@ $string['export'] = 'Information herunterladen als';
 $string['download'] = 'Herunterladen';
 
 $string['showgradeitem'] = 'Auswahl Bewertungsspalte';
-$string['showgradeitem_description'] = 'Zeige Bewertungsaspekte mit folgenden Bewertungsanzeige-Typen als Auswahlmöglichkeit unter Bewertungsspatle an.';
+$string['showgradeitem_description'] = 'Zeige Bewertungsaspekte mit folgenden Bewertungsanzeige-Typen als Auswahlmöglichkeit unter Bewertungsspalte an.';
 
 $string['category'] = 'Notenkategorie';
 $string['a'] = ' (absolut)';
