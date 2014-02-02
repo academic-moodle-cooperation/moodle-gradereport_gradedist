@@ -40,6 +40,7 @@ class edit_letter_form extends moodleform {
         $newcoverage = $this->_customdata['newcoverage'];
 
         $mform->addElement('header', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
+        $mform->addHelpButton('gradedist', 'pluginname', 'gradereport_gradedist');
         
         $select = $mform->createElement('select', 'gradeitem', get_string('gradeitem', 'gradereport_gradedist'));
         foreach($gradeitems as $index => $gradeitem) {
