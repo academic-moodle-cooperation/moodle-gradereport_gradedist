@@ -23,6 +23,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'Notenverteilung';
+$string['pluginname_help'] = 'Mit Hilfe der Notenverteilung können Sie sich über eine Bewertungsspalte die Verteilung der Notenstufen anhand der aktuellen unteren Grenzen anzeigen lassen. Sie können neue untere Grenzen festelegen und erkennen auf einen Blick die mögliche Auswirkungen Ihrer Änderung auf die Verteilung. Sind Sie mit den neuen unteren Grenzen zufrieden können Sie die aktuellen Notenstufen des Kurses mit diesen neuen unteren Grenzen überschreiben.
+Hinweis: Die Notenstufen werden für alle Spalten Ihres Kurses übernommen und können nur für den gesamten Kurs gesetzt werden.';
 
 $string['gradedist:view'] = 'Notenverteilung anzeigen';
 $string['gradedist:edit'] = 'Notenverteilung bearbeiten';
