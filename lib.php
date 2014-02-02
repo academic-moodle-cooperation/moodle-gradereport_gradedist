@@ -62,15 +62,8 @@ class grade_report_gradedist extends grade_report_grader {
         $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
         
         foreach($this->gtree->get_items() as $g) {
-            if (empty($gradeitems[0]) && strcmp($g->itemtype, 'course') == 0) {
-                $gradeitem = new stdClass();
-                $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
-                $gradeitem->disable = false;
-                $gradeitems[0] = $gradeitem;
-                continue;
-            }
             $gradeitem = new stdClass();
-            $gradeitem->name = $g->itemname;
+            $gradeitem->name = (strcmp($g->itemtype, 'course') == 0) ? get_string('coursesum', 'gradereport_gradedist') : $g->itemname;
             $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
             $gradeitems[$g->id] = $gradeitem;
         }
