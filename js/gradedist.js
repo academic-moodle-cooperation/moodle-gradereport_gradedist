@@ -214,8 +214,8 @@ M.gradereport_gradedist = {
                 errcovdiv.remove();
             }
             
-            Y.all('.actcoverage').setContent(data.actcoverage[0] + '/' + data.actcoverage[1]);
-            Y.all('.newcoverage').setContent(data.newcoverage[0] + '/' + data.newcoverage[1]);
+            Y.all('.actcoverage').setContent(data.actcoverage[0] + '/' + data.actcoverage[1] + ' (' + data.actcoverage[2] + '%)');
+            Y.all('.newcoverage').setContent(data.newcoverage[0] + '/' + data.newcoverage[1] + ' (' + data.newcoverage[2] + '%)');
         }
         
         var desc = Y.all('#fgroup_id_grp_description input[type=radio]');

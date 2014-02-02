@@ -88,8 +88,10 @@ class edit_letter_form extends moodleform {
         
         $mform->addElement('html', '<div id="chart_container"></div>');
         
-        $mform->addElement('html', html_writer::div(get_string('actcoverage', 'gradereport_gradedist').html_writer::span($actcoverage[0].'/'.$actcoverage[1], 'actcoverage')));
-        $mform->addElement('html', html_writer::div(get_string('newcoverage', 'gradereport_gradedist').html_writer::span($newcoverage[0].'/'.$newcoverage[1], 'newcoverage')));
+        $mform->addElement('html', html_writer::div(get_string('actcoverage', 'gradereport_gradedist')
+                .html_writer::span($actcoverage[0].'/'.$actcoverage[1].' ('.$actcoverage[2].'%)', 'actcoverage')));
+        $mform->addElement('html', html_writer::div(get_string('newcoverage', 'gradereport_gradedist')
+                .html_writer::span($newcoverage[0].'/'.$newcoverage[1].' ('.$newcoverage[2].'%)', 'newcoverage')));
         
         // hidden params
         $mform->addElement('hidden', 'id', $id);
