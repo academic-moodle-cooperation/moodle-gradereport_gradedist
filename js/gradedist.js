@@ -36,10 +36,10 @@ M.gradereport_gradedist = {
                 }
             },
             xAxis: {
-                categories: letters,
                 title: {
                     text: M.str.gradereport_gradedist.gradeletter
-                }
+                },
+                categories: letters
             },
             yAxis: {
                 title: {
@@ -229,12 +229,14 @@ M.gradereport_gradedist = {
                 chart.yAxis[0].axisTitle.attr({
                     text: M.str.gradereport_gradedist.percent
                 });
+                chart.yAxis[0].setExtremes(0, 100);
             } else {
                 values = absolut;
                 values_new = absolut_new;
                 chart.yAxis[0].axisTitle.attr({
                     text: M.str.gradereport_gradedist.absolut
                 });
+                chart.yAxis[0].setExtremes(0, null);
             }
             chart.series[0].setData(values);
             chart.series[1].setData(values_new);
