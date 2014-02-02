@@ -206,10 +206,9 @@ M.gradereport_gradedist = {
             if (!erremp && errcov) {
                 if (!errcovdiv)
                     Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_coverage"><span>' + M.str.gradereport_gradedist.coverage + '</span><span class="newcoverage">' + data.newcoverage[0] + '/' + data.newcoverage[1] + '</span></div>');
-                    Y.one('#id_submitbutton').set('disabled', true);
+            
             } else if (errcovdiv) {
                 errcovdiv.remove();
-                Y.one('#id_submitbutton').set('disabled', false);
             }
             
             Y.all('.actcoverage').setContent(data.actcoverage[0] + '/' + data.actcoverage[1]);
