@@ -142,7 +142,7 @@ M.gradereport_gradedist = {
             var errintdiv = Y.one('#b_interval');
             var errprediv = Y.one('#b_predecessor');
             
-            var decimals = /^\d+(\.\d{1,2})?$/;
+            var decimals = /^\d+([,.]\d{1,2})?$/;
             var pre = 100.01;
             
             boundaries.each(function(boundary) {
