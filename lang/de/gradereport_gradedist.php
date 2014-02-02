@@ -54,8 +54,8 @@ $string['decimals'] = 'Sie können als untere Grenze nur Dezimalzahlen mit bis z
 $string['predecessor'] = 'Jede Notenstufe muss eine niedrigere untere Grenze haben als die nächsthöhere Notenstufe.';
 $string['coverage'] = 'Die neue Notenverteilung erfasst nicht alle Bewertungen!';
 
-$string['actcoverage'] = 'Durch aktuelle untere Grenze noch nicht erfasste Bewertungen: ';
-$string['newcoverage'] = 'Durch neue untere Grenze noch nicht erfasste Bewertungen: ';
+$string['actcoverage'] = 'Durch aktuelle Notenstufen nicht erfasste Bewertungen: ';
+$string['newcoverage'] = 'Durch neue Notenstufen nicht erfasste Bewertungen: ';
 
 $string['changeletters'] = 'Notenstufen ändern';
 $string['confirm'] = 'Notenstufen wirklich ändern';

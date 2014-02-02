@@ -54,8 +54,8 @@ $string['decimals'] = 'The lower boundary has to be a floating point number with
 $string['predecessor'] = 'The lower boundary of a grade letter has to be smaller than the boundary of his predecessor.';
 $string['coverage'] = 'The new grade distribution does not cover all grades!';
 
-$string['actcoverage'] = 'Actual lower boundary does not include grades: ';
-$string['newcoverage'] = 'New lower boundary does not include grades: ';
+$string['actcoverage'] = 'Items not included by current letters: ';
+$string['newcoverage'] = 'Items not included by new letters: ';
 
 $string['changeletters'] = 'Change grade letters';
 $string['confirm'] = 'Change grade letters';

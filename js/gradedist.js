@@ -194,7 +194,7 @@ M.gradereport_gradedist = {
         var coverage = function(data) {
             
             var erremp = false;
-            var errcov = data.newcoverage[0] != data.newcoverage[1];
+            var errcov = Number(data.newcoverage[0]) != 0;
             var errcovdiv = Y.one('#b_coverage');
             
             boundaries.each(function(boundary) {
