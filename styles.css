@@ -40,6 +40,11 @@
     color: #006600;
 }
 
+#page-grade-report-gradedist-index #fitem_id_submitbutton,
+#page-grade-report-gradedist-index #fgroup_id_grp_export {
+    margin-left:25%;
+}
+
 #page-grade-report-gradedist-index #fgroup_id_grp_export label {
     margin-top:6px;
 }
