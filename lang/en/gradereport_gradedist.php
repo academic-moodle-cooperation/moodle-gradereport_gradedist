@@ -39,7 +39,7 @@ $string['gradeboundary_new_help'] = 'You can see the effects of new lower bounda
 
 $string['chart'] = 'Chart';
 
-$string['description'] = 'Description';
+$string['description'] = 'Labelling';
 $string['absolut'] = 'Absolute';
 $string['percent'] = 'Percent';
 
