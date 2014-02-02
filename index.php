@@ -121,7 +121,7 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
                     $actdist,
                     $newdist,
                     $exportformat,
-                    'gradeletters_'.$gradeitems[$gradeitem]->name);
+                    $course->shortname.'_'.$gradeitems[$gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false));
 }
 
 if ($confirm && !$boundaryerror) {
