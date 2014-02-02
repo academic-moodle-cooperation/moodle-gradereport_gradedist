@@ -39,7 +39,7 @@ $string['gradeboundary_new_help'] = 'Unter neue untere Grenze wird die Auswirkun
 
 $string['chart'] = 'Diagramm';
 
-$string['description'] = 'Beschreibung';
+$string['description'] = 'Beschriftung';
 $string['absolut'] = 'Absolut';
 $string['percent'] = 'Prozent';
 
