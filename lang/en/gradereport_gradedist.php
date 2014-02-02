@@ -53,7 +53,7 @@ $string['interval'] = 'The lower boundary has to be in between 0 and 100.';
 $string['decimals'] = 'The lower boundary has to be a floating point number with max 2 decimal places.';
 $string['predecessor'] = 'The lower boundary of a grade letter has to be smaller than the boundary of his predecessor.';
 $string['coverage'] = 'The new grade distribution does not cover all grades!';
-
+$string['coverage_export'] = 'Items not included by letters:';
 $string['actcoverage'] = 'Items not included by current letters: ';
 $string['newcoverage'] = 'Items not included by new letters: ';
 

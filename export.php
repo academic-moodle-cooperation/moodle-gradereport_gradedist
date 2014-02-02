@@ -80,6 +80,15 @@ class exportworkbook {
             3 => round($newtotal),
             4 => $newdist->coverage[0]));
         
+        $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>''));
+        
+        $export->addRow(array(
+            0 => get_string('coverage_export', 'gradereport_gradedist'),
+            1 => $actdist->coverage[2],
+            2 => $actdist->coverage[0],
+            3 => $newdist->coverage[2],
+            4 => $newdist->coverage[0]));
+        
         $export->generate($filename);
         exit;
     }
