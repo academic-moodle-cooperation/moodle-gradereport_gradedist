@@ -39,3 +39,11 @@
 #page-grade-report-gradedist-index #fgroup_id_grp_columns fieldset span label {
     color: #006600;
 }
+
+#page-grade-report-gradedist-index #fgroup_id_grp_export label {
+    margin-top:6px;
+}
+
+#page-grade-report-gradedist-index #id_grp_export_exportformat {
+    margin-right:10px;
+}
