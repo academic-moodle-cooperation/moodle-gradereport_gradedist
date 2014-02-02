@@ -36,7 +36,10 @@ M.gradereport_gradedist = {
                 }
             },
             xAxis: {
-                categories: letters
+                categories: letters,
+                title: {
+                    text: M.str.gradereport_gradedist.gradeletter
+                }
             },
             yAxis: {
                 title: {

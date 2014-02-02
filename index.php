@@ -216,7 +216,8 @@ if ($confirm && !$boundaryerror) {
                             array('predecessor', 'gradereport_gradedist'),
                             array('coverage', 'gradereport_gradedist'),
                             array('absolut', 'gradereport_gradedist'),
-                            array('percent', 'gradereport_gradedist')
+                            array('percent', 'gradereport_gradedist'),
+                            array('gradeletter', 'gradereport_gradedist')
         ));
     $PAGE->requires->js_init_call('M.gradereport_gradedist.init',
             array($data), true, $jsmodule);
