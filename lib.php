@@ -23,6 +23,7 @@
  */
 
 require_once($CFG->dirroot.'/grade/report/grader/lib.php');
+require_once $CFG->libdir.'/grade/constants.php';
 
 /**
  * Class providing an API for the overview report building and displaying.
@@ -62,7 +63,10 @@ class grade_report_gradedist extends grade_report_grader {
         $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
         
         foreach($this->gtree->get_items() as $g) {
+            if($g->gradetype != GRADE_TYPE_VALUE) continue;
+            
             $gradeitem = new stdClass();
+            
             if (strcmp($g->itemtype, 'course') == 0) {
                 $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
                 $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
