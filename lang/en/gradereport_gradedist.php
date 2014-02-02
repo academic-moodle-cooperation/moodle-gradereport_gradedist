@@ -43,8 +43,8 @@ $string['description'] = 'Labelling';
 $string['absolut'] = 'Absolute';
 $string['percent'] = 'Percent';
 
-$string['columns'] = 'Columns';
-$string['actualcolumns'] = 'actual grade letters';
+$string['columns'] = 'Bars';
+$string['actualcolumns'] = 'current grade letters';
 $string['newcolumns'] = 'new grade letters';
 
 $string['interval'] = 'The lower boundary has to be in between 0 and 100.';
