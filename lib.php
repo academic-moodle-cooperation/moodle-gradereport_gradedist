@@ -65,6 +65,13 @@ class grade_report_gradedist extends grade_report_grader {
             $gradeitem = new stdClass();
             if (strcmp($g->itemtype, 'course') == 0) {
                 $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
+                $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
+                
+                // Little hack to get coursesum in front
+                $gradeitems = array_reverse($gradeitems, true);
+                $gradeitems[$g->id] = $gradeitem;
+                $gradeitems = array_reverse($gradeitems, true);
+                continue;
             } else if (strcmp($g->itemtype, 'category') == 0) {
                 $gc = $DB->get_record('grade_categories', array('id'=>$g->iteminstance ));
                 $gradeitem->name = $gc->fullname;
@@ -74,7 +81,6 @@ class grade_report_gradedist extends grade_report_grader {
             $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
             $gradeitems[$g->id] = $gradeitem;
         }
-        ksort ($gradeitems);
         return $gradeitems;
     }
 
