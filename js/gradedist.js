@@ -17,12 +17,12 @@ M.gradereport_gradedist = {
         $.map(data.actdist, function(grade, index) {
             letters.push(index)
             absolut.push(grade.count);
-            percent.push(Math.round(grade.percentage));
+            percent.push(grade.percentage);
         });
         
         $.map(data.newdist, function(grade, index) {
             absolut_new.push(grade.count);
-            percent_new.push(Math.round(grade.percentage));
+            percent_new.push(grade.percentage);
         });
         
         var chart = new Highcharts.Chart({
@@ -82,7 +82,7 @@ M.gradereport_gradedist = {
 
                 $.map(data.actdist, function(grade, index) {
                     absolut.push(grade.count);
-                    percent.push(Math.round(grade.percentage));
+                    percent.push(grade.percentage);
                 });
                 
                 var values = (mode) ? percent : absolut;
@@ -93,7 +93,7 @@ M.gradereport_gradedist = {
             
             $.map(data.newdist, function(grade, index) {
                 absolut_new.push(grade.count);
-                percent_new.push(Math.round(grade.percentage));
+                percent_new.push(grade.percentage);
             });
             
             coverage(data);
