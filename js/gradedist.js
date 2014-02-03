@@ -72,6 +72,7 @@ M.gradereport_gradedist = {
                     }
                 }]
         });
+        
         chart.update = function(id, o, args) {
             
             data = Y.JSON.parse(o.responseText);
@@ -189,8 +190,11 @@ M.gradereport_gradedist = {
             } else if (errprediv) {
                 errprediv.remove();
             }
+            if(erremp) {
+                error = true;
+            }
             
-            Y.one('#id_submitbutton').set('disabled', error || erremp);
+            Y.one('#id_submitbutton').set('disabled', error);
             return !error;
         };
         
@@ -251,5 +255,7 @@ M.gradereport_gradedist = {
                 chart.series[column].hide();
             }
         });
+        
+        validate();
     }
 }

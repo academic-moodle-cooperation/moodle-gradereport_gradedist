@@ -35,9 +35,8 @@ require_once('confirm_form.php');
 require_once('mtablepdf.php');
 require_once('export.php');
 
+global $SESSION;
 $courseid = required_param('id', PARAM_INT);
-$boundaries_new = optional_param_array('grp_gradeboundaries_new', array(), PARAM_TEXT);
-
 $confirm = optional_param('confirm', false, PARAM_BOOL);
 $saved = optional_param('saved', false, PARAM_BOOL);
 
@@ -56,20 +55,32 @@ $PAGE->requires->js('/grade/report/gradedist/js/highcharts.js');
 
 $gpr = new grade_plugin_return(array('type'=>'report', 'plugin'=>'gradedist', 'courseid'=>$course->id));
 $returnurl = $gpr->get_return_url('index.php');
+$boundaryerror = false;
 
 $letters = grade_get_letters($context);
 krsort($letters, SORT_NUMERIC);
-$boundaryerror = false;
+
+$grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
+$gradeitems = $grader->get_gradeitems();
+reset($gradeitems);
+
+$gradeitem = optional_param('gradeitem', (isset($SESSION->gradeitem)) ? $SESSION->gradeitem : key($gradeitems), PARAM_INT);
+$boundaries_new = optional_param_array('grp_gradeboundaries_new', (isset($SESSION->boundaries_new)) ? $SESSION->boundaries_new : array(), PARAM_TEXT);
+$SESSION->gradeitem = $gradeitem;
+$SESSION->boundaries_new = $boundaries_new;
 
 $mdata = new stdClass();
+$mdata->gradeitem = $gradeitem;
 $i = 1; $max = 100;
 foreach ($letters as $boundary=>$letter) {
     $boundary = format_float($boundary, 2);
     $gradelettername = 'grp_gradeletters['.$i.']';
     $gradeboundaryname = 'grp_gradeboundaries['.$i.']';
+    $gradeboundary_newname = 'grp_gradeboundaries_new['.$i.']';
 
     $mdata->$gradelettername   = $letter;
     $mdata->$gradeboundaryname = $boundary;
+    $mdata->$gradeboundary_newname = (isset($boundaries_new[$i])) ? $boundaries_new[$i] : null;
     
     if($confirm) {
         $boundary = $boundaries_new[$i];
@@ -79,11 +90,6 @@ foreach ($letters as $boundary=>$letter) {
     }
     $i++;
 }
-
-$grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
-$gradeitems = $grader->get_gradeitems();
-reset($gradeitems);
-$gradeitem = optional_param('gradeitem', key($gradeitems), PARAM_INT);
 
 $actdist = $grader->load_distribution($letters, $gradeitem);
 $newdist = $grader->load_distribution(array(), $gradeitem);
@@ -193,8 +199,6 @@ if ($confirm && !$boundaryerror) {
         echo $OUTPUT->notification(get_string('notification', 'gradereport_gradedist'));
         
         $cform->display();
-        
-        echo $OUTPUT->footer();
     }
     
 } else {
