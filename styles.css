@@ -41,8 +41,25 @@
 }
 
 #page-grade-report-gradedist-index #fitem_id_submitbutton,
-#page-grade-report-gradedist-index #fgroup_id_grp_export {
+#page-grade-report-gradedist-index #fgroup_id_grp_export,
+#page-grade-report-gradedist-index #fgroup_id_buttonar {
+    width:50%;
     margin-left:25%;
+    mragin-right:25%;
+}
+
+#page-grade-report-gradedist-index #fitem_id_submitbutton div,
+#page-grade-report-gradedist-index #fgroup_id_grp_export fieldset {
+    width:66%;
+    margin-left:30%;
+}
+#page-grade-report-gradedist-index #fgroup_id_buttonar div {
+    width:80%;
+    margin-left:18%;
+}
+
+#page-grade-report-gradedist-index #fgroup_id_grp_export .fitemtitle {
+    width:30%;
 }
 
 #page-grade-report-gradedist-index #fgroup_id_grp_export label {
