@@ -85,11 +85,11 @@ foreach ($letters as $boundary=>$letter) {
     $mdata->$gradeboundaryname = $boundary;
     $mdata->$gradeboundary_newname = (isset($boundaries_new[$i])) ? $boundaries_new[$i] : null;
     
-    if ($confirm || !empty($boundaries_new)) {
+    if (!empty($boundaries_new)) {
         $boundary = $boundaries_new[$i];
         $newletters[$boundary] = $letter;
         
-        if ($boundary == '' || $boundary > 100 || !preg_match('/^\d+(\.\d{1,2})?$/', $boundary) || $boundary > $max) {
+        if ($boundary == '' || $boundary > 100 || !preg_match('/^\d+([.,]\d{1,2})?$/', $boundary) || $boundary > $max) {
             $boundaryerror = true;
         }
     }
