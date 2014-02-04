@@ -123,7 +123,7 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
     $gradeitem = $data->gradeitem;
     $exportformat = $data->grp_export['exportformat'];
     $export->export($course,
-                    $gradeitem,
+                    $gradeitems[$gradeitem]->name,
                     $actdist,
                     $newdist,
                     $exportformat,
