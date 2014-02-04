@@ -53,6 +53,13 @@ class grade_report_gradedist extends grade_report_grader {
         $this->letters = $letters;
     }
     
+    public function get_users() {
+        if (empty($this->users)) {
+            $this->load_users();
+        }
+        return $this->users;
+    }
+    
     /**
      * We get gradeitems for select here
      */
@@ -93,10 +100,7 @@ class grade_report_gradedist extends grade_report_grader {
      */
     public function load_distribution($newletters, $gradeitem=0) {
         global $CFG, $DB;
-
-        if (empty($this->users)) {
-            $this->load_users();
-        }
+        $this->get_users();
         
         $sql = "SELECT g.*, gi.grademax, gi.grademin
                   FROM {grade_items} gi,
@@ -105,7 +109,7 @@ class grade_report_gradedist extends grade_report_grader {
                 AND g.itemid = :gradeitem";
         $params = array('gradeitem'=>$gradeitem, 'courseid'=>$this->courseid);
         
-        krsort($this->letters); // just to be sure
+        krsort($this->letters); // Just to be sure
         $userids = array_keys($this->users);
         
         $total = 0;
@@ -123,40 +127,43 @@ class grade_report_gradedist extends grade_report_grader {
         }
         
         if ($grades = $DB->get_records_sql($sql, $params)) {
-            foreach ($grades as $graderec) {
-                if (in_array($graderec->userid, $userids) and array_key_exists($graderec->itemid, $this->gtree->get_items())) { // some items may not be present!!
-                    if ($graderec->hidden || is_null($graderec->finalgrade)) {
+            foreach ($grades as $grade) {
+                if (in_array($grade->userid, $userids) and array_key_exists($grade->itemid, $this->gtree->get_items())) { // Some items may not be present!!
+                    if ($grade->hidden || is_null($grade->finalgrade)) {
                         continue;
                     }
                     $total++;
                     
-                    // Map to percentage
-                    $gradeint = $graderec->grademax - $graderec->grademin;
-                    if ($gradeint != 100 || $graderec->grademin != 0) {
-                        $grade = ($graderec->finalgrade - $graderec->grademin) * 100 / $gradeint;
-                    } else {
-                        $grade = $graderec->finalgrade;
-                    }
-                    
                     // Calculate gradeletter
-                    reset($newletters);
-                    $letter = current($newletters);
-                    while ($grade < key($newletters)) {
-                        $letter = next($newletters);
-                    }
-                    if ($letter !== false) {
+                    $letter = $this->get_gradeletter($newletters, $grade);
+                    
+                    if ($letter != null) {
                         $return->distribution[$letter]->count++;
                         $count++;
                     }
                 }
             }
-            if ($total > 0) {
-                foreach($return->distribution as $gradedist) {
-                    $gradedist->percentage = round($gradedist->count * 100 / $total, 2);
-                }
+            foreach($return->distribution as $gradedist) {
+                $gradedist->percentage = ($total > 0) ? round($gradedist->count * 100 / $total, 2) : 0;
             }
-            $return->coverage = array($total - $count, $total, round(($total - $count) * 100 / $total, 2));
+            $return->coverage = array($total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0);
         }
         return $return;
+    }
+    
+    public function get_gradeletter($letters, $grade) {
+        // Map to range
+        $grademin = (isset($grade->grademin)) ? $grade->grademin : $grade->rawgrademin;
+        $grademax = (isset($grade->grademax)) ? $grade->grademax : $grade->rawgrademax;
+        $gradeint = $grademax - $grademin;
+        $value = ($gradeint != 100 || $grademin != 0) ? ($grade->finalgrade - $grademin) * 100 / $gradeint : $grade->finalgrade;
+        
+        // Calculate gradeletter
+        $value = bounded_number(0, $value, 100); // Just in case
+        foreach ($letters as $boundary => $letter) {
+            if ($value >= $boundary) {
+                return format_string($letter);
+            }
+        }
     }
 }

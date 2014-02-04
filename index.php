@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Exportformats
-
 require_once '../../../config.php';
 require_once $CFG->libdir.'/gradelib.php';
 require_once $CFG->dirroot.'/grade/lib.php';
@@ -39,6 +37,7 @@ global $SESSION;
 $courseid = required_param('id', PARAM_INT);
 $confirm = optional_param('confirm', false, PARAM_BOOL);
 $saved = optional_param('saved', false, PARAM_BOOL);
+$export = optional_param('grp_export[export]', '', PARAM_TEXT);
 
 // Basic access checks
 if (!$course = $DB->get_record('course', array('id' => $courseid))) {
@@ -62,6 +61,7 @@ $boundaryerror = false;
 
 $letters = grade_get_letters($context);
 krsort($letters, SORT_NUMERIC);
+$newletters = array();
 
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
 $gradeitems = $grader->get_gradeitems();
@@ -85,8 +85,10 @@ foreach ($letters as $boundary=>$letter) {
     $mdata->$gradeboundaryname = $boundary;
     $mdata->$gradeboundary_newname = (isset($boundaries_new[$i])) ? $boundaries_new[$i] : null;
     
-    if($confirm) {
+    if ($confirm || !empty($boundaries_new)) {
         $boundary = $boundaries_new[$i];
+        $newletters[$boundary] = $letter;
+        
         if ($boundary == '' || $boundary > 100 || !preg_match('/^\d+(\.\d{1,2})?$/', $boundary) || $boundary > $max) {
             $boundaryerror = true;
         }
@@ -95,7 +97,7 @@ foreach ($letters as $boundary=>$letter) {
 }
 
 $actdist = $grader->load_distribution($letters, $gradeitem);
-$newdist = $grader->load_distribution(array(), $gradeitem);
+$newdist = $grader->load_distribution($newletters, $gradeitem);
 
 $mform = new edit_letter_form($returnurl, array(
             'id'=>$course->id,
@@ -109,28 +111,21 @@ $mform->set_data($mdata);
 
 if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
     // Export
-    $newletters = array();
-
-    $i = 1;
-    foreach ($letters as $letter) {
-        if ($data->grp_gradeboundaries_new[$i] != '') {
-            $newletters[$data->grp_gradeboundaries_new[$i]] = $letter;
-        }
-        $i++;
-    }
-
-    $actdist = $grader->load_distribution($letters, $gradeitem);
-    $newdist = $grader->load_distribution($newletters, $gradeitem);
-
-    $export = new exportworkbook();
-    $gradeitem = $data->gradeitem;
+    $export = new grade_export_gradedist();
     $exportformat = $data->grp_export['exportformat'];
-    $export->export($course,
-                    $gradeitems[$gradeitem]->name,
-                    $actdist,
-                    $newdist,
-                    $exportformat,
-                    $course->shortname.'_'.$gradeitems[$gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false));
+    
+    $gradeitem = new stdClass();
+    $gradeitem->id = $data->gradeitem;
+    $gradeitem->name = $gradeitems[$data->gradeitem]->name;
+    
+    $export->init($course,
+                  $grader,
+                  $gradeitem,
+                  $letters,
+                  $newletters,
+                  $exportformat,
+                  $course->shortname.'_'.$gradeitems[$data->gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false));
+    $export->print_grades();
 }
 
 if ($confirm && !$boundaryerror) {
