@@ -97,9 +97,9 @@ class grade_export_gradedist {
         $export->addRow(array(
             0 => get_string('sum', 'gradereport_gradedist'),
             1 => round($acttotal),
-            2 => $actdist->coverage[0],
+            2 => $actdist->coverage[1] - $actdist->coverage[0],
             3 => round($newtotal),
-            4 => $newdist->coverage[0]));
+            4 => $newdist->coverage[1] - $newdist->coverage[0]));
         
         $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>''));
         
