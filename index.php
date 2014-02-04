@@ -70,28 +70,27 @@ reset($gradeitems);
 $gradeitem = optional_param('gradeitem', (isset($SESSION->gradeitem)) ? $SESSION->gradeitem : key($gradeitems), PARAM_INT);
 $boundaries_new = optional_param_array('grp_gradeboundaries_new', (isset($SESSION->boundaries_new)) ? $SESSION->boundaries_new : array(), PARAM_TEXT);
 $SESSION->gradeitem = $gradeitem;
-$SESSION->boundaries_new = $boundaries_new;
+$SESSION->boundaries_new = null;//$boundaries_new;
 
 $mdata = new stdClass();
 $mdata->gradeitem = $gradeitem;
 $i = 1; $max = 100;
 foreach ($letters as $boundary=>$letter) {
     $boundary = format_float($boundary, 2);
+    $boundary_new = (isset($boundaries_new[$i])) ? $boundaries_new[$i] : null;
+    
     $gradelettername = 'grp_gradeletters['.$i.']';
     $gradeboundaryname = 'grp_gradeboundaries['.$i.']';
     $gradeboundary_newname = 'grp_gradeboundaries_new['.$i.']';
 
     $mdata->$gradelettername   = $letter;
     $mdata->$gradeboundaryname = $boundary;
-    $mdata->$gradeboundary_newname = (isset($boundaries_new[$i])) ? $boundaries_new[$i] : null;
+    $mdata->$gradeboundary_newname = $boundary_new;
     
-    if (!empty($boundaries_new)) {
-        $boundary = $boundaries_new[$i];
-        $newletters[$boundary] = $letter;
-        
-        if ($boundary == '' || $boundary > 100 || !preg_match('/^\d+([.,]\d{1,2})?$/', $boundary) || $boundary > $max) {
-            $boundaryerror = true;
-        }
+    if (empty($boundary_new) || $boundary_new > 100 || !preg_match('/^\d+([.,]\d{1,2})?$/', $boundary_new) || $boundary_new > $max) {
+        $boundaryerror = true;
+    } else {
+        $newletters[$boundary_new] = $letter;
     }
     $i++;
 }
