@@ -47,7 +47,7 @@ class exportworkbook {
         $export->setHeaderText($course->fullname, '',
                                $course->shortname, '',
                                '', '',
-                               'gradeitem', '',
+                               $gradeitem, '',
                                '', '', '', '');
         
         $export->setTitles(array(
