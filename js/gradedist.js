@@ -190,11 +190,8 @@ M.gradereport_gradedist = {
             } else if (errprediv) {
                 errprediv.remove();
             }
-            if(erremp) {
-                error = true;
-            }
             
-            Y.one('#id_submitbutton').set('disabled', error);
+            Y.one('#id_submitbutton').set('disabled', error || erremp);
             return !error;
         };
         
