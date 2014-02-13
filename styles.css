@@ -58,12 +58,17 @@
     margin-left:18%;
 }
 
-#page-grade-report-gradedist-index #fgroup_id_grp_export .fitemtitle {
-    width:30%;
+#page-grade-report-gradedist-index #id_submitbutton {
+    margin-left:7px;
 }
 
-#page-grade-report-gradedist-index #fgroup_id_grp_export label {
-    margin-top:6px;
+#page-grade-report-gradedist-index #fgroup_id_grp_export {
+    margin-top:14px;
+}
+
+#page-grade-report-gradedist-index #fgroup_id_grp_export .fitemtitle {
+    width:30%;
+    margin-top:7px;
 }
 
 #page-grade-report-gradedist-index #id_grp_export_exportformat {
