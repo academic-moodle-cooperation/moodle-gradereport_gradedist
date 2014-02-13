@@ -105,7 +105,7 @@ class edit_letter_form extends moodleform {
         
         $export = array();
         $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
-                               MTablePDF::OUTPUT_FORMAT_CSV_TAB => 'txt',
+                               MTablePDF::OUTPUT_FORMAT_CSV_TAB => 'csv',
                                MTablePDF::OUTPUT_FORMAT_XLS     => 'xls');
         
         $export[] =& $mform->createElement('select', 'exportformat', '', $exportformats);
