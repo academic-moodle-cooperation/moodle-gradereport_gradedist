@@ -111,33 +111,33 @@ class grade_export_gradedist {
             4 => $newdist->coverage[0]));
         
         // Student data
-        $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>''));
-        
-        $export->addRow(array(
-            0 => get_string('idnumber'),
-            1 => get_string('lastname'),
-            2 => get_string('firstname'),
-            3 => get_string('actualgrade', 'gradereport_gradedist'),
-            4 => get_string('newgrade', 'gradereport_gradedist')));
-
-        $gradeitem = $DB->get_record('grade_items', array('id' => $this->gradeitem->id));
-        $gui = new graded_users_iterator($this->course, array($this->gradeitem->id => $gradeitem));
-        $gui->init();
-        
-        while ($userdata = $gui->next_user()) {
-            $user  = $userdata->user;
-            $grade = $userdata->grades[$this->gradeitem->id];
-            $actualgrade = $this->grader->get_gradeletter($this->letters, $grade);
-            $newgrade = $this->grader->get_gradeletter($this->newletters, $grade);
-            
-            $export->addRow(array(
-                0 => $user->idnumber,
-                1 => $user->lastname,
-                2 => $user->firstname,
-                3 => $actualgrade,
-                4 => ($newgrade != null) ? $newgrade : ''
-            ));
-        }
+//        $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>''));
+//        
+//        $export->addRow(array(
+//            0 => get_string('idnumber'),
+//            1 => get_string('lastname'),
+//            2 => get_string('firstname'),
+//            3 => get_string('actualgrade', 'gradereport_gradedist'),
+//            4 => get_string('newgrade', 'gradereport_gradedist')));
+//
+//        $gradeitem = $DB->get_record('grade_items', array('id' => $this->gradeitem->id));
+//        $gui = new graded_users_iterator($this->course, array($this->gradeitem->id => $gradeitem));
+//        $gui->init();
+//        
+//        while ($userdata = $gui->next_user()) {
+//            $user  = $userdata->user;
+//            $grade = $userdata->grades[$this->gradeitem->id];
+//            $actualgrade = $this->grader->get_gradeletter($this->letters, $grade);
+//            $newgrade = $this->grader->get_gradeletter($this->newletters, $grade);
+//            
+//            $export->addRow(array(
+//                0 => $user->idnumber,
+//                1 => $user->lastname,
+//                2 => $user->firstname,
+//                3 => $actualgrade,
+//                4 => ($newgrade != null) ? $newgrade : ''
+//            ));
+//        }
         
         $export->generate($this->filename);
         exit;
