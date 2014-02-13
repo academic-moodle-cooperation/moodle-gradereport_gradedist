@@ -42,7 +42,7 @@ if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 }
 require_login($course);
 $context = context_course::instance($course->id);
-require_capability('gradereport/gradedist:edit', $context);
+require_capability('gradereport/gradedist:view', $context);
 
 $PAGE->set_url('/grade/report/gradedist/ajax_handler.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard');//calling this here to make blocks display
