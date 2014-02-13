@@ -88,26 +88,26 @@ class grade_export_gradedist {
             
             $export->addRow(array(
                 0 => $letter,
-                1 => round($actdist->distribution[$letter]->percentage),
+                1 => number_format($actdist->distribution[$letter]->percentage, 2, ',', ' '),
                 2 => $actdist->distribution[$letter]->count,
-                3 => round($newdist->distribution[$letter]->percentage),
+                3 => number_format($newdist->distribution[$letter]->percentage, 2, ',', ' '),
                 4 => $newdist->distribution[$letter]->count
             ));
         }
         $export->addRow(array(
             0 => get_string('sum', 'gradereport_gradedist'),
-            1 => round($acttotal),
+            1 => number_format($acttotal, 2, ',', ' '),
             2 => $actdist->coverage[1] - $actdist->coverage[0],
-            3 => round($newtotal),
+            3 => number_format($newtotal, 2, ',', ' '),
             4 => $newdist->coverage[1] - $newdist->coverage[0]));
         
         $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>''));
         
         $export->addRow(array(
             0 => get_string('coverage_export', 'gradereport_gradedist'),
-            1 => round($actdist->coverage[2], 2),
+            1 => number_format($actdist->coverage[2], 2, ',', ' '),
             2 => $actdist->coverage[0],
-            3 => round($newdist->coverage[2], 2),
+            3 => number_format($newdist->coverage[2], 2, ',', ' '),
             4 => $newdist->coverage[0]));
         
         // Student data
