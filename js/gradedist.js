@@ -59,7 +59,7 @@ M.gradereport_gradedist = {
                     dataLabels: {
                         enabled: true,
                         color: '#000000',
-                        backgroundColor: '#FFFFFF',
+                        backgroundColor: '#FFFFFF'
                     }
                 }, {
                     data: absolut_new,
@@ -68,7 +68,7 @@ M.gradereport_gradedist = {
                         enabled: true,
                         color: '#000000',
                         backgroundColor: '#FFFFFF',
-                        align: 'center',
+                        align: 'center'
                     }
                 }]
         });
@@ -106,7 +106,7 @@ M.gradereport_gradedist = {
         var cfg = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             },
             form: {
                 id: 'letterform',
@@ -191,7 +191,9 @@ M.gradereport_gradedist = {
                 errprediv.remove();
             }
             
-            Y.one('#id_submitbutton').set('disabled', error || erremp);
+            var submit = Y.one('#id_submitbutton');
+            if (submit) submit.set('disabled', error || erremp);
+                    
             return !error;
         };
         

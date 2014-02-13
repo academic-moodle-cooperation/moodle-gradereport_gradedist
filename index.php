@@ -53,7 +53,7 @@ $edit = (has_capability('moodle/grade:manageletters', $context) || has_capabilit
 $PAGE->set_url('/grade/report/gradedist/index.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display
 $PAGE->requires->jquery();
-$PAGE->requires->js('/grade/report/gradedist/js/highcharts.js');
+$PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
 
 $gpr = new grade_plugin_return(array('type'=>'report', 'plugin'=>'gradedist', 'courseid'=>$course->id));
 $returnurl = $gpr->get_return_url('index.php');
