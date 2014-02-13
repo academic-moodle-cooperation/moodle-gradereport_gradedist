@@ -52,12 +52,11 @@ class edit_letter_form extends moodleform {
         $gradeboundaries = array();
         $gradeboundaries_new = array();
         $attributes = array('size' => 2, 'style' => 'margin-right:10px');
-        $attributes_new = ($edit) ? $attributes : array_merge($attributes, array('disabled' => 'disabled'));
         
         for($i=1; $i<$num+1; $i++) {
             $gradeletters[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeletters', 'disabled'=>'disabled'), $attributes));
             $gradeboundaries[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeboundaries', 'disabled'=>'disabled'), $attributes));
-            $gradeboundaries_new[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeboundaries_new'), $attributes_new));
+            $gradeboundaries_new[] =& $mform->createElement('text', $i, false, array_merge(array('class' => 'gradeboundaries_new'), $attributes));
         }
         
         $mform->addGroup($gradeletters, 'grp_gradeletters', get_string('gradeletter', 'gradereport_gradedist'), array(''));
@@ -100,8 +99,10 @@ class edit_letter_form extends moodleform {
         $mform->setType('confirm', PARAM_BOOL);
         
         // buttons
-        $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'), array('disabled'=>true));
-        $mform->closeHeaderBefore('submitbutton');
+        if ($edit) {
+            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'), array('disabled'=>true));
+            $mform->closeHeaderBefore('submitbutton');
+        }
         
         $export = array();
         $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
