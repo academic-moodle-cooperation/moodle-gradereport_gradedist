@@ -53,10 +53,107 @@ class grade_report_gradedist extends grade_report_grader {
         $this->letters = $letters;
     }
     
-    public function get_users() {
-        if (empty($this->users)) {
-            $this->load_users();
+    /**
+     * pulls out the userids of the users to be display, and sorts them
+     */
+    public function load_users() {
+        global $CFG, $DB;
+
+        if (!empty($this->users)) {
+            return;
         }
+
+        //limit to users with a gradeable role
+        list($gradebookrolessql, $gradebookrolesparams) = $DB->get_in_or_equal(explode(',', $this->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
+
+        //limit to users with an active enrollment
+        list($enrolledsql, $enrolledparams) = get_enrolled_sql($this->context);
+
+        //fields we need from the user table
+        $userfields = user_picture::fields('u', get_extra_user_fields($this->context));
+
+        $sortjoin = $sort = $params = null;
+
+        //if the user has clicked one of the sort asc/desc arrows
+        if (is_numeric($this->sortitemid)) {
+            $params = array_merge(array('gitemid'=>$this->sortitemid), $gradebookrolesparams, $this->groupwheresql_params, $enrolledparams);
+
+            $sortjoin = "LEFT JOIN {grade_grades} g ON g.userid = u.id AND g.itemid = $this->sortitemid";
+            $sort = "g.finalgrade $this->sortorder";
+
+        } else {
+            $sortjoin = '';
+            switch($this->sortitemid) {
+                case 'lastname':
+                    $sort = "u.lastname $this->sortorder, u.firstname $this->sortorder";
+                    break;
+                case 'firstname':
+                    $sort = "u.firstname $this->sortorder, u.lastname $this->sortorder";
+                    break;
+                case 'email':
+                    $sort = "u.email $this->sortorder";
+                    break;
+                case 'idnumber':
+                default:
+                    $sort = "u.idnumber $this->sortorder";
+                    break;
+            }
+
+            $params = array_merge($gradebookrolesparams, $this->groupwheresql_params, $enrolledparams);
+        }
+
+        $sql = "SELECT $userfields
+                  FROM {user} u
+                  JOIN ($enrolledsql) je ON je.id = u.id
+                       $this->groupsql
+                       $sortjoin
+                  JOIN (
+                           SELECT DISTINCT ra.userid
+                             FROM {role_assignments} ra
+                            WHERE ra.roleid IN ($this->gradebookroles)
+                              AND ra.contextid " . get_related_contexts_string($this->context) . "
+                       ) rainner ON rainner.userid = u.id
+                   AND u.deleted = 0
+                   $this->groupwheresql
+              ORDER BY $sort";
+        
+        $this->users = $DB->get_records_sql($sql, $params);
+
+        if (empty($this->users)) {
+            $this->userselect = '';
+            $this->users = array();
+            $this->userselect_params = array();
+        } else {
+            list($usql, $uparams) = $DB->get_in_or_equal(array_keys($this->users), SQL_PARAMS_NAMED, 'usid0');
+            $this->userselect = "AND g.userid $usql";
+            $this->userselect_params = $uparams;
+
+            // Add a flag to each user indicating whether their enrolment is active.
+            $sql = "SELECT ue.userid
+                      FROM {user_enrolments} ue
+                      JOIN {enrol} e ON e.id = ue.enrolid
+                     WHERE ue.userid $usql
+                           AND ue.status = :uestatus
+                           AND e.status = :estatus
+                           AND e.courseid = :courseid
+                  GROUP BY ue.userid";
+            $coursecontext = get_course_context($this->context);
+            $params = array_merge($uparams, array('estatus'=>ENROL_INSTANCE_ENABLED, 'uestatus'=>ENROL_USER_ACTIVE, 'courseid'=>$coursecontext->instanceid));
+            $useractiveenrolments = $DB->get_records_sql($sql, $params);
+
+            $defaultgradeshowactiveenrol = !empty($CFG->grade_report_showonlyactiveenrol);
+            $showonlyactiveenrol = get_user_preferences('grade_report_showonlyactiveenrol', $defaultgradeshowactiveenrol);
+            $showonlyactiveenrol = $showonlyactiveenrol || !has_capability('moodle/course:viewsuspendedusers', $coursecontext);
+            foreach ($this->users as $user) {
+                // If we are showing only active enrolments, then remove suspended users from list.
+                if ($showonlyactiveenrol && !array_key_exists($user->id, $useractiveenrolments)) {
+                    unset($this->users[$user->id]);
+                } else {
+                    $this->users[$user->id]->suspendedenrolment = !array_key_exists($user->id, $useractiveenrolments);
+                }
+            }
+        }
+
         return $this->users;
     }
     
@@ -100,7 +197,7 @@ class grade_report_gradedist extends grade_report_grader {
      */
     public function load_distribution($newletters, $gradeitem=0) {
         global $CFG, $DB;
-        $this->get_users();
+        $this->load_users();
         
         $sql = "SELECT g.*, gi.grademax, gi.grademin
                   FROM {grade_items} gi,
