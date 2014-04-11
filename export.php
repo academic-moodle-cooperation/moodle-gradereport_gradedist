@@ -54,7 +54,7 @@ class grade_export_gradedist {
     public function print_grades() {
         global $DB, $USER;
         
-        $export = new MTablePDF(MTablePDF::portrait, array_fill(0, 5, array('mode' => 'Fixed', 'value' => 20)));
+        $export = new MTablePDF(MTablePDF::portrait, array_fill(0, 6, array('mode' => 'Fixed', 'value' => 20)));
         
         // Set document information
         $export->SetCreator('TUWEL');
@@ -74,7 +74,8 @@ class grade_export_gradedist {
             1 => get_string('actualcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
             2 => get_string('actualcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
             3 => get_string('newcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
-            4 => get_string('newcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist')
+            4 => get_string('newcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
+            5 => '' // Fit number of columns
         ));
         
         $acttotal = 0;
@@ -91,7 +92,8 @@ class grade_export_gradedist {
                 1 => number_format($actdist->distribution[$letter]->percentage, 2, ',', ' '),
                 2 => $actdist->distribution[$letter]->count,
                 3 => number_format($newdist->distribution[$letter]->percentage, 2, ',', ' '),
-                4 => $newdist->distribution[$letter]->count
+                4 => $newdist->distribution[$letter]->count,
+                5 => ''
             ));
         }
         $export->addRow(array(
@@ -99,26 +101,32 @@ class grade_export_gradedist {
             1 => number_format($acttotal, 2, ',', ' '),
             2 => $actdist->coverage[1] - $actdist->coverage[0],
             3 => number_format($newtotal, 2, ',', ' '),
-            4 => $newdist->coverage[1] - $newdist->coverage[0]));
+            4 => $newdist->coverage[1] - $newdist->coverage[0],
+            5 => ''
+        ));
         
-        $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>''));
+        $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>'', 5=>''));
         
         $export->addRow(array(
             0 => get_string('coverage_export', 'gradereport_gradedist'),
             1 => number_format($actdist->coverage[2], 2, ',', ' '),
             2 => $actdist->coverage[0],
             3 => number_format($newdist->coverage[2], 2, ',', ' '),
-            4 => $newdist->coverage[0]));
+            4 => $newdist->coverage[0],
+            5 => ''
+        ));
         
         // Student data
-        $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>''));
+        $export->addRow(array(0=>'', 1=>'', 2=>'', 3=>'', 4=>'', 5=>''));
         
         $export->addRow(array(
             0 => get_string('idnumber'),
             1 => get_string('lastname'),
             2 => get_string('firstname'),
             3 => get_string('actualgrade', 'gradereport_gradedist'),
-            4 => get_string('newgrade', 'gradereport_gradedist')));
+            4 => get_string('newgrade', 'gradereport_gradedist'),
+            5 => get_string('points', 'gradereport_gradedist')
+        ));
 
         $gradeitem = $DB->get_record('grade_items', array('id' => $this->gradeitem->id));
         $gui = new graded_users_iterator($this->course, array($this->gradeitem->id => $gradeitem));
@@ -135,7 +143,8 @@ class grade_export_gradedist {
                 1 => $user->lastname,
                 2 => $user->firstname,
                 3 => $actualgrade,
-                4 => ($newgrade != null) ? $newgrade : ''
+                4 => (!is_null($newgrade)) ? $newgrade : '',
+                5 => (!is_null($grade->finalgrade)) ? number_format($grade->finalgrade, 2, ',', ' ') : ''
             ));
         }
         

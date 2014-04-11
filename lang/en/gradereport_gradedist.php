@@ -77,3 +77,4 @@ $string['p'] = ' (%)';
 $string['sum'] = 'Sum';
 $string['actualgrade'] = 'Grade (current)';
 $string['newgrade'] = 'Grade (new)';
+$string['points'] = 'Points';
