@@ -234,7 +234,7 @@ class grade_report_gradedist extends grade_report_grader {
                     // Calculate gradeletter
                     $letter = $this->get_gradeletter($newletters, $grade);
                     
-                    if ($letter != null) {
+                    if (array_key_exists($letter, $return->distribution)) {
                         $return->distribution[$letter]->count++;
                         $count++;
                     }
@@ -249,6 +249,9 @@ class grade_report_gradedist extends grade_report_grader {
     }
     
     public function get_gradeletter($letters, $grade) {
+        if (is_null($grade->finalgrade)) {
+            return '-';
+        }
         // Map to range
         $grademin = (isset($grade->grademin)) ? $grade->grademin : $grade->rawgrademin;
         $grademax = (isset($grade->grademax)) ? $grade->grademax : $grade->rawgrademax;
