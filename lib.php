@@ -72,6 +72,9 @@ class grade_report_gradedist extends grade_report_grader {
         //fields we need from the user table
         $userfields = user_picture::fields('u', get_extra_user_fields($this->context));
 
+        // We want to query both the current context and parent contexts.
+        list($relatedctxsql, $relatedctxparams) = $DB->get_in_or_equal($this->context->get_parent_context_ids(true), SQL_PARAMS_NAMED, 'relatedctx');
+
         $sortjoin = $sort = $params = null;
 
         //if the user has clicked one of the sort asc/desc arrows
@@ -99,7 +102,7 @@ class grade_report_gradedist extends grade_report_grader {
                     break;
             }
 
-            $params = array_merge($gradebookrolesparams, $this->groupwheresql_params, $enrolledparams);
+            $params = array_merge($gradebookrolesparams, $this->groupwheresql_params, $enrolledparams, $relatedctxparams);
         }
 
         $sql = "SELECT $userfields
@@ -111,7 +114,7 @@ class grade_report_gradedist extends grade_report_grader {
                            SELECT DISTINCT ra.userid
                              FROM {role_assignments} ra
                             WHERE ra.roleid IN ($this->gradebookroles)
-                              AND ra.contextid " . get_related_contexts_string($this->context) . "
+                              AND ra.contextid $relatedctxsql
                        ) rainner ON rainner.userid = u.id
                    AND u.deleted = 0
                    $this->groupwheresql
@@ -137,7 +140,7 @@ class grade_report_gradedist extends grade_report_grader {
                            AND e.status = :estatus
                            AND e.courseid = :courseid
                   GROUP BY ue.userid";
-            $coursecontext = get_course_context($this->context);
+            $coursecontext = $this->context->get_course_context(true);
             $params = array_merge($uparams, array('estatus'=>ENROL_INSTANCE_ENABLED, 'uestatus'=>ENROL_USER_ACTIVE, 'courseid'=>$coursecontext->instanceid));
             $useractiveenrolments = $DB->get_records_sql($sql, $params);
 
