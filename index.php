@@ -226,12 +226,12 @@ if ($confirm && !$boundaryerror) {
 
     print_grade_page_head($course->id, 'report', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
     
-    if ($saved)
+    if ($saved) {
         echo $OUTPUT->notification(get_string('saved', 'gradereport_gradedist'), 'notifysuccess');
-    
-    if ($saved && $boundaryerror)
+    } else if($boundaryerror) {
         echo $OUTPUT->notification(get_string('boundaryerror', 'gradereport_gradedist'));
-
+    }
+    
     // Gradedist settings
     $mform->display();
 }
