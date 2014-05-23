@@ -138,7 +138,7 @@ if ($confirm && !$boundaryerror) {
     $i = 1; $max = 100;
     foreach ($letters as $letter) {
         $gradeboundary_newname = 'grp_gradeboundaries_new['.$i.']';
-        $boundary = $boundaries_new[$i];
+        $boundary = str_replace(',', '.', $boundaries_new[$i]);
         
         $line = array();
         $line[] = format_float($max, 2).' %';
@@ -171,7 +171,7 @@ if ($confirm && !$boundaryerror) {
 
         $i = 1;
         foreach($letters as $letter) {
-            $boundary = $data->grp_gradeboundaries_new[$i];
+            $boundary = str_replace(',', '.', $data->grp_gradeboundaries_new[$i]);
 
             $record = new stdClass();
             $record->letter        = $letter;
