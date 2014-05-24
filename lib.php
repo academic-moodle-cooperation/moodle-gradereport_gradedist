@@ -246,20 +246,19 @@ class grade_report_gradedist extends grade_report_grader {
             foreach($return->distribution as $gradedist) {
                 $gradedist->percentage = ($total > 0) ? round($gradedist->count * 100 / $total, 2) : 0;
             }
-            $return->coverage = array($total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0);
         }
+        $return->coverage = array($total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0);
         return $return;
     }
     
     public function get_gradeletter($letters, $grade) {
-        if (is_null($grade->finalgrade)) {
+        if (is_null($grade->finalgrade) || !$gradeitem = grade_item::fetch(array('id'=>$grade->itemid))) {
             return '-';
         }
+                    
         // Map to range
-        $grademin = (isset($grade->grademin)) ? $grade->grademin : $grade->rawgrademin;
-        $grademax = (isset($grade->grademax)) ? $grade->grademax : $grade->rawgrademax;
-        $gradeint = $grademax - $grademin;
-        $value = ($gradeint != 100 || $grademin != 0) ? ($grade->finalgrade - $grademin) * 100 / $gradeint : $grade->finalgrade;
+        $gradeint = $gradeitem->grademax - $gradeitem->grademin;
+        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? ($grade->finalgrade - $gradeitem->grademin) * 100 / $gradeint : $grade->finalgrade;
         
         // Calculate gradeletter
         $value = bounded_number(0, $value, 100); // Just in case
