@@ -25,15 +25,12 @@ M.gradereport_gradedist = {
             percent_new.push(grade.percentage);
         });
         
-        var chart = new Highcharts.Chart({
+        var chart = $('#chart_container').highcharts({
             chart: {
-                renderTo: 'chart_container',
                 type: 'column'
             },
             title: {
-                style: {
-                    display: 'none'
-                }
+                text: ''
             },
             xAxis: {
                 title: {
@@ -72,9 +69,10 @@ M.gradereport_gradedist = {
                     }
                 }]
         });
-        
-        chart.update = function(id, o, args) {
-            
+		
+        var update = function(id, o, args) {
+		
+            var chart = $('#chart_container').highcharts();
             data = Y.JSON.parse(o.responseText);
             
             if(data.updateall) {
@@ -114,7 +112,7 @@ M.gradereport_gradedist = {
                 upload: false
             },
             on: {
-                complete: chart.update
+                complete: update
             }
         };
         
