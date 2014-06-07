@@ -100,7 +100,7 @@ class edit_letter_form extends moodleform {
         
         // buttons
         if ($edit) {
-            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'), array('disabled'=>true));
+            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
             $mform->closeHeaderBefore('submitbutton');
         }
         
