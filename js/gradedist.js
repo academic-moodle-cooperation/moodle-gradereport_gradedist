@@ -25,8 +25,9 @@ M.gradereport_gradedist = {
             percent_new.push(grade.percentage);
         });
         
-        var chart = $('#chart_container').highcharts({
+        var chart = new Highcharts.Chart({
             chart: {
+				renderTo: 'chart_container',
                 type: 'column'
             },
             title: {
@@ -72,7 +73,6 @@ M.gradereport_gradedist = {
 		
         var update = function(id, o, args) {
 		
-            var chart = $('#chart_container').highcharts();
             data = Y.JSON.parse(o.responseText);
             
             if(data.updateall) {
@@ -218,8 +218,8 @@ M.gradereport_gradedist = {
             Y.all('.actcoverage').setContent(data.actcoverage[0] + '/' + data.actcoverage[1] + ' (' + data.actcoverage[2] + '%)');
             Y.all('.newcoverage').setContent(data.newcoverage[0] + '/' + data.newcoverage[1] + ' (' + data.newcoverage[2] + '%)');
         }
-        
-        var desc = Y.all('#fgroup_id_grp_description input[type=radio]');
+		
+        var desc = Y.all('#fgroup_id_grp_description input');
         desc.on('change', function (e) {
             mode = e.currentTarget.get('value');
             var values, values_new;
@@ -243,7 +243,7 @@ M.gradereport_gradedist = {
             chart.series[1].setData(values_new);
         });
         
-        var cols = Y.all('#fgroup_id_grp_columns input[type=checkbox]');
+        var cols = Y.all('#fgroup_id_grp_columns input');
         cols.on('click', function (e) {
             var column = (e.currentTarget.get('id') == 'id_grp_columns_actualcolumns') ? 0 : 1;
             if(e.currentTarget.get('checked')) {
