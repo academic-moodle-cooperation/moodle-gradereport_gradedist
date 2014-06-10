@@ -77,6 +77,7 @@ $mdata->gradeitem = $gradeitem;
 $i = 1; $max = 100.01;
 foreach ($letters as $boundary=>$letter) {
     $boundary = format_float($boundary, 2);
+    $boundary_new = isset($boundaries_new[$i]) ? $boundaries_new[$i] : null;
     
     $gradelettername = 'grp_gradeletters['.$i.']';
     $gradeboundaryname = 'grp_gradeboundaries['.$i.']';
@@ -86,16 +87,15 @@ foreach ($letters as $boundary=>$letter) {
     $mdata->$gradeboundaryname = $boundary;
     $mdata->$gradeboundary_newname = $boundary_new;
     
-	// Validation fallback if javascript is disabled
-	if (isset($boundaries_new[$i])) {
-		$boundary_new = $boundaries_new[$i];
-		if ($boundary_new == '' || $boundary_new > 100 || !preg_match('/^\d+([.,]\d{1,2})?$/', $boundary_new) || $boundary_new >= $max) {
-			$boundaryerror = true;
-		} else {
-			$newletters[$boundary_new] = $letter;
-		}
-		$max = $boundary_new;
-	}
+    // Validation fallback if javascript is disabled
+    if (isset($boundaries_new[$i])) {
+        if ($boundary_new == '' || $boundary_new > 100 || !preg_match('/^\d+([.,]\d{1,2})?$/', $boundary_new) || $boundary_new >= $max) {
+                $boundaryerror = true;
+        } else {
+                $newletters[$boundary_new] = $letter;
+        }
+        $max = $boundary_new;
+    }
     $i++;
 }
 
