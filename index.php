@@ -53,7 +53,7 @@ $edit = (has_capability('gradereport/gradedist:edit', $context) && has_capabilit
 $PAGE->set_url('/grade/report/gradedist/index.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display
 $PAGE->requires->jquery();
-$PAGE->requires->js('/grade/report/gradedist/lib/highcharts/js/highcharts.js');
+$PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
 
 $gpr = new grade_plugin_return(array('type'=>'report', 'plugin'=>'gradedist', 'courseid'=>$course->id));
 $returnurl = $gpr->get_return_url('index.php');
@@ -90,9 +90,9 @@ foreach ($letters as $boundary=>$letter) {
     // Validation fallback if javascript is disabled
     if (isset($boundaries_new[$i])) {
         if ($boundary_new == '' || $boundary_new > 100 || !preg_match('/^\d+([.,]\d{1,2})?$/', $boundary_new) || $boundary_new >= $max) {
-            $boundaryerror = true;
+                $boundaryerror = true;
         } else {
-            $newletters[$boundary_new] = $letter;
+                $newletters[$boundary_new] = $letter;
         }
         $max = $boundary_new;
     }
@@ -214,7 +214,7 @@ if ($confirm && !$boundaryerror) {
     // Start output
     $jsmodule = array(
         'name' => 'gradereport_gradedist',
-        'fullpath' => '/grade/report/gradedist/lib/gradedist.js',
+        'fullpath' => '/grade/report/gradedist/js/gradedist.js',
         'requires' => array('io-form'),
         'strings'  => array(array('interval', 'gradereport_gradedist'),
                             array('decimals', 'gradereport_gradedist'),
