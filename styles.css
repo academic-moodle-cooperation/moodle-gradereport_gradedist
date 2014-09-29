@@ -75,3 +75,7 @@
 #page-grade-report-gradedist-index #id_grp_export_exportformat {
     margin-right:10px;
 }
+
+#page-grade-report-gradedist-index #id_gradedist input[type="text"] {
+    width: auto;
+}
