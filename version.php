@@ -16,6 +16,9 @@
 
 /**
  * version.php
+ * Defines the version of grouptool
+ * This code fragment is called by moodle_needs_upgrading() and
+ * /admin/index.php
  *
  * @package       gradereport_gradedist
  * @author        Andreas Hruska (andreas.hruska@tuwien.ac.at)
@@ -27,8 +30,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014033100;              // The current plugin version (Date: YYYYMMDDXX)
-$plugin->release   = "2014-03-31"; 	  // User-friendly version number
+$plugin->version  = 2014033100;
+$plugin->release   = "2014-03-31";              // User-friendly version number.
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->requires  = 2013050100;              // Requires this Moodle version
-$plugin->component = 'gradereport_gradedist'; // Full name of the plugin (used for diagnostics)
+$plugin->requires  = 2014041100.00;             // Requires this Moodle version!
+$plugin->component = 'gradereport_gradedist';   // To check on upgrade, that module sits in correct place.
