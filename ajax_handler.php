@@ -17,9 +17,12 @@
 /**
  * Ajax handler for grade distribution chart
  *
- * @package   gradereport_gradedist
- * @copyright 2013 Günther Bernsteiner (guetar@gmx.at)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package       gradereport_gradedist
+ * @author        Andreas Hruska (andreas.hruska@tuwien.ac.at)
+ * @author        Katarzyna Potocka (katarzyna.potocka@tuwien.ac.at)
+ * @author        Günther Bernsteiner
+ * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once '../../../config.php';
