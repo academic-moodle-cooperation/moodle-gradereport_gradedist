@@ -1,6 +1,5 @@
 <?php
-
-// This file is an extension of Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,12 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for gradedist
+ * English lang file
  *
- * @package   gradereport_gradedist
- * @copyright 2013 Günther Bernsteiner (guetar@gmx.at)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package       gradereport_gradedist
+ * @author        Andreas Hruska (andreas.hruska@tuwien.ac.at)
+ * @author        Katarzyna Potocka (katarzyna.potocka@tuwien.ac.at)
+ * @author        Günther Bernsteiner
+ * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 $string['pluginname'] = 'Grade distribution';
 $string['pluginname_help'] = 'This report shows the distribution of grades over a particular grade item depending on the lower bounds defined for the grade letters. The preview functionality allows you to immediately see how changes to the lower boundaries of grade letters affect the grade distribution. If you are satisfied with the new lower boundaries the definitions of the grade letters can be permanently changed.
 Note: The definition of grade letters applies to all grade items in the course.';

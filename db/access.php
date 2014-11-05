@@ -39,7 +39,7 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
-    
+
     'gradereport/gradedist:edit' => array(
         'riskbitmask' => RISK_PERSONAL,
         'captype' => 'write',
@@ -49,6 +49,6 @@ $capabilities = array(
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
         ),
-        'clonepermissionsfrom' =>  'moodle/grade:manageletters'
+        'clonepermissionsfrom' => 'moodle/grade:manageletters'
     )
 );
