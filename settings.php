@@ -28,9 +28,9 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-    
-    require_once $CFG->libdir.'/grade/constants.php';
-    $display_types = array(GRADE_DISPLAY_TYPE_REAL => new lang_string('real', 'grades'),
+
+    require_once($CFG->libdir.'/grade/constants.php');
+    $displaytypes = array(GRADE_DISPLAY_TYPE_REAL => new lang_string('real', 'grades'),
                            GRADE_DISPLAY_TYPE_PERCENTAGE => new lang_string('percentage', 'grades'),
                            GRADE_DISPLAY_TYPE_LETTER => new lang_string('letter', 'grades'),
                            GRADE_DISPLAY_TYPE_REAL_PERCENTAGE => new lang_string('realpercentage', 'grades'),
@@ -40,11 +40,12 @@ if ($ADMIN->fulltree) {
                            GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER => new lang_string('percentageletter', 'grades'),
                            GRADE_DISPLAY_TYPE_PERCENTAGE_REAL => new lang_string('percentagereal', 'grades')
                            );
-    asort($display_types);
-    
-    $selection = array_fill_keys(array_keys($display_types), true);
+    asort($displaytypes);
 
-    $settings->add(new admin_setting_configmulticheckbox('gradedist_showgradeitem', get_string('showgradeitem', 'gradereport_gradedist'),
-                                                  get_string('showgradeitem_description', 'gradereport_gradedist'), $selection, $display_types));
+    $selection = array_fill_keys(array_keys($displaytypes), true);
+
+    $settings->add(new admin_setting_configmulticheckbox('gradedist_showgradeitem',
+        get_string('showgradeitem', 'gradereport_gradedist'),
+        get_string('showgradeitem_description', 'gradereport_gradedist'), $selection, $displaytypes));
 
 }
