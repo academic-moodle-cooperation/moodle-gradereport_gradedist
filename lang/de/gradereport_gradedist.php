@@ -1,6 +1,5 @@
 <?php
-
-// This file is an extension of Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,12 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for gradedist
+ * German lang file
  *
- * @package   gradereport_gradedist
- * @copyright 2013 Günther Bernsteiner (guetar@gmx.at)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package       gradereport_gradedist
+ * @author        Andreas Hruska (andreas.hruska@tuwien.ac.at)
+ * @author        Katarzyna Potocka (katarzyna.potocka@tuwien.ac.at)
+ * @author        Günther Bernsteiner
+ * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 $string['pluginname'] = 'Notenverteilung';
 $string['pluginname_help'] = 'Mit Hilfe der Notenverteilung können Sie sich über eine Bewertungsspalte die Verteilung der Notenstufen anhand der aktuellen unteren Grenzen anzeigen lassen. Sie können neue untere Grenzen festelegen und erkennen auf einen Blick die mögliche Auswirkungen Ihrer Änderung auf die Verteilung. Sind Sie mit den neuen unteren Grenzen zufrieden können Sie die aktuellen Notenstufen des Kurses mit diesen neuen unteren Grenzen überschreiben.
 Hinweis: Die Notenstufen werden für alle Spalten Ihres Kurses übernommen und können nur für den gesamten Kurs gesetzt werden.';

@@ -26,7 +26,7 @@
  */
 
 require_once($CFG->dirroot.'/grade/report/grader/lib.php');
-require_once $CFG->libdir.'/grade/constants.php';
+require_once($CFG->libdir.'/grade/constants.php');
 
 /**
  * Class providing an API for the overview report building and displaying.
@@ -40,7 +40,7 @@ class grade_report_gradedist extends grade_report_grader {
      * @var array $letters
      */
     private $letters;
-    
+
     /**
      * Constructor.
      * @param int $courseid
@@ -52,12 +52,12 @@ class grade_report_gradedist extends grade_report_grader {
      */
     public function __construct($courseid, $gpr, $context, $letters, $page=null, $sortitemid=null) {
         parent::__construct($courseid, $gpr, $context, $page, $sortitemid);
-        
+
         $this->letters = $letters;
     }
-    
+
     /**
-     * pulls out the userids of the users to be display, and sorts them
+     * Pulls out the userids of the users to be display, and sorts them.
      */
     public function load_users() {
         global $CFG, $DB;
@@ -66,23 +66,26 @@ class grade_report_gradedist extends grade_report_grader {
             return;
         }
 
-        //limit to users with a gradeable role
-        list($gradebookrolessql, $gradebookrolesparams) = $DB->get_in_or_equal(explode(',', $this->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
+        // Limit to users with a gradeable role.
+        list($gradebookrolessql, $gradebookrolesparams) =
+                $DB->get_in_or_equal(explode(',', $this->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
 
-        //limit to users with an active enrollment
+        // Limit to users with an active enrollment.
         list($enrolledsql, $enrolledparams) = get_enrolled_sql($this->context);
 
-        //fields we need from the user table
+        // Fields we need from the user table.
         $userfields = user_picture::fields('u', get_extra_user_fields($this->context));
 
         // We want to query both the current context and parent contexts.
-        list($relatedctxsql, $relatedctxparams) = $DB->get_in_or_equal($this->context->get_parent_context_ids(true), SQL_PARAMS_NAMED, 'relatedctx');
+        list($relatedctxsql, $relatedctxparams) =
+                $DB->get_in_or_equal($this->context->get_parent_context_ids(true), SQL_PARAMS_NAMED, 'relatedctx');
 
         $sortjoin = $sort = $params = null;
 
-        //if the user has clicked one of the sort asc/desc arrows
+        // If the user has clicked one of the sort asc/desc arrows.
         if (is_numeric($this->sortitemid)) {
-            $params = array_merge(array('gitemid'=>$this->sortitemid), $gradebookrolesparams, $this->groupwheresql_params, $enrolledparams);
+            $params = array_merge(array('gitemid' => $this->sortitemid),
+                      $gradebookrolesparams, $this->groupwheresql_params, $enrolledparams);
 
             $sortjoin = "LEFT JOIN {grade_grades} g ON g.userid = u.id AND g.itemid = $this->sortitemid";
             $sort = "g.finalgrade $this->sortorder";
@@ -122,7 +125,7 @@ class grade_report_gradedist extends grade_report_grader {
                    AND u.deleted = 0
                    $this->groupwheresql
               ORDER BY $sort";
-        
+
         $this->users = $DB->get_records_sql($sql, $params);
 
         if (empty($this->users)) {
@@ -144,7 +147,10 @@ class grade_report_gradedist extends grade_report_grader {
                            AND e.courseid = :courseid
                   GROUP BY ue.userid";
             $coursecontext = $this->context->get_course_context(true);
-            $params = array_merge($uparams, array('estatus'=>ENROL_INSTANCE_ENABLED, 'uestatus'=>ENROL_USER_ACTIVE, 'courseid'=>$coursecontext->instanceid));
+            $params = array_merge($uparams, array(
+                'estatus' => ENROL_INSTANCE_ENABLED,
+                'uestatus' => ENROL_USER_ACTIVE,
+                'courseid' => $coursecontext->instanceid));
             $useractiveenrolments = $DB->get_records_sql($sql, $params);
 
             $defaultgradeshowactiveenrol = !empty($CFG->grade_report_showonlyactiveenrol);
@@ -162,32 +168,34 @@ class grade_report_gradedist extends grade_report_grader {
 
         return $this->users;
     }
-    
+
     /**
-     * We get gradeitems for select here
+     * We get gradeitems for select here.
      */
     public function get_gradeitems() {
         global $CFG, $DB;
-        
+
         $gradeitems = array();
         $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
-        
-        foreach($this->gtree->get_items() as $g) {
-            if($g->gradetype != GRADE_TYPE_VALUE) continue;
-            
+
+        foreach ($this->gtree->get_items() as $g) {
+            if ($g->gradetype != GRADE_TYPE_VALUE) {
+                continue;
+            }
+
             $gradeitem = new stdClass();
-            
+
             if (strcmp($g->itemtype, 'course') == 0) {
                 $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
                 $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
-                
-                // Little hack to get coursesum in front
+
+                // Small hack to get coursesum in front.
                 $gradeitems = array_reverse($gradeitems, true);
                 $gradeitems[$g->id] = $gradeitem;
                 $gradeitems = array_reverse($gradeitems, true);
                 continue;
             } else if (strcmp($g->itemtype, 'category') == 0) {
-                $gc = $DB->get_record('grade_categories', array('id'=>$g->iteminstance ));
+                $gc = $DB->get_record('grade_categories', array('id' => $g->iteminstance ));
                 $gradeitem->name = $gc->fullname;
             } else {
                 $gradeitem->name = $g->itemname;
@@ -199,72 +207,74 @@ class grade_report_gradedist extends grade_report_grader {
     }
 
     /**
-     * We supply the letters and gradeitem in this query, and get the distribution
+     * We supply the letters and gradeitem in this query, and get the distribution.
      */
     public function load_distribution($newletters, $gradeitem=0) {
         global $CFG, $DB;
         $this->load_users();
-        
+
         $sql = "SELECT g.*, gi.grademax, gi.grademin
                   FROM {grade_items} gi,
                        {grade_grades} g
                 WHERE g.itemid = gi.id AND gi.courseid = :courseid
                 AND g.itemid = :gradeitem";
-        $params = array('gradeitem'=>$gradeitem, 'courseid'=>$this->courseid);
-        
-        krsort($this->letters); // Just to be sure
+        $params = array('gradeitem' => $gradeitem, 'courseid' => $this->courseid);
+
+        krsort($this->letters); // Just to be sure.
         $userids = array_keys($this->users);
-        
+
         $total = 0;
         $count = 0;
-        
+
         $return = new stdClass();
         $return->distribution = array_fill_keys($this->letters, null);
         $return->coverage = array(0, 0);
-        
-        foreach($this->letters as $letter) {
+
+        foreach ($this->letters as $letter) {
             $gradedist = new stdClass();
             $gradedist->count       = 0;
             $gradedist->percentage  = 0;
             $return->distribution[$letter] = $gradedist;
         }
-        
+
         if ($grades = $DB->get_records_sql($sql, $params)) {
             foreach ($grades as $grade) {
-                if (in_array($grade->userid, $userids) and array_key_exists($grade->itemid, $this->gtree->get_items())) { // Some items may not be present!!
+                if (in_array($grade->userid, $userids) && array_key_exists($grade->itemid, $this->gtree->get_items())) {
+                    // Some items may not be present!!
                     if (is_null($grade->finalgrade)) {
                         continue;
                     }
                     $total++;
-                    
-                    // Calculate gradeletter
+
+                    // Calculate gradeletter.
                     $letter = $this->get_gradeletter($newletters, $grade);
-                    
+
                     if (array_key_exists($letter, $return->distribution)) {
                         $return->distribution[$letter]->count++;
                         $count++;
                     }
                 }
             }
-            foreach($return->distribution as $gradedist) {
+            foreach ($return->distribution as $gradedist) {
                 $gradedist->percentage = ($total > 0) ? round($gradedist->count * 100 / $total, 2) : 0;
             }
         }
         $return->coverage = array($total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0);
         return $return;
     }
-    
+
     public function get_gradeletter($letters, $grade) {
-        if (is_null($grade->finalgrade) || !$gradeitem = grade_item::fetch(array('id'=>$grade->itemid))) {
+        if (is_null($grade->finalgrade) || !$gradeitem = grade_item::fetch(array('id' => $grade->itemid))) {
             return '-';
         }
-                    
-        // Map to range
+
+        // Map to range.
         $gradeint = $gradeitem->grademax - $gradeitem->grademin;
-        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? ($grade->finalgrade - $gradeitem->grademin) * 100 / $gradeint : $grade->finalgrade;
-        
-        // Calculate gradeletter
-        $value = bounded_number(0, $value, 100); // Just in case
+        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ?
+                 ($grade->finalgrade - $gradeitem->grademin) * 100 / $gradeint : $grade->finalgrade;
+
+        // Calculate gradeletter.
+        $value = bounded_number(0, $value, 100); // Just in case.
         foreach ($letters as $boundary => $letter) {
             if ($value >= $boundary) {
                 return format_string($letter);
