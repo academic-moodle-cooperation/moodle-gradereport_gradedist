@@ -33,21 +33,21 @@
 #page-grade-report-gradedist-index .b_error {
     margin-top:5px;
     padding-left:16%;
-    color: #993300;
+    color: #990000;
 }
 
 #page-grade-report-gradedist-index .b_error span {
     margin-left: 10px;
-    color: #993300;
+    color: #990000;
 }
 
 #page-grade-report-gradedist-index .actcoverage {
-    color:#993300;
+    color:#990000;
 }
 
 #page-grade-report-gradedist-index .newcoverage,
 #page-grade-report-gradedist-index .b_error .newcoverage {
-    color:#006600;
+    color:#33cc33;
 }
 
 #page-grade-report-gradedist-index #id_grp_description_description_1 {
@@ -59,11 +59,11 @@
 }
 
 #page-grade-report-gradedist-index #fgroup_id_grp_columns fieldset span:first-child label {
-    color: #993300;
+    color: #990000;
 }
 
 #page-grade-report-gradedist-index #fgroup_id_grp_columns fieldset span label {
-    color: #006600;
+    color: #33cc33;
 }
 
 #page-grade-report-gradedist-index #fitem_id_submitbutton,
