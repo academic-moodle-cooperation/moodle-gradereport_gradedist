@@ -81,3 +81,16 @@ $string['sum'] = 'Sum';
 $string['actualgrade'] = 'Grade (current)';
 $string['newgrade'] = 'Grade (new)';
 $string['points'] = 'Points ({$a})';
+
+// Events.
+$string['gradedistviewed'] = 'Grade distribution viewed';
+$string['gradedistviewed_description'] = 'The user with id {$a->userid} viewed the grade distribution.';
+
+$string['gradedistdownloaded'] = 'Current grade distribution downloaded';
+$string['gradedistdownloaded_description'] = 'The user with id {$a->userid} downloaded the current grade distribution.';
+
+$string['confirmationtableviewed'] = 'Confirmation table viewed';
+$string['confirmationtableviewed_description'] = 'The user with id {$a->userid} viewed the grade distribution confirmation table.';
+
+$string['newletterssubmitted'] = 'New grade letters submitted';
+$string['newletterssubmitted_description'] = 'The user with id {$a->userid} submitted the new grade letters.';
