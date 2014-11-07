@@ -81,3 +81,16 @@ $string['sum'] = 'Summe';
 $string['actualgrade'] = 'Note (aktuell)';
 $string['newgrade'] = 'Note (neue)';
 $string['points'] = 'Punkte ({$a})';
+
+// Events.
+$string['gradedistviewed'] = 'Notenverteilung angezeigt';
+$string['gradedistviewed_description'] = 'Der Benutzer mit id {$a->userid} besuchte die Notenverteilung.';
+
+$string['gradedistdownloaded'] = 'Aktuelle Notenverteilung heruntergeladen';
+$string['gradedistdownloaded_description'] = 'Der Benutzer mit id {$a->userid} exportierte die aktuelle Notenverteilung.';
+
+$string['confirmationtableviewed'] = 'Bestätigungstabelle angezeigt';
+$string['confirmationtableviewed_description'] = 'Der Benutzer mit id {$a->userid} überprüfte die neuen Notenstufen.';
+
+$string['newletterssubmitted'] = 'Neue Notenstufen gespeichert';
+$string['newletterssubmitted_description'] = 'Der Benutzer mit id {$a->userid} speicherte die neuen Notenstufen.';
