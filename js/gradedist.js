@@ -82,7 +82,7 @@ M.gradereport_gradedist = {
             series:
                 [{
                     data: absolut,
-                    color: '#993300',
+                    color: '#990000',
                     dataLabels: {
                         enabled: true,
                         color: '#000000',
@@ -90,7 +90,7 @@ M.gradereport_gradedist = {
                     }
                 }, {
                     data: absolutnew,
-                    color: '#006600',
+                    color: '#33cc33',
                     dataLabels: {
                         enabled: true,
                         color: '#000000',
