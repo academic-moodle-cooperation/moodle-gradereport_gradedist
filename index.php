@@ -129,6 +129,10 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
     $gradeitem->id = $data->gradeitem;
     $gradeitem->name = $gradeitems[$data->gradeitem]->name;
 
+    // Export event.
+    \gradereport_gradedist\event\gradedist_downloaded::create(
+        array('context' => $context, 'other' => array('url' => $returnurl)))->trigger();
+
     $export->init($course,
                   $grader,
                   $gradeitem,
@@ -199,15 +203,23 @@ if ($confirm && !$boundaryerror) {
         }
 
         $returnurl = $gpr->get_return_url('index.php', array('id' => $course->id, 'saved' => true));
+
+        // New letters submitted event.
+        \gradereport_gradedist\event\newletters_submitted::create(
+            array('context' => $context, 'other' => array('url' => $returnurl)))->trigger();
+
         redirect($returnurl);
 
     } else {
-        // Show confirm table.
+        // Show confirmation table.
         print_grade_page_head($course->id, 'report', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
 
         echo $OUTPUT->notification(get_string('notification', 'gradereport_gradedist'));
 
         $cform->display();
+        // Confirmation table event.
+        \gradereport_gradedist\event\confirmation_table_viewed::create(
+            array('context' => $context, 'other' => array('url' => $returnurl)))->trigger();
     }
 
 } else {
@@ -245,6 +257,10 @@ if ($confirm && !$boundaryerror) {
 
     // Gradedist settings.
     $mform->display();
+
+    // View event.
+    \gradereport_gradedist\event\gradedist_viewed::create(
+        array('context' => $context, 'other' => array('url' => $returnurl)))->trigger();
 }
 
 echo $OUTPUT->footer();
