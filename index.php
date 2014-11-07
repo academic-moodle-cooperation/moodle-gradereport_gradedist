@@ -82,7 +82,7 @@ $mdata->gradeitem = $gradeitem;
 $i = 1; $max = 100.01;
 foreach ($letters as $boundary => $letter) {
     $boundary = format_float($boundary, 2);
-    $boundarynew = isset($boundariesnew[$i]) ? $boundariesnew[$i] : null;
+    $boundarynew = isset($boundariesnew[$i]) ? $boundariesnew[$i] : $boundary;
 
     $gradelettername = 'grp_gradeletters['.$i.']';
     $gradeboundaryname = 'grp_gradeboundaries['.$i.']';
