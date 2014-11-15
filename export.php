@@ -65,11 +65,10 @@ class grade_export_gradedist {
         $export->set_outputformat($this->exportformat);
 
         // Show course in header.
-        $export->set_headertext($this->course->fullname, '',
-                               $this->course->shortname, '',
+        $export->set_headertext(get_string('course').':', $this->course->shortname,
                                '', '',
-                               $this->gradeitem->name, '',
-                               '', '', '', '');
+                               get_string('gradeitem', 'gradereport_gradedist').':', $this->gradeitem->name,
+                               '', '', '', '', '', '');
 
         // Gradedist data.
         $export->set_titles(array(
