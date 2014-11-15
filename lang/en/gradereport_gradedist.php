@@ -38,7 +38,7 @@ $string['coursesum'] = 'Sum for the course';
 $string['gradeletter'] = 'Grade letters';
 
 $string['gradeboundary'] = 'Lower boundary in %';
-$string['gradeboundary_help'] = 'The setting determines the minimum percentage over which grades will be assigned the grade letter.';
+$string['gradeboundary_help'] = 'The setting determines the minimum percentage over which grades will be assigned to the grade letter.';
 $string['gradeboundary_new'] = 'New lower boundary in %';
 $string['gradeboundary_new_help'] = 'You can see the effects of new lower boundaries on the distribution of grades. Lower boundaries have to be numbers with max. 2 decimal points.';
 
