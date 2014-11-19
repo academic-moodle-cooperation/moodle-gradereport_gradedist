@@ -149,6 +149,10 @@ M.gradereport_gradedist = {
 
         var gradeitems = Y.one('#id_gradeitem');
         gradeitems.on('change', function (e) {
+            var success = Y.all('.alert-success');
+            if (success) {
+                success.remove();
+            }
             cfg.data = 'updateall=1';
             Y.io(uri, cfg);
         });
@@ -158,6 +162,10 @@ M.gradereport_gradedist = {
             var notifications = Y.all('#page-grade-report-gradedist-index .notifyproblem, #page-grade-report-gradedist-index .notifysuccess');
             if (notifications) {
                 notifications.remove();
+            }
+            var success = Y.all('.alert-success');
+            if (success) {
+                success.remove();
             }
             if (validate()) {
                 Y.io(uri, cfg);
