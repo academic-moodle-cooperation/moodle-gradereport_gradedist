@@ -72,12 +72,12 @@ class grade_export_gradedist {
 
         // Gradedist data.
         $export->set_titles(array(
-            0 => get_string('category', 'gradereport_gradedist'),
-            1 => get_string('actualcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
-            2 => get_string('actualcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
-            3 => get_string('newcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
-            4 => get_string('newcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
-            5 => '' // Fit number of columns.
+            get_string('category', 'gradereport_gradedist'),
+            get_string('actualcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
+            get_string('actualcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
+            get_string('newcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
+            get_string('newcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
+            '' // Fit number of columns.
         ));
 
         $acttotal = 0;
@@ -90,48 +90,48 @@ class grade_export_gradedist {
             $newtotal += $newdist->distribution[$letter]->percentage;
 
             $export->add_row(array(
-                0 => $letter,
-                1 => number_format($actdist->distribution[$letter]->percentage, 2, ',', ' '),
-                2 => $actdist->distribution[$letter]->count,
-                3 => number_format($newdist->distribution[$letter]->percentage, 2, ',', ' '),
-                4 => $newdist->distribution[$letter]->count,
-                5 => ''
+                $letter,
+                number_format($actdist->distribution[$letter]->percentage, 2, ',', ' '),
+                $actdist->distribution[$letter]->count,
+                number_format($newdist->distribution[$letter]->percentage, 2, ',', ' '),
+                $newdist->distribution[$letter]->count,
+                ''
             ));
         }
         $export->add_row(array(
-            0 => get_string('sum', 'gradereport_gradedist'),
-            1 => number_format($acttotal, 2, ',', ' '),
-            2 => $actdist->coverage[1] - $actdist->coverage[0],
-            3 => number_format($newtotal, 2, ',', ' '),
-            4 => $newdist->coverage[1] - $newdist->coverage[0],
-            5 => ''
+            get_string('sum', 'gradereport_gradedist'),
+            number_format($acttotal, 2, ',', ' '),
+            $actdist->coverage[1] - $actdist->coverage[0],
+            number_format($newtotal, 2, ',', ' '),
+            $newdist->coverage[1] - $newdist->coverage[0],
+            ''
         ));
 
-        $export->add_row(array(0 => '', 1 => '', 2 => '', 3 => '', 4 => '', 5 => ''));
+        $export->add_row(array('', '', '', '', '', ''));
 
         $export->add_row(array(
-            0 => get_string('coverage_export', 'gradereport_gradedist'),
-            1 => number_format($actdist->coverage[2], 2, ',', ' '),
-            2 => $actdist->coverage[0],
-            3 => number_format($newdist->coverage[2], 2, ',', ' '),
-            4 => $newdist->coverage[0],
-            5 => ''
+            get_string('coverage_export', 'gradereport_gradedist'),
+            number_format($actdist->coverage[2], 2, ',', ' '),
+            $actdist->coverage[0],
+            number_format($newdist->coverage[2], 2, ',', ' '),
+            $newdist->coverage[0],
+            ''
         ));
 
         // Student data.
-        $export->add_row(array(0 => '', 1 => '', 2 => '', 3 => '', 4 => '', 5 => ''));
+        $export->add_row(array('', '', '', '', '', ''));
 
         $gradeitem = $DB->get_record('grade_items', array('id' => $this->gradeitem->id));
         $gui = new graded_users_iterator($this->course, array($this->gradeitem->id => $gradeitem));
         $gui->init();
 
         $export->add_row(array(
-            0 => get_string('idnumber'),
-            1 => get_string('lastname'),
-            2 => get_string('firstname'),
-            3 => get_string('actualgrade', 'gradereport_gradedist'),
-            4 => get_string('newgrade', 'gradereport_gradedist'),
-            5 => get_string('points', 'gradereport_gradedist', number_format($gradeitem->grademax, 2, ',', ' '))
+            get_string('idnumber'),
+            get_string('lastname'),
+            get_string('firstname'),
+            get_string('actualgrade', 'gradereport_gradedist'),
+            get_string('newgrade', 'gradereport_gradedist'),
+            get_string('points', 'gradereport_gradedist', number_format($gradeitem->grademax, 2, ',', ' '))
         ));
 
         while ($userdata = $gui->next_user()) {
@@ -141,12 +141,12 @@ class grade_export_gradedist {
             $newgrade = $this->grader->get_gradeletter($this->newletters, $grade);
 
             $export->add_row(array(
-                0 => $user->idnumber,
-                1 => $user->lastname,
-                2 => $user->firstname,
-                3 => $actualgrade,
-                4 => (!is_null($newgrade)) ? $newgrade : '',
-                5 => (!is_null($grade->finalgrade)) ? number_format($grade->finalgrade, 2, ',', ' ') : ''
+                $user->idnumber,
+                $user->lastname,
+                $user->firstname,
+                $actualgrade,
+                (!is_null($newgrade)) ? $newgrade : '',
+                (!is_null($grade->finalgrade)) ? number_format($grade->finalgrade, 2, ',', ' ') : ''
             ));
         }
 

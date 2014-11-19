@@ -41,7 +41,9 @@ M.gradereport_gradedist = {
         var percentnew = [];
 
         var submit = Y.one('#id_submitbutton');
-		submit.set('disabled', true);
+        if (submit) {
+            submit.set('disabled', true);
+        }
 
         $.map(data.actdist, function(grade, index) {
             letters.push(index)
@@ -222,7 +224,9 @@ M.gradereport_gradedist = {
                 errprediv.remove();
             }
 
-            submit.set('disabled', error || erremp);
+            if (submit) {
+                submit.set('disabled', error || erremp);
+            }
             return !error;
         };
 
