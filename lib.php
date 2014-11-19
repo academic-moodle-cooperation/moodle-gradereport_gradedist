@@ -114,7 +114,6 @@ class grade_report_gradedist extends grade_report_grader {
         $sql = "SELECT $userfields
                   FROM {user} u
                   JOIN ($enrolledsql) je ON je.id = u.id
-                       $this->groupsql
                        $sortjoin
                   JOIN (
                            SELECT DISTINCT ra.userid
@@ -123,7 +122,6 @@ class grade_report_gradedist extends grade_report_grader {
                               AND ra.contextid $relatedctxsql
                        ) rainner ON rainner.userid = u.id
                    AND u.deleted = 0
-                   $this->groupwheresql
               ORDER BY $sort";
 
         $this->users = $DB->get_records_sql($sql, $params);
