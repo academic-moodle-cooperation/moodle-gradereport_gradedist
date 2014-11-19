@@ -37,10 +37,16 @@ require_once('mtablepdf.php');
 require_once('export.php');
 
 global $SESSION;
+
 $courseid = required_param('id', PARAM_INT);
 $confirm = optional_param('confirm', false, PARAM_BOOL);
 $saved = optional_param('saved', false, PARAM_BOOL);
 $export = optional_param('grp_export[export]', '', PARAM_TEXT);
+
+$gradeitem = optional_param('gradeitem',
+        (isset($SESSION->gradeitem)) ? $SESSION->gradeitem : key($gradeitems), PARAM_INT);
+$boundariesnew = optional_param_array('grp_gradeboundaries_new',
+        (isset($SESSION->boundariesnew)) ? $SESSION->boundariesnew : array(), PARAM_TEXT);
 
 // Basic access checks.
 if (!$course = $DB->get_record('course', array('id' => $courseid))) {
@@ -58,24 +64,17 @@ $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display.
 $PAGE->requires->jquery();
 $PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
 
+$letters = grade_get_letters($context);
+krsort($letters, SORT_NUMERIC);
+$newletters = empty($boundariesnew) ? $letters : array();
+
 $gpr = new grade_plugin_return(array('type' => 'report', 'plugin' => 'gradedist', 'courseid' => $course->id));
 $returnurl = $gpr->get_return_url('index.php');
 $boundaryerror = false;
 
-$letters = grade_get_letters($context);
-krsort($letters, SORT_NUMERIC);
-$newletters = array();
-
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
 $gradeitems = $grader->get_gradeitems();
 reset($gradeitems);
-
-$gradeitem = optional_param('gradeitem',
-        (isset($SESSION->gradeitem)) ? $SESSION->gradeitem : key($gradeitems), PARAM_INT);
-$boundariesnew = optional_param_array('grp_gradeboundaries_new',
-        (isset($SESSION->boundaries_new)) ? $SESSION->boundaries_new : array(), PARAM_TEXT);
-$SESSION->gradeitem = $gradeitem;
-$SESSION->boundaries_new = null;
 
 $mdata = new stdClass();
 $mdata->gradeitem = $gradeitem;
@@ -175,6 +174,8 @@ if ($confirm && !$boundaryerror) {
 
     if ($cform->is_cancelled()) {
         // Cancel.
+        $SESSION->gradeitem = $gradeitem;
+        $SESSION->boundariesnew = $boundariesnew;
         redirect($returnurl);
 
     } else if ($data = $cform->get_data()) {

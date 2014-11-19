@@ -69,6 +69,7 @@ $data   = new stdClass();
 
 $actdist = $grader->load_distribution($letters, $gradeitem);
 $newdist = $grader->load_distribution($newletters, $gradeitem);
+
 $data->actdist = $actdist->distribution;
 $data->newdist = $newdist->distribution;
 $data->actcoverage = $actdist->coverage;
