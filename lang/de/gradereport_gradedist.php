@@ -38,7 +38,7 @@ $string['coursesum'] = 'Summe für den Kurs';
 $string['gradeletter'] = 'Notenstufen';
 
 $string['gradeboundary'] = 'Untere Grenze in %';
-$string['gradeboundary_help'] = 'Eine prozentuale Grenze über der die Bewertung einer bestimmten Notenstufe zugeordnet wird.';
+$string['gradeboundary_help'] = 'Mindestprozentwert der erreichbaren Punkte, ab dem eine Bewertung einer bestimmten Notenstufe zugeordnet wird.';
 $string['gradeboundary_new'] = 'Neue untere Grenze in %';
 $string['gradeboundary_new_help'] = 'Unter neue untere Grenze wird die Auswirkung dieser auf die Notenverteilung angezeigt. Nur die Eingabe von Dezimalzahlen mit bis zu 2 Nachkommastellen im Bereich 0-100 ist möglich.';
 
