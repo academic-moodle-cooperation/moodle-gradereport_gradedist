@@ -66,40 +66,8 @@
     color: #33cc33;
 }
 
-#page-grade-report-gradedist-index #fitem_id_submitbutton,
-#page-grade-report-gradedist-index #fgroup_id_grp_export,
-#page-grade-report-gradedist-index #fgroup_id_buttonar {
-    width:50%;
-    margin-left:25%;
-    mragin-right:25%;
-}
-
-#page-grade-report-gradedist-index #fitem_id_submitbutton div,
-#page-grade-report-gradedist-index #fgroup_id_grp_export fieldset {
-    width:66%;
-    margin-left:30%;
-}
-#page-grade-report-gradedist-index #fgroup_id_buttonar div {
-    width:80%;
-    margin-left:18%;
-}
-
-#page-grade-report-gradedist-index #id_submitbutton {
-    margin-left:7px;
-}
-
-#page-grade-report-gradedist-index #fgroup_id_grp_export {
-    margin-top:14px;
-}
-
-#page-grade-report-gradedist-index #fgroup_id_grp_export .fitemtitle {
-    width:30%;
-    margin-top:7px;
-    margin-right:2px;
-}
-
-#page-grade-report-gradedist-index #id_grp_export_exportformat {
-    margin-right:10px;
+#page-grade-report-gradedist-index #id_grp_export_export {
+    margin:0 0 0 20px;
 }
 
 #page-grade-report-gradedist-index #id_gradedist input[type="text"] {
