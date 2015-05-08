@@ -62,7 +62,7 @@ M.gradereport_gradedist = {
                 type: 'column'
             },
             title: {
-                text: ''
+                text: data.title
             },
             xAxis: {
                 title: {
@@ -117,6 +117,8 @@ M.gradereport_gradedist = {
 
                 var values = (mode) ? percent : absolut;
                 chart.series[0].setData(values);
+
+                chart.setTitle({ text: data.title });
             }
             absolutnew = [];
             percentnew = [];
