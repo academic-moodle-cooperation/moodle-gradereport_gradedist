@@ -69,6 +69,7 @@ $data   = new stdClass();
 
 $actdist = $grader->load_distribution($letters, $gradeitem);
 $newdist = $grader->load_distribution($newletters, $gradeitem);
+$gradeitems = $grader->get_gradeitems();
 
 $data->actdist = $actdist->distribution;
 $data->newdist = $newdist->distribution;
@@ -77,6 +78,7 @@ $data->newcoverage = $newdist->coverage;
 
 $data->courseid = $courseid;
 $data->gradeitem = $gradeitem;
+$data->title = $gradeitems[$gradeitem]->name;
 $data->updateall = $updateall;
 
 echo json_encode($data);
