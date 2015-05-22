@@ -44,6 +44,13 @@ $string['gradeboundary_new_help'] = 'Unter neue untere Grenze wird die Auswirkun
 
 $string['chart'] = 'Diagramm';
 
+$string['printchart'] = 'Diagramm drucken';
+$string['downloadpng'] = 'PNG-Bild downloaden';
+$string['downloadjpeg'] = 'JPEG-Bild downloaden';
+$string['downloadpdf'] = 'PDF-Dokument downloaden';
+$string['downloadsvg'] = 'SVG Vektorgraphik downloaden';
+$string['contextbuttontitle'] = 'Diagramm Kontextmenü';
+
 $string['description'] = 'Beschriftung';
 $string['absolut'] = 'Absolut';
 $string['percent'] = 'Prozent';

@@ -81,6 +81,14 @@ M.gradereport_gradedist = {
             tooltip: {
                 enabled: false
             },
+            lang: {
+                printChart: M.str.gradereport_gradedist.printchart,
+                downloadPNG: M.str.gradereport_gradedist.downloadpng,
+                downloadJPEG: M.str.gradereport_gradedist.downloadjpeg,
+                downloadPDF: M.str.gradereport_gradedist.downloadpdf,
+                downloadSVG: M.str.gradereport_gradedist.downloadsvg,
+                contextButtonTitle: M.str.gradereport_gradedist.contextbuttontitle
+            },
             series:
                 [{
                     data: absolut,
