@@ -247,6 +247,12 @@ if ($confirm && !$boundaryerror) {
                             array('absolut', 'gradereport_gradedist'),
                             array('percent', 'gradereport_gradedist'),
                             array('gradeletter', 'gradereport_gradedist'),
+                            array('printchart', 'gradereport_gradedist'),
+                            array('downloadpng', 'gradereport_gradedist'),
+                            array('downloadjpeg', 'gradereport_gradedist'),
+                            array('downloadpdf', 'gradereport_gradedist'),
+                            array('downloadsvg', 'gradereport_gradedist'),
+                            array('contextbuttontitle', 'gradereport_gradedist'),
         ));
     $PAGE->requires->js_init_call('M.gradereport_gradedist.init',
             array($data), true, $jsmodule);

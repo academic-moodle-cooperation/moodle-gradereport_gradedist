@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -30,8 +30,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2015050900;
-$plugin->release   = "2015-05-09";              // User-friendly version number.
+$plugin->version  = 2015052200;
+$plugin->release   = "2015-05-22";              // User-friendly version number.
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->requires  = 2014041100.00;             // Requires this Moodle version!
 $plugin->component = 'gradereport_gradedist';   // To check on upgrade, that module sits in correct place.
