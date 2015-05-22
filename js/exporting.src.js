@@ -91,8 +91,6 @@ defaultOptions.navigation = {
 	}
 };
 
-
-
 // Add the export related options
 defaultOptions.exporting = {
 	//enabled: true,
@@ -117,28 +115,40 @@ defaultOptions.exporting = {
 			}, {
 				textKey: 'downloadPNG',
 				onclick: function () {
+                    $(window).data('beforeunload',window.onbeforeunload);
+                    window.onbeforeunload = null;
 					this.exportChart();
+                    window.onbeforeunload = $(window).data('beforeunload');
 				}
 			}, {
 				textKey: 'downloadJPEG',
 				onclick: function () {
+                    $(window).data('beforeunload',window.onbeforeunload);
+                    window.onbeforeunload = null;
 					this.exportChart({
 						type: 'image/jpeg'
 					});
+                    window.onbeforeunload = $(window).data('beforeunload');
 				}
 			}, {
 				textKey: 'downloadPDF',
 				onclick: function () {
+                    $(window).data('beforeunload',window.onbeforeunload);
+                    window.onbeforeunload = null;
 					this.exportChart({
 						type: 'application/pdf'
 					});
+                    window.onbeforeunload = $(window).data('beforeunload');
 				}
 			}, {
 				textKey: 'downloadSVG',
 				onclick: function () {
+                    $(window).data('beforeunload',window.onbeforeunload);
+                    window.onbeforeunload = null;
 					this.exportChart({
 						type: 'image/svg+xml'
 					});
+                    window.onbeforeunload = $(window).data('beforeunload');
 				}
 			}
 			// Enable this block to add "View SVG" to the dropdown menu
@@ -206,7 +216,7 @@ extend(Chart.prototype, {
 			.replace(/ (NS[0-9]+\:)?href=/g, ' xlink:href=') // #3567
 			.replace(/\n/, ' ')
 			// Any HTML added to the container after the SVG (#894)
-			.replace(/<\/svg>.*?$/, '</svg>') 
+			.replace(/<\/svg>.*?$/, '</svg>')
 			// Batik doesn't support rgba fills and strokes (#3095)
 			.replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)"/g, '$1="rgb($2)" $1-opacity="$3"')
 			/* This fails in IE < 8
@@ -370,7 +380,7 @@ extend(Chart.prototype, {
 	 * @param {Object} chartOptions Additional chart options for the SVG representation of the chart
 	 */
 	exportChart: function (options, chartOptions) {
-		
+
 		var svg = this.getSVGForExport(options, chartOptions);
 
 		// merge the options
@@ -509,13 +519,11 @@ extend(Chart.prototype, {
 				clearTimeout(hideTimer);
 			});
 
-
 			// Hide it on clicking or touching outside the menu (#2258, #2335, #2407)
 			addEvent(document, 'mouseup', docMouseUpHandler);
 			addEvent(chart, 'destroy', function () {
 				removeEvent(document, 'mouseup', docMouseUpHandler);
 			});
-
 
 			// create the items
 			each(items, function (item) {
@@ -540,7 +548,6 @@ extend(Chart.prototype, {
 							cursor: 'pointer'
 						}, menuItemStyle), innerMenu);
 
-
 					// Keep references to menu divs to be able to destroy them
 					chart.exportDivElements.push(element);
 				}
@@ -563,7 +570,7 @@ extend(Chart.prototype, {
 		}
 		// if outside bottom, bottom align it
 		if (y + height + chart.exportMenuHeight > chartHeight && button.alignOptions.verticalAlign !== 'top') {
-			menuStyle.bottom = (chartHeight - y - menuPadding)  + PX;
+			menuStyle.bottom = (chartHeight - y - menuPadding) + PX;
 		} else {
 			menuStyle.top = (y + height - menuPadding) + PX;
 		}
@@ -602,7 +609,6 @@ extend(Chart.prototype, {
 			return;
 		}
 
-
 		var attr = btnOptions.theme,
 			states = attr.states,
 			hover = states && states.hover,
@@ -630,7 +636,6 @@ extend(Chart.prototype, {
 				button.setState(2);
 			};
 		}
-
 
 		if (btnOptions.text && btnOptions.symbol) {
 			attr.paddingLeft = Highcharts.pick(attr.paddingLeft, 25);
@@ -711,7 +716,6 @@ extend(Chart.prototype, {
 	}
 });
 
-
 symbols.menu = function (x, y, width, height) {
 	var arr = [
 		M, x, y + 2.5,
@@ -743,6 +747,5 @@ Chart.prototype.callbacks.push(function (chart) {
 	}
 
 });
-
 
 }(Highcharts));
