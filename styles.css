@@ -73,3 +73,7 @@
 #page-grade-report-gradedist-index #id_gradedist input[type="text"] {
     width: auto;
 }
+
+.highcharts-contextmenu hr {
+    margin: 5px 0;
+}
