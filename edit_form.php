@@ -118,11 +118,11 @@ class edit_letter_form extends moodleform {
         $export = array();
         $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
                                MTablePDF::OUTPUT_FORMAT_CSV_TAB => 'csv',
-                               MTablePDF::OUTPUT_FORMAT_XLS     => 'xls');
+                               MTablePDF::OUTPUT_FORMAT_XLSX     => 'xlsx');
 
         $export[] =& $mform->createElement('select', 'exportformat', '', $exportformats);
         $export[] =& $mform->createElement('submit', 'export', get_string('download', 'gradereport_gradedist'));
         $mform->addGroup($export, 'grp_export', get_string('export', 'gradereport_gradedist'), array(''));
-        $mform->setDefault('grp_export[exportformat]', MTablePDF::OUTPUT_FORMAT_XLS);
+        $mform->setDefault('grp_export[exportformat]', MTablePDF::OUTPUT_FORMAT_XLSX);
     }
 }
