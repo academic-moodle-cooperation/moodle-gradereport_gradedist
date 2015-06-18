@@ -62,16 +62,25 @@ class grade_export_gradedist {
         // Set document information.
         $export->SetCreator('TUWEL');
         $export->SetAuthor($USER->firstname . " " . $USER->lastname);
-        $export->set_outputformat($this->exportformat);
+        $export->setoutputformat($this->exportformat);
 
         // Show course in header.
-        $export->set_headertext(get_string('course').':', $this->course->shortname,
+        $export->setheadertext(get_string('course').':', $this->course->shortname,
                                '', '',
                                get_string('gradeitem', 'gradereport_gradedist').':', $this->gradeitem->name,
                                '', '', '', '', '', '');
+        
+        // Set a specific override format for the header title and description if default is not ok
+        $headertitleformat = array(
+            'size' => 12,
+            'bold' => 1,
+            'align' => 'left',
+            'v_align' => 'vcenter');
+        $headerdescformat = array();
+        $export->set_headerformat($headertitleformat, $headerdescformat);
 
         // Gradedist data.
-        $export->set_titles(array(
+        $export->settitles(array(
             get_string('category', 'gradereport_gradedist'),
             get_string('actualcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
             get_string('actualcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
@@ -89,7 +98,7 @@ class grade_export_gradedist {
             $acttotal += $actdist->distribution[$letter]->percentage;
             $newtotal += $newdist->distribution[$letter]->percentage;
 
-            $export->add_row(array(
+            $export->addrow(array(
                 $letter,
                 number_format($actdist->distribution[$letter]->percentage, 2, ',', ' '),
                 $actdist->distribution[$letter]->count,
@@ -98,7 +107,7 @@ class grade_export_gradedist {
                 ''
             ));
         }
-        $export->add_row(array(
+        $export->addrow(array(
             get_string('sum', 'gradereport_gradedist'),
             number_format($acttotal, 2, ',', ' '),
             $actdist->coverage[1] - $actdist->coverage[0],
@@ -107,9 +116,9 @@ class grade_export_gradedist {
             ''
         ));
 
-        $export->add_row(array('', '', '', '', '', ''));
+        $export->addrow(array('', '', '', '', '', ''));
 
-        $export->add_row(array(
+        $export->addrow(array(
             get_string('coverage_export', 'gradereport_gradedist'),
             number_format($actdist->coverage[2], 2, ',', ' '),
             $actdist->coverage[0],
@@ -119,19 +128,25 @@ class grade_export_gradedist {
         ));
 
         // Student data.
-        $export->add_row(array('', '', '', '', '', ''));
+        $export->addrow(array('', '', '', '', '', ''));
 
         $gradeitem = $DB->get_record('grade_items', array('id' => $this->gradeitem->id));
         $gui = new graded_users_iterator($this->course, array($this->gradeitem->id => $gradeitem));
         $gui->init();
 
-        $export->add_row(array(
-            get_string('idnumber'),
-            get_string('lastname'),
-            get_string('firstname'),
-            get_string('actualgrade', 'gradereport_gradedist'),
-            get_string('newgrade', 'gradereport_gradedist'),
-            get_string('points', 'gradereport_gradedist', number_format($gradeitem->grademax, 2, ',', ' '))
+        $userdatatitleformat = array('size' => 12,
+            'bold' => 1,
+            'align' => 'center',
+            'bottom' => 1,
+            'v_align' => 'vcenter');
+
+        $export->addrow(array(
+            array("data" => get_string('idnumber'), "format" => $userdatatitleformat),
+            array("data" => get_string('lastname'), "format" => $userdatatitleformat),
+            array("data" => get_string('firstname'),"format" => $userdatatitleformat),
+            array("data" => get_string('actualgrade', 'gradereport_gradedist'),"format" => $userdatatitleformat),
+            array("data" => get_string('newgrade', 'gradereport_gradedist'),"format" => $userdatatitleformat),
+            array("data" => get_string('points', 'gradereport_gradedist', number_format($gradeitem->grademax, 2, ',', ' ')), "format" => $userdatatitleformat)
         ));
 
         while ($userdata = $gui->next_user()) {
@@ -140,7 +155,7 @@ class grade_export_gradedist {
             $actualgrade = $this->grader->get_gradeletter($this->letters, $grade);
             $newgrade = $this->grader->get_gradeletter($this->newletters, $grade);
 
-            $export->add_row(array(
+            $export->addrow(array(
                 $user->idnumber,
                 $user->lastname,
                 $user->firstname,
