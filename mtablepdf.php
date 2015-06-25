@@ -1,12 +1,12 @@
 <?php
 // This file is part of Moodle - http://moodle.org/
 //
-// Moodle is free software: you can redistribute it and/or modify
+// It is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Moodle is distributed in the hope that it will be useful,
+// It is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -17,11 +17,10 @@
 /**
  * Table export class
  *
- * @package       local
- * @subpackage    printpreview
+ * @package       gradereport_gradedist
  * @author        Andreas Hruska (andreas.hruska@tuwien.ac.at)
  * @author        Katarzyna Potocka (katarzyna.potocka@tuwien.ac.at)
- * @author        Andreas Windbichler
+ * @author        Andreas Krieger
  * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -38,7 +37,7 @@ require_once($CFG->libdir . '/pdflib.php');
 
 /**
  * @author Andreas Windbichler
- * @version 18.06.2015
+ * @version 25.06.2015
  *
  */
 class MTablePDF extends pdf{
@@ -673,7 +672,7 @@ class MTablePDF extends pdf{
         $time = time();
         $time = userdate($time);
         $worksheet = $workbook->add_worksheet($time);
-        
+
         $headlineprop = array('size' => 12,
             'bold' => 1,
             'bottom' => 1,
@@ -745,7 +744,7 @@ class MTablePDF extends pdf{
                     if ($first) {
                         $worksheet->write_string($line, $i, $cell['data'], $textfirst);
                         $first = false;
-                    } else { 
+                    } else {
                         $worksheet->write_string($line, $i, $cell['data'], $text);
                     }
                 }
@@ -760,7 +759,7 @@ class MTablePDF extends pdf{
              $this->headerformat['title'] = $headertitleformat;
              $this->headerformat['desc'] = $headerdescformat;
     }
-    
+
     public function get_xls($filename) {
         global $CFG;
 
