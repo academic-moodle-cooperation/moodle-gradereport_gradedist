@@ -36,8 +36,6 @@ require_once('confirm_form.php');
 require_once('mtablepdf.php');
 require_once('export.php');
 
-global $SESSION;
-
 $courseid = required_param('id', PARAM_INT);
 $confirm = optional_param('confirm', false, PARAM_BOOL);
 $saved = optional_param('saved', false, PARAM_BOOL);
@@ -72,9 +70,9 @@ $gradeitems = $grader->get_gradeitems();
 reset($gradeitems);
 
 $gradeitem = optional_param('gradeitem',
-        (isset($SESSION->gradeitem)) ? $SESSION->gradeitem : key($gradeitems), PARAM_INT);
+        (isset($SESSION->gradereport_gradedist->gradeitem)) ? $SESSION->gradereport_gradedist->gradeitem : key($gradeitems), PARAM_INT);
 $boundariesnew = optional_param_array('grp_gradeboundaries_new',
-        (isset($SESSION->boundariesnew)) ? $SESSION->boundariesnew : array(), PARAM_TEXT);
+        (isset($SESSION->gradereport_gradedist->boundariesnew)) ? $SESSION->gradereport_gradedist->boundariesnew : array(), PARAM_TEXT);
 
 $newletters = empty($boundariesnew) ? $letters : array();
 
@@ -176,8 +174,9 @@ if ($confirm && !$boundaryerror) {
 
     if ($cform->is_cancelled()) {
         // Cancel.
-        $SESSION->gradeitem = $gradeitem;
-        $SESSION->boundariesnew = $boundariesnew;
+        $SESSION->gradereport_gradedist = new stdClass();
+        $SESSION->gradereport_gradedist->gradeitem = $gradeitem;
+        $SESSION->gradereport_gradedist->boundariesnew = $boundariesnew;
         redirect($returnurl);
 
     } else if ($data = $cform->get_data()) {
