@@ -274,7 +274,8 @@ class grade_report_gradedist extends grade_report_grader {
         // Calculate gradeletter.
         $value = bounded_number(0, $value, 100); // Just in case.
         foreach ($letters as $boundary => $letter) {
-            if ($value >= $boundary) {
+            $numboundary = str_replace(',', '.', $boundary);
+            if ($value >= $numboundary) {
                 return format_string($letter);
             }
         }
