@@ -55,3 +55,11 @@ USAGE
        for the old and/or the new grade letters.
     5. The current distribution can be downloaded as Excel-Sheet.
     6. The new lower boundaries for the grade letter can be saved via "Change grade letters". 
+
+CHANGELOG
+====================================================================================================
+        *) 14.11.2015
+                Fix Bug #2771 "Chart displays new and actual values differently
+                without having modified new values": make the module compare always with
+                "." as decimal point, don't use ",", this might fail for unknown
+                reasons.
