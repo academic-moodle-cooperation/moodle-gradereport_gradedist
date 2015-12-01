@@ -69,6 +69,12 @@ $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
 $gradeitems = $grader->get_gradeitems();
 reset($gradeitems);
 
+$groupmode = groups_get_course_groupmode($course);
+
+$coursegroups = $grader->get_grouplist();
+
+$coursegroupings = $grader->get_groupinglist();
+
 $gradeitem = optional_param('gradeitem',
         (isset($SESSION->gradereport_gradedist->gradeitem)) ? $SESSION->gradereport_gradedist->gradeitem : key($gradeitems), PARAM_INT);
 $boundariesnew = optional_param_array('grp_gradeboundaries_new',
@@ -106,14 +112,20 @@ foreach ($letters as $boundary => $letter) {
     $i++;
 }
 
-$actdist = $grader->load_distribution($letters, $gradeitem);
-$newdist = $grader->load_distribution($newletters, $gradeitem);
+$groupid = 0; $groupingid = 0;
+$actdist = $grader->load_distribution($letters, $gradeitem, $groupid, $groupingid);
+$newdist = $grader->load_distribution($newletters, $gradeitem, $groupid, $groupingid);
+
+$gsel = $grader->group_selector;
 
 $mform = new edit_letter_form($returnurl, array(
             'id' => $course->id,
             'num' => count($letters),
             'edit' => $edit,
             'gradeitems' => $gradeitems,
+            'coursegroups' => $coursegroups,
+            'coursegroupings' => $coursegroupings,
+            'groupmode' => $groupmode,
             'actcoverage' => $actdist->coverage,
             'newcoverage' => $newdist->coverage),
             'post', '', array('id' => 'letterform'));
@@ -265,6 +277,7 @@ if ($confirm && !$boundaryerror) {
     }
 
     // Gradedist settings.
+    echo 
     $mform->display();
 
     // View event.
