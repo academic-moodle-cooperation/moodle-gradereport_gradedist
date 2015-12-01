@@ -34,13 +34,16 @@ require_once($CFG->libdir.'/formslib.php');
 class edit_letter_form extends moodleform {
 
     public function definition() {
-        $mform       =&$this->_form;
-        $id          = $this->_customdata['id'];
-        $num         = $this->_customdata['num'];
-        $edit        = $this->_customdata['edit'];
-        $gradeitems  = $this->_customdata['gradeitems'];
-        $actcoverage = $this->_customdata['actcoverage'];
-        $newcoverage = $this->_customdata['newcoverage'];
+        $mform            =&$this->_form;
+        $id               = $this->_customdata['id'];
+        $num              = $this->_customdata['num'];
+        $edit             = $this->_customdata['edit'];
+        $gradeitems       = $this->_customdata['gradeitems'];
+        $coursegroups     = $this->_customdata['coursegroups'];
+        $coursegroupings  = $this->_customdata['coursegroupings'];
+        $groupmode        = $this->_customdata['groupmode'];
+        $actcoverage      = $this->_customdata['actcoverage'];
+        $newcoverage      = $this->_customdata['newcoverage'];
 
         $mform->addElement('header', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
         $mform->addHelpButton('gradedist', 'pluginname', 'gradereport_gradedist');
@@ -51,6 +54,19 @@ class edit_letter_form extends moodleform {
         }
         $mform->addElement($select);
 
+        if (($groupmode != NOGROUPS)) {
+            $selectgroup = $mform->createElement('select', 'coursegroup', get_string('labelgroup', 'gradereport_gradedist'));
+            foreach ($coursegroups as $index => $curgroup) {
+                $selectgroup->addOption($curgroup->name, $index, null);
+            }
+            $mform->addElement($selectgroup);
+
+            $selectgrouping = $mform->createElement('select', 'coursegrouping', get_string('labelgrouping', 'gradereport_gradedist'));
+            foreach ($coursegroupings as $index => $curgrouping) {
+                $selectgrouping->addOption($curgrouping->name, $index, null);
+            }
+            $mform->addElement($selectgrouping);
+        }
         $gradeletters = array();
         $gradeboundaries = array();
         $gradeboundariesnew = array();

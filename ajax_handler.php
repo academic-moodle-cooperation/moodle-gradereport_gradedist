@@ -35,6 +35,8 @@ require_once($CFG->dirroot.'/grade/report/gradedist/edit_form.php');
 
 $courseid  = required_param('id', PARAM_INT);
 $gradeitem = optional_param('gradeitem', null, PARAM_INT);
+$groupid = optional_param('coursegroup', 0, PARAM_INT);
+$groupingid = optional_param('coursegrouping', 0, PARAM_INT);
 $updateall = optional_param('updateall', false, PARAM_BOOL);
 
 $gradeletters  = optional_param_array('grp_gradeletters', array(), PARAM_TEXT);
@@ -69,9 +71,19 @@ foreach ($letters as $letter) {
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
 $data   = new stdClass();
 
-$actdist = $grader->load_distribution($letters, $gradeitem);
-$newdist = $grader->load_distribution($newletters, $gradeitem);
+$actdist = $grader->load_distribution($letters, $gradeitem, $groupid, $groupingid);
+$newdist = $grader->load_distribution($newletters, $gradeitem, $groupid, $groupingid);
 $gradeitems = $grader->get_gradeitems();
+
+$coursegroups = groups_get_all_groups($course->id);
+$coursegroupings = groups_get_all_groupings($course->id);
+$chartsubtitle = "";
+// todo: depends on "0" as hardcoded and available !
+if (($groupingid == 0) && ($groupid != 0)) {
+    $chartsubtitle = " - ".$coursegroups[$groupid]->name;
+} else if (($groupid == 0) && ($groupingid !=0)) {
+    $chartsubtitle = " - ".$coursegroupings[$groupingid]->name;
+}
 
 $data->actdist = $actdist->distribution;
 $data->newdist = $newdist->distribution;
@@ -81,6 +93,7 @@ $data->newcoverage = $newdist->coverage;
 $data->courseid = $courseid;
 $data->gradeitem = $gradeitem;
 $data->title = $gradeitems[$gradeitem]->name;
+$data->title .= $chartsubtitle;
 $data->updateall = $updateall;
 
 echo json_encode($data);
