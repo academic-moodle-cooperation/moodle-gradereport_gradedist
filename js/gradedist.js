@@ -167,6 +167,32 @@ M.gradereport_gradedist = {
             Y.io(uri, cfg);
         });
 
+        var coursegroups = Y.one('#id_coursegroup');
+        if (coursegroups) {
+            coursegroups.on('change', function (e) {
+                var success = Y.all('.alert-success');
+                if (success) {
+                    success.remove();
+                }
+                cfg.data = 'updateall=1';
+                Y.one('#id_coursegrouping').set('value', '0');
+                Y.io(uri, cfg);
+            });
+        }
+
+        var coursegroupings = Y.one('#id_coursegrouping');
+        if (coursegroupings) {
+            coursegroupings.on('change', function (e) {
+                var success = Y.all('.alert-success');
+                if (success) {
+                    success.remove();
+                }
+                cfg.data = 'updateall=1';
+                Y.one('#id_coursegroup').set('value', '0');
+                Y.io(uri, cfg);
+            });
+        }
+
         var boundaries = Y.all('#fgroup_id_grp_gradeboundaries_new input[type=text]');
         boundaries.on('change', function (e) {
             var notifications = Y.all('#page-grade-report-gradedist-index .notifyproblem, #page-grade-report-gradedist-index .notifysuccess');
