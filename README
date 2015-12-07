@@ -58,6 +58,9 @@ USAGE
 
 CHANGELOG
 ====================================================================================================
+        *) 01.12.2015
+                Add Feature #2624: Add group and groupings to grade distribution
+                chart visualization if groupmode is active
         *) 14.11.2015
                 Fix Bug #2771 "Chart displays new and actual values differently
                 without having modified new values": make the module compare always with
