@@ -35,9 +35,9 @@ $string['gradedist:edit'] = 'Manage grade distribution';
 $string['gradeitem'] = 'Grading column';
 $string['coursesum'] = 'Sum for the course';
 
-$string['labelgroup'] = 'Group';
+$string['labelgroup'] = 'Focus view on group';
 
-$string['labelgrouping'] = 'Groupings';
+$string['labelgrouping'] = 'Focus view on grouping';
 $string['nogroupingentry'] = 'No grouping';
 
 $string['gradeletter'] = 'Grade letters';

@@ -35,9 +35,9 @@ $string['gradedist:edit'] = 'Notenverteilung bearbeiten';
 $string['gradeitem'] = 'Bewertungsspalte';
 $string['coursesum'] = 'Summe für den Kurs';
 
-$string['labelgroup'] = 'Gruppe';
+$string['labelgroup'] = 'Ansicht auf Gruppe fokusieren';
 
-$string['labelgrouping'] = 'Gruppierungen';
+$string['labelgrouping'] = 'Ansicht auf Gruppierung fokusieren';
 $string['nogroupingentry'] = 'Keine Gruppierung';
 
 $string['gradeletter'] = 'Notenstufen';
