@@ -210,38 +210,35 @@ class grade_report_gradedist extends grade_report_grader {
     public function get_grouplist() {
 
         $groups = array();
-        
-        $userid = 0;
-        $groupingid = 0;
-        $groups = groups_get_all_groups($this->courseid, $userid, $groupingid);
+        $groups = groups_get_all_groups($this->courseid);
 
-        $allgroup = new StdClass();
-        $allgroup->name = get_string('allparticipants');
-        $allgroup->id = 0; // todo: check if free for use !?
+        $allgroupentry = new StdClass();
+        $allgroupentry->name = get_string('allparticipants');
+        $allgroupentry->id = 0; 
         
         // hack to put "all groups" in front
         $groups = array_reverse($groups, true);
-        $groups[$allgroup->id] = $allgroup;
+        $groups[$allgroupentry->id] = $allgroupentry;
         $groups = array_reverse($groups, true);
 
         return $groups;
     }
 
+        /**
+     * We get groupings for select here.
+     */
     public function get_groupinglist() {
 
         $groupings = array();
-        
-        $userid = 0;
-        $groupingid = 0;
         $groupings = groups_get_all_groupings($this->courseid);
 
-        $nogrouping = new StdClass();
-        $nogrouping->name = get_string('nogroupingentry', 'gradereport_gradedist');
-        $nogrouping->id = 0; // todo: check if free for use !?
+        $nogroupingentry = new StdClass();
+        $nogroupingentry->name = get_string('nogroupingentry', 'gradereport_gradedist');
+        $nogroupingentry->id = 0; 
         
         // hack to put "no grouping" in front
         $groupings = array_reverse($groupings, true);
-        $groupings[$nogrouping->id] = $nogrouping;
+        $groupings[$nogroupingentry->id] = $nogroupingentry;
         $groupings = array_reverse($groupings, true);
 
         return $groupings;
@@ -251,28 +248,21 @@ class grade_report_gradedist extends grade_report_grader {
     /**
      * We supply the letters and gradeitem in this query, and get the distribution.
      */
-    public function load_distribution($newletters, $gradeitem=0, $mygroupid=0, $mygroupingid=0) {
+    public function load_distribution($newletters, $gradeitem=0, $groupid=0, $groupingid=0) {
         global $CFG, $DB;
 
         $this->load_users();
         $selectedusers = array();
-        $myuserid = 0; // why have to set this ? and is 0 save?
-        //file_put_contents("textfile1", print_r($mygroupingid, true), FILE_APPEND);
-        if ($mygroupingid == 0) {
-            if ($mygroupid == 0) { // tackle all users
+        if ($groupingid == 0) {
+            if ($groupid == 0) { // tackle all users
                 $selectedusers = $this->users;
             } else { // tackle the users of a single group
-                $mygroupusers = groups_get_members($mygroupid);
-                $selectedusers = array_intersect_key($mygroupusers, $this->users); 
+                $groupusers = groups_get_members($groupid);
+                $selectedusers = array_intersect_key($groupusers, $this->users); 
             }
         } else { // tackle the users of the groups of a grouping
-//            $mygroups = groups_get_all_groups($this->courseid, $myuserid, $mygroupingid);
-//            $mygroupsusers = array();
-//            foreach ($mygroups as $groupid => $mygroup) {
-//                $mygroupsusers += groups_get_members($groupid);
-//            }
-            $mygroupsusers = groups_get_grouping_members($mygroupingid);
-            $selectedusers = array_intersect_key($mygroupsusers, $this->users); 
+            $groupsusers = groups_get_grouping_members($groupingid);
+            $selectedusers = array_intersect_key($groupsusers, $this->users); 
         }
 
         $userids = array_keys($selectedusers);
