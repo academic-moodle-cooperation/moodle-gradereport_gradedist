@@ -76,9 +76,9 @@ $coursegroups = $grader->get_grouplist();
 $coursegroupings = $grader->get_groupinglist();
 
 $gradeitem = optional_param('gradeitem',
-        (isset($SESSION->gradereport_gradedist->gradeitem)) ? $SESSION->gradereport_gradedist->gradeitem : key($gradeitems), PARAM_INT);
+        (isset($SESSION->gradereport_gradedist_gradeitem)) ? $SESSION->gradereport_gradedist_gradeitem : key($gradeitems), PARAM_INT);
 $boundariesnew = optional_param_array('grp_gradeboundaries_new',
-        (isset($SESSION->gradereport_gradedist->boundariesnew)) ? $SESSION->gradereport_gradedist->boundariesnew : array(), PARAM_TEXT);
+        (isset($SESSION->gradereport_gradedist_boundariesnew)) ? $SESSION->gradereport_gradedist_boundariesnew : array(), PARAM_TEXT);
 
 $newletters = empty($boundariesnew) ? $letters : array();
 
@@ -186,9 +186,8 @@ if ($confirm && !$boundaryerror) {
 
     if ($cform->is_cancelled()) {
         // Cancel.
-        $SESSION->gradereport_gradedist = new stdClass();
-        $SESSION->gradereport_gradedist->gradeitem = $gradeitem;
-        $SESSION->gradereport_gradedist->boundariesnew = $boundariesnew;
+        $SESSION->gradereport_gradedist_gradeitem = $gradeitem;
+        $SESSION->gradereport_gradedist_boundariesnew = $boundariesnew;
         redirect($returnurl);
 
     } else if ($data = $cform->get_data()) {
@@ -277,7 +276,6 @@ if ($confirm && !$boundaryerror) {
     }
 
     // Gradedist settings.
-    echo 
     $mform->display();
 
     // View event.
