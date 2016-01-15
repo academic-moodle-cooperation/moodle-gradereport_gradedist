@@ -15,11 +15,11 @@
 # 1040 Wien
 # http://tsc.tuwien.ac.at/
 # ---------------------------------------------------------------
-# FOR Moodle <2.7.2>
+# FOR Moodle > 2.7.2
 # ---------------------------------------------------------------
 
 README.txt
-v.2014-10-08
+v.2016-01-15
 
 
 Gradereport Gradedist
@@ -33,7 +33,15 @@ OVERVIEW
 
 REQUIREMENTS
 ================================================================================
-    Developed for Moodle 2.7.2
+    Originally developed for Moodle 2.7.2
+
+    This module depends on HighCharts for visualizing the grade distribution.
+    You can download this module from http://www.highcharts.com/download
+    free of charge for non-commercial use.
+
+    Make sure to download the correct package version 4.x and place the core 
+    (highcharts.src.js) and the exporting module (exporting.src.js)
+    into the folder /yourmoodleroot/grade/report/gradedist/js/"
 
 INSTALLATION 
 ================================================================================
@@ -58,6 +66,12 @@ USAGE
 
 CHANGELOG
 ====================================================================================================
+        *) 15.01.2016
+                Fix Bug #2871 Entering "100" invokes an error message and prevents to save the new entries
+                Fix Bug #2870 Wrong prefilled new grade boundaries after saving new boundaries
+                Hotfix #2637 [github.com] Highcharts JS license:
+                    Add text to the *Requirements* section that Highcharts can be
+                    downloaded manually for non-commercial use.
         *) 01.12.2015
                 Add Feature #2624: Add group and groupings to grade distribution
                 chart visualization if groupmode is active
