@@ -92,7 +92,6 @@ foreach ($letters as $boundary => $letter) {
     $mdata->$gradeboundarynewname = $boundarynew;
 
     // Validation fallback if javascript is disabled.
-    $boundarynew = str_replace(",", ".", $boundarynew);
     if (isset($boundariesnew[$i])) {
         if ($boundarynew == ''
         ||  $boundarynew > 100
