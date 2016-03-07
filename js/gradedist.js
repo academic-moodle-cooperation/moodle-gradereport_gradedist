@@ -56,59 +56,64 @@ M.gradereport_gradedist = {
             percentnew.push(grade.percentage);
         });
 
-        var chart = new Highcharts.Chart({
-            chart: {
-		renderTo: 'chart_container',
-                type: 'column'
-            },
-            title: {
-                text: data.title
-            },
-            xAxis: {
-                title: {
-                    text: M.str.gradereport_gradedist.gradeletter
-                },
-                categories: letters
-            },
-            yAxis: {
-                title: {
-                    text: M.str.gradereport_gradedist.absolut
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            tooltip: {
-                enabled: false
-            },
-            lang: {
-                printChart: M.str.gradereport_gradedist.printchart,
-                downloadPNG: M.str.gradereport_gradedist.downloadpng,
-                downloadJPEG: M.str.gradereport_gradedist.downloadjpeg,
-                downloadPDF: M.str.gradereport_gradedist.downloadpdf,
-                downloadSVG: M.str.gradereport_gradedist.downloadsvg,
-                contextButtonTitle: M.str.gradereport_gradedist.contextbuttontitle
-            },
-            series:
-                [{
-                    data: absolut,
-                    color: '#990000',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        backgroundColor: '#FFFFFF'
-                    }
-                }, {
-                    data: absolutnew,
-                    color: '#33cc33',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        backgroundColor: '#FFFFFF',
-                        align: 'center'
-                    }
-                }]
-        });
+		if(data.highcharts) {
+			
+			var chart = new Highcharts.Chart({
+				chart: {
+			renderTo: 'chart_container',
+					type: 'column'
+				},
+				title: {
+					text: data.title
+				},
+				xAxis: {
+					title: {
+						text: M.str.gradereport_gradedist.gradeletter
+					},
+					categories: letters
+				},
+				yAxis: {
+					title: {
+						text: M.str.gradereport_gradedist.absolut
+					}
+				},
+				legend: {
+					enabled: false
+				},
+				tooltip: {
+					enabled: false
+				},
+				lang: {
+					printChart: M.str.gradereport_gradedist.printchart,
+					downloadPNG: M.str.gradereport_gradedist.downloadpng,
+					downloadJPEG: M.str.gradereport_gradedist.downloadjpeg,
+					downloadPDF: M.str.gradereport_gradedist.downloadpdf,
+					downloadSVG: M.str.gradereport_gradedist.downloadsvg,
+					contextButtonTitle: M.str.gradereport_gradedist.contextbuttontitle
+				},
+				series:
+					[{
+						data: absolut,
+						color: '#990000',
+						dataLabels: {
+							enabled: true,
+							color: '#000000',
+							backgroundColor: '#FFFFFF'
+						}
+					}, {
+						data: absolutnew,
+						color: '#33cc33',
+						dataLabels: {
+							enabled: true,
+							color: '#000000',
+							backgroundColor: '#FFFFFF',
+							align: 'center'
+						}
+					}]
+			})
+		} else {
+			Y.one('#chart_container').setHTML('<br><p><i><strong>[ !!! '+ M.str.gradereport_gradedist.highchartsmissing + ' !!! ]</strong></i></p><br>');	
+		};
 
         var update = function(id, o, args) {
 

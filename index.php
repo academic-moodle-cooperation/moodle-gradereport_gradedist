@@ -55,8 +55,12 @@ $edit = (has_capability('gradereport/gradedist:edit', $context) && has_capabilit
 $PAGE->set_url('/grade/report/gradedist/index.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display.
 $PAGE->requires->jquery();
-$PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
-$PAGE->requires->js('/grade/report/gradedist/js/exporting.src.js');
+
+if ($highcharts=file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.src.js')&&file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.src.js')) {
+    $PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
+	$PAGE->requires->js('/grade/report/gradedist/js/exporting.src.js');
+}
+
 
 $letters = grade_get_letters($context);
 krsort($letters, SORT_NUMERIC);
@@ -233,6 +237,7 @@ if ($confirm && !$boundaryerror) {
     $data->actcoverage = $actdist->coverage;
     $data->newcoverage = $newdist->coverage;
     $data->title = $gradeitems[$gradeitem]->name;
+    $data->highcharts = $highcharts;
 
     // Start output.
     $jsmodule = array(
@@ -252,6 +257,7 @@ if ($confirm && !$boundaryerror) {
                             array('downloadpdf', 'gradereport_gradedist'),
                             array('downloadsvg', 'gradereport_gradedist'),
                             array('contextbuttontitle', 'gradereport_gradedist'),
+                            array('highchartsmissing', 'gradereport_gradedist'),
         ));
     $PAGE->requires->js_init_call('M.gradereport_gradedist.init',
             array($data), true, $jsmodule);
