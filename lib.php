@@ -85,7 +85,7 @@ class grade_report_gradedist extends grade_report_grader {
         // If the user has clicked one of the sort asc/desc arrows.
         if (is_numeric($this->sortitemid)) {
             $params = array_merge(array('gitemid' => $this->sortitemid),
-                      $gradebookrolesparams, $this->groupwheresql_params, $enrolledparams);
+                      $gradebookrolesparams, $this->groupwheresql_params, $enrolledparams, $relatedctxparams);
 
             $sortjoin = "LEFT JOIN {grade_grades} g ON g.userid = u.id AND g.itemid = $this->sortitemid";
             $sort = "g.finalgrade $this->sortorder";
@@ -124,6 +124,7 @@ class grade_report_gradedist extends grade_report_grader {
                    AND u.deleted = 0
               ORDER BY $sort";
 
+        
         $this->users = $DB->get_records_sql($sql, $params);
 
         if (empty($this->users)) {
