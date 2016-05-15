@@ -98,7 +98,9 @@ M.gradereport_gradedist = {
 						dataLabels: {
 							enabled: true,
 							color: '#000000',
-							backgroundColor: '#FFFFFF'
+                                                        style: {
+                                                            fontWeight: 'normal'
+                                                        }
 						}
 					}, {
 						data: absolutnew,
@@ -106,8 +108,9 @@ M.gradereport_gradedist = {
 						dataLabels: {
 							enabled: true,
 							color: '#000000',
-							backgroundColor: '#FFFFFF',
-							align: 'center'
+                                                        style: {
+                                                            fontWeight: 'normal'
+                                                        }
 						}
 					}]
 			})

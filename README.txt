@@ -19,7 +19,7 @@
 # ---------------------------------------------------------------
 
 README.txt
-v.2016-01-15
+v.2016-05-15
 
 
 Gradereport Gradedist
@@ -40,8 +40,9 @@ REQUIREMENTS
     free of charge for non-commercial use.
 
     Make sure to download the correct package version 4.x and place the core 
-    (highcharts.src.js) and the exporting module (exporting.src.js)
-    into the folder /yourmoodleroot/grade/report/gradedist/js/"
+    (highcharts.src.js) and the exporting module (exporting.src.js), or if you
+    prefer their minified versions (highcharts.js, exporting.js)
+    into the folder moodleroot/grade/report/gradedist/js/"
 
 INSTALLATION 
 ================================================================================
@@ -66,6 +67,11 @@ USAGE
 
 CHANGELOG
 ====================================================================================================
+        *) 15.05.2016
+                [github][Update] #3267:
+                Change recommended download target for highcharts files.
+                Adapt code so also their minified versions are accepted.
+                Fix exporting bug with non-transparent labels disappearing on image with latest version of highcharts
         *) 15.01.2016
                 Fix Bug #2871 Entering "100" invokes an error message and prevents to save the new entries
                 Fix Bug #2870 Wrong prefilled new grade boundaries after saving new boundaries
