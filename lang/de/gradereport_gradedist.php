@@ -94,7 +94,10 @@ $string['actualgrade'] = 'Note (aktuell)';
 $string['newgrade'] = 'Note (neue)';
 $string['points'] = 'Punkte ({$a})';
 
-$string['highchartsmissing'] = 'Zur Anzeige des Diagramms downloaden Sie die Version 4.x der Highcharts library von  http://www.highcharts.com/download. Kopieren Sie beide Dateien, das Modul highcharts.src.js vom Unterverzeichnis js und das Modul exporting.src.js vom Unterverzeichnis js/modules, in das Verzeichnis moodleroot/grade/report/gradedist/js.';
+$string['highchartsmissing'] = 'Zur Anzeige des Diagramms downloaden Sie die Version 4.x der Highcharts Library von <a href="http://code.highcharts.com/">http://code.highcharts.com/</a>.'
+        . ' Kopieren Sie die beiden Dateien, das Modul highcharts.src.js und das Modul exporting.src.js,'
+        . ' bzw. alternativ falls bevorzugt deren minimierte Version highcharts.js und exporting.js,'
+        . ' zusammen in das Verzeichnis moodleroot/grade/report/gradedist/js.';
 
 // Events.
 $string['gradedistviewed'] = 'Notenverteilung angezeigt';
