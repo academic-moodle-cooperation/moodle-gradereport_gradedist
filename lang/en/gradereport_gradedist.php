@@ -89,7 +89,10 @@ $string['actualgrade'] = 'Grade (current)';
 $string['newgrade'] = 'Grade (new)';
 $string['points'] = 'Points ({$a})';
 
-$string['highchartsmissing'] = 'To view the diagram download version 4.x of the Highcharts library from http://www.highcharts.com/download. Copy both, the core module highcharts.src.js from the js subdirectory and the exporting.src.js module from the js/modules subdirectory into the directory moodleroot/grade/report/gradedist/js.';
+$string['highchartsmissing'] = 'To view the diagram download version 4.x of the Highcharts library from <a href="http://code.highcharts.com/">http://code.highcharts.com/</a>. '
+        . 'Copy both together, the core module highcharts.src.js and the exporting.src.js module,'
+        . 'or alternatively if you prefer their minified versions highcharts.js and exporting.js respectively, '
+        . 'into the directory moodleroot/grade/report/gradedist/js.';
 
 // Events.
 $string['gradedistviewed'] = 'Grade distribution viewed';
