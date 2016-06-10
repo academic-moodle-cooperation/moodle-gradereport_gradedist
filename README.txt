@@ -67,6 +67,8 @@ USAGE
 
 CHANGELOG
 ====================================================================================================
+        *) 10.06.2016
+                #3239: Reflect the group or grouping selection of the chart also in the download
         *) 15.05.2016
                 [github][Update] #3267:
                 Change recommended download target for highcharts files.
