@@ -43,8 +43,10 @@ class grade_export_gradedist {
     private $newletters;
     private $exportformat;
     private $filename;
+    private $groupid;
+    private $groupingid;
 
-    public function init($course, $grader, $gradeitem, $letters, $newletters, $exportformat, $filename) {
+    public function init($course, $grader, $gradeitem, $letters, $newletters, $exportformat, $filename, $groupid=0, $groupingid=0) {
         $this->course = $course;
         $this->grader = $grader;
         $this->gradeitem = $gradeitem;
@@ -52,6 +54,8 @@ class grade_export_gradedist {
         $this->newletters = $newletters;
         $this->exportformat = $exportformat;
         $this->filename = $filename;
+        $this->groupid = $groupid;
+        $this->groupingid = $groupingid;
     }
 
     public function print_grades() {
@@ -64,10 +68,23 @@ class grade_export_gradedist {
         $export->SetAuthor($USER->firstname . " " . $USER->lastname);
         $export->setoutputformat($this->exportformat);
 
-        // Show course in header.
+        // Create title add on if there is a group or grouping selected
+        $titleaddon = "";        
+        if (($this->groupingid != 0) || ($this->groupid != 0)) {          
+            $coursegroups = groups_get_all_groups($this->course->id);
+            $coursegroupings = groups_get_all_groupings($this->course->id);
+
+            if (($this->groupingid == 0) && ($this->groupid != 0)) {
+                $titleaddon = " - ".$coursegroups[$this->groupid]->name;
+            } else if (($this->groupid == 0) && ($this->groupingid != 0)) {
+                $titleaddon = " - ".$coursegroupings[$this->groupingid]->name;
+            }
+        }
+
+        // Show course, gradeitem and (optionally) group/grouping title add on in header
         $export->setheadertext(get_string('course').':', $this->course->shortname,
                                '', '',
-                               get_string('gradeitem', 'gradereport_gradedist').':', $this->gradeitem->name,
+                               get_string('gradeitem', 'gradereport_gradedist').':', $this->gradeitem->name . $titleaddon,
                                '', '', '', '', '', '');
         
         // Set a specific override format for the header title and description if default is not ok
@@ -91,8 +108,8 @@ class grade_export_gradedist {
 
         $acttotal = 0;
         $newtotal = 0;
-        $actdist = $this->grader->load_distribution($this->letters, $this->gradeitem->id);
-        $newdist = $this->grader->load_distribution($this->newletters, $this->gradeitem->id);
+        $actdist = $this->grader->load_distribution($this->letters, $this->gradeitem->id, $this->groupid, $this->groupingid);
+        $newdist = $this->grader->load_distribution($this->newletters, $this->gradeitem->id, $this->groupid, $this->groupingid);
 
         foreach ($actdist->distribution as $letter => $gradedist) {
             $acttotal += $actdist->distribution[$letter]->percentage;
@@ -149,8 +166,32 @@ class grade_export_gradedist {
             array("data" => get_string('points', 'gradereport_gradedist', number_format($gradeitem->grademax, 2, ',', ' ')), "format" => $userdatatitleformat)
         ));
 
+        // create an array of ids of the groups we want to see
+        $selectedgroupids = array();
+        if ($this->groupingid != 0) {
+           $groupsofgrouping = groups_get_all_groups($this->course->id, 0, $this->groupingid);
+           foreach ($groupsofgrouping as $onegroup) {
+              array_push($selectedgroupids, $onegroup->id);
+           }
+        }
+        if ($this->groupid != 0) {
+            array_push($selectedgroupids, $this->groupid);
+        }         
+        
         while ($userdata = $gui->next_user()) {
             $user  = $userdata->user;
+
+            // if a group or grouping is selected, print only their users
+            $ismemberofagroup = TRUE;
+            if (($this->groupingid != 0) || ($this->groupid != 0)) {          
+                $ismemberofagroup = FALSE;
+                foreach ($selectedgroupids as $currentgroupid) {
+                    if (groups_is_member($currentgroupid, $user->id)) {$ismemberofagroup = TRUE;}
+                }
+            }
+            
+            if (!$ismemberofagroup) {continue;}
+            
             $grade = $userdata->grades[$this->gradeitem->id];
             $actualgrade = $this->grader->get_gradeletter($this->letters, $grade);
             $newgrade = $this->grader->get_gradeletter($this->newletters, $grade);
