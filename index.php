@@ -149,6 +149,9 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
     $gradeitem->id = $data->gradeitem;
     $gradeitem->name = $gradeitems[$data->gradeitem]->name;
 
+    $groupid = isset($data->coursegroup) ? $data->coursegroup : 0;
+    $groupingid = isset($data->coursegrouping) ? $data->coursegrouping : 0;
+    
     // Export event.
     \gradereport_gradedist\event\gradedist_downloaded::create(
         array('context' => $context, 'other' => array('url' => $returnurl)))->trigger();
@@ -159,7 +162,9 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
                   $letters,
                   $newletters,
                   $exportformat,
-                  $course->shortname.'_'.$gradeitems[$data->gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false));
+                  $course->shortname.'_'.$gradeitems[$data->gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false),
+                  $groupid,
+                  $groupingid);
     $export->print_grades();
 }
 
