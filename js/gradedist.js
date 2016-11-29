@@ -122,7 +122,7 @@ M.gradereport_gradedist = {
 
             data = Y.JSON.parse(o.responseText);
 
-            if(data.updateall) {
+            if(data.updateall == 1) {
                 absolut = [];
                 percent = [];
 
@@ -131,7 +131,7 @@ M.gradereport_gradedist = {
                     percent.push(grade.percentage);
                 });
 
-                var values = (mode) ? percent : absolut;
+                var values = (mode == 1) ? percent : absolut;
                 chart.series[0].setData(values);
 
                 chart.setTitle({ text: data.title });
@@ -145,7 +145,7 @@ M.gradereport_gradedist = {
             });
 
             coverage(data);
-            var newvalues = (mode) ? percentnew : absolutnew;
+            var newvalues = (mode == 1) ? percentnew : absolutnew;
             chart.series[1].setData(newvalues);
         }
 
@@ -201,7 +201,7 @@ M.gradereport_gradedist = {
             });
         }
 
-        var boundaries = Y.all('#fgroup_id_grp_gradeboundaries_new input[type=text]');
+        var boundaries = Y.all('.gradeboundaries_new input[type=text], #fgroup_id_grp_gradeboundaries_new input[type=text]');
         boundaries.on('change', function (e) {
             var notifications = Y.all('#page-grade-report-gradedist-index .notifyproblem, #page-grade-report-gradedist-index .notifysuccess');
             if (notifications) {
@@ -253,7 +253,7 @@ M.gradereport_gradedist = {
 
             if (errdec) {
                 if (!errdecdiv) {
-                    Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_decimals"><span>' + M.str.gradereport_gradedist.decimals + '</span></div>');
+                    Y.one('#boundary_error_container').append('<div class="b_error" id="b_decimals"><span>' + M.str.gradereport_gradedist.decimals + '</span></div>');
                 }
                 error = true;
             } else if (errdecdiv) {
@@ -261,7 +261,7 @@ M.gradereport_gradedist = {
             }
             if (errint) {
                 if (!errintdiv) {
-                    Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_interval"><span>' + M.str.gradereport_gradedist.interval + '</span></div>');
+                    Y.one('#boundary_error_container').append('<div class="b_error" id="b_interval"><span>' + M.str.gradereport_gradedist.interval + '</span></div>');
                 }
                 error = true;
             } else if (errintdiv) {
@@ -269,14 +269,14 @@ M.gradereport_gradedist = {
             }
             if (errpre) {
                 if (!errprediv) {
-                    Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_predecessor"><span>' + M.str.gradereport_gradedist.predecessor + '</span></div>');
+                    Y.one('#boundary_error_container').append('<div class="b_error" id="b_predecessor"><span>' + M.str.gradereport_gradedist.predecessor + '</span></div>');
                 }
                 error = true;
             } else if (errprediv) {
                 errprediv.remove();
             }
 
-            if (submit) {
+            if (submit !== null) {
                 submit.set('disabled', error || erremp);
             }
             return !error;
@@ -296,7 +296,7 @@ M.gradereport_gradedist = {
 
             if (!erremp && errcov) {
                 if (!errcovdiv) {
-                    Y.one('#fgroup_id_grp_gradeboundaries_new').append('<div class="b_error" id="b_coverage"><span>' + M.str.gradereport_gradedist.coverage + '</span><span class="newcoverage">' + data.newcoverage[0] + '/' + data.newcoverage[1] + '</span></div>');
+                    Y.one('#boundary_error_container').append('<div class="b_error" id="b_coverage"><span>' + M.str.gradereport_gradedist.coverage + '</span><span class="newcoverage">' + data.newcoverage[0] + '/' + data.newcoverage[1] + '</span></div>');
                 }
             } else if (errcovdiv) {
                 errcovdiv.remove();
@@ -306,12 +306,12 @@ M.gradereport_gradedist = {
             Y.all('.newcoverage').setContent(data.newcoverage[0] + '/' + data.newcoverage[1] + ' (' + data.newcoverage[2] + '%)');
         }
 
-        var desc = Y.all('#fgroup_id_grp_description input');
+        var desc = Y.all('input[name^="grp_description"]');
         desc.on('change', function (e) {
             mode = e.currentTarget.get('value');
             var values, values_new;
 
-            if (mode) {
+            if (mode == 1) {
                 values = percent;
                 values_new = percentnew;
                 chart.yAxis[0].axisTitle.attr({
@@ -330,7 +330,7 @@ M.gradereport_gradedist = {
             chart.series[1].setData(values_new);
         });
 
-        var cols = Y.all('#fgroup_id_grp_columns input');
+        var cols = Y.all('#id_grp_columns_actualcolumns, #id_grp_columns_newcolumns');
         cols.on('click', function (e) {
             var column = (e.currentTarget.get('id') == 'id_grp_columns_actualcolumns') ? 0 : 1;
             if(e.currentTarget.get('checked')) {

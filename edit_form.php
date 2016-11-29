@@ -93,6 +93,8 @@ class edit_letter_form extends moodleform {
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries_new', 'gradeboundary_new', 'gradereport_gradedist');
 
+        $mform->addElement('html', '<div id="boundary_error_container"></div>');
+        
         $mform->addElement('header', 'chart', get_string('chart', 'gradereport_gradedist'));
 
         $description = array();
