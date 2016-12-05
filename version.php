@@ -24,7 +24,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version  = 2016120500;
-$plugin->requires  = 2016120500;
+//$plugin->requires  = 2016120500; temporarily reset to "old" value until 3.2. final release is installed
+$plugin->requires  = 2014041100;
 $plugin->component = 'gradereport_gradedist';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release   = "v3.2.0";
