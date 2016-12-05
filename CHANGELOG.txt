@@ -1,0 +1,48 @@
+CHANGELOG
+=========
+
+3.2.0 (2016-12-05)
+------------------
+
+* Moodle 3.2 compatible version
+* [FIXED] #3491: Adapt javascript IDs to new Boost theme
+
+
+3.1.0 (2016-06-10)
+------------------
+
+* Moodle 3.1 compatible version
+* [FEATURE] #3239: Reflect the group or grouping selection of the chart also in
+  the download
+
+
+3.0.1 (2016-05-15)
+------------------
+
+* Moodle 3.0 compatible version
+* [CHANGED] #3267: Change recommended download target for highcharts files
+  Adapt code so also their minified versions are accepted. Fix exporting bug
+  with non-transparent labels disappearing on image with latest version of
+  highcharts
+
+
+2.9.0 (2016-12-01)
+------------------
+
+* Moodle 2.9 compatible version
+* [FEATURE] #2624: Add group and groupings to grade distribution
+
+
+2.8.0 (2016-06-25)
+------------------
+
+* First release for Moodle 2.8
+* [FIXED] #2771 "Chart displays new and actual values differently without
+  having modified new values": make the module compare always with "." as
+  decimal point, don't use ",", this might fail for unknown reasons
+* [CHANGED] #2637 Highcharts JS license: Add text to the *Requirements* section
+  that Highcharts can be downloaded manually for non-commercial use
+* [FIXED] #2871 Entering "100" invokes an error message and prevents to save
+  the new entries
+* [FIXED] #2870 Wrong prefilled new grade boundaries after saving new
+  boundaries
