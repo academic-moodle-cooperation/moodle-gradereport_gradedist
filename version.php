@@ -16,6 +16,9 @@
 
 /**
  * @package   gradereport_gradedist
+ * @author    Andreas Hruska (andreas.hruska@tuwien.ac.at)
+ * @author    Katarzyna Potocka (katarzyna.potocka@tuwien.ac.at)
+ * @author    Günther Bernsteiner
  * @author    Andreas Krieger
  * @copyright 2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,8 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version  = 2016120500;
-//$plugin->requires  = 2016120500; temporarily reset to "old" value until 3.2. final release is installed
-$plugin->requires  = 2014041100;
+$plugin->requires  = 2016120500;
 $plugin->component = 'gradereport_gradedist';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release   = "v3.2.0";
