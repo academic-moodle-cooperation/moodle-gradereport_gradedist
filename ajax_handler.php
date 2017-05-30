@@ -77,10 +77,10 @@ $gradeitems = $grader->get_gradeitems();
 $coursegroups = groups_get_all_groups($course->id);
 $coursegroupings = groups_get_all_groupings($course->id);
 $chartsubtitle = "";
-// todo: depends on "0" as hardcoded and available !
+// Depends on "0" as hardcoded and available (ToDo)!
 if (($groupingid == 0) && ($groupid != 0)) {
     $chartsubtitle = " - ".$coursegroups[$groupid]->name;
-} else if (($groupid == 0) && ($groupingid !=0)) {
+} else if (($groupid == 0) && ($groupingid != 0)) {
     $chartsubtitle = " - ".$coursegroupings[$groupingid]->name;
 }
 

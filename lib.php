@@ -24,6 +24,8 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die;
+
 require_once($CFG->dirroot.'/grade/report/grader/lib.php');
 require_once($CFG->libdir.'/grade/constants.php');
 
@@ -66,7 +68,7 @@ class grade_report_gradedist extends grade_report_grader {
         }
 
         // Limit to users with a gradeable role.
-        list($gradebookrolessql, $gradebookrolesparams) =
+        list($gradebookrolessql, $gradebookrolesparams) = 
                 $DB->get_in_or_equal(explode(',', $this->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
 
         // Limit to users with an active enrollment.
@@ -76,7 +78,7 @@ class grade_report_gradedist extends grade_report_grader {
         $userfields = user_picture::fields('u', get_extra_user_fields($this->context));
 
         // We want to query both the current context and parent contexts.
-        list($relatedctxsql, $relatedctxparams) =
+        list($relatedctxsql, $relatedctxparams) = 
                 $DB->get_in_or_equal($this->context->get_parent_context_ids(true), SQL_PARAMS_NAMED, 'relatedctx');
 
         $sortjoin = $sort = $params = null;
@@ -123,7 +125,6 @@ class grade_report_gradedist extends grade_report_grader {
                    AND u.deleted = 0
               ORDER BY $sort";
 
-        
         $this->users = $DB->get_records_sql($sql, $params);
 
         if (empty($this->users)) {
@@ -204,7 +205,7 @@ class grade_report_gradedist extends grade_report_grader {
         return $gradeitems;
     }
 
-        /**
+    /**
      * We get groups for select here.
      */
     public function get_grouplist() {
@@ -214,9 +215,9 @@ class grade_report_gradedist extends grade_report_grader {
 
         $allgroupentry = new StdClass();
         $allgroupentry->name = get_string('allparticipants');
-        $allgroupentry->id = 0; 
-        
-        // hack to put "all groups" in front
+        $allgroupentry->id = 0;
+
+        // Hack to put "all groups" in front.
         $groups = array_reverse($groups, true);
         $groups[$allgroupentry->id] = $allgroupentry;
         $groups = array_reverse($groups, true);
@@ -224,7 +225,7 @@ class grade_report_gradedist extends grade_report_grader {
         return $groups;
     }
 
-        /**
+    /**
      * We get groupings for select here.
      */
     public function get_groupinglist() {
@@ -234,9 +235,9 @@ class grade_report_gradedist extends grade_report_grader {
 
         $nogroupingentry = new StdClass();
         $nogroupingentry->name = get_string('nogroupingentry', 'gradereport_gradedist');
-        $nogroupingentry->id = 0; 
-        
-        // hack to put "no grouping" in front
+        $nogroupingentry->id = 0;
+
+        // Hack to put "no grouping" in front.
         $groupings = array_reverse($groupings, true);
         $groupings[$nogroupingentry->id] = $nogroupingentry;
         $groupings = array_reverse($groupings, true);
@@ -244,7 +245,7 @@ class grade_report_gradedist extends grade_report_grader {
         return $groupings;
     }
 
-    
+
     /**
      * We supply the letters and gradeitem in this query, and get the distribution.
      */
@@ -254,15 +255,15 @@ class grade_report_gradedist extends grade_report_grader {
         $this->load_users();
         $selectedusers = array();
         if ($groupingid == 0) {
-            if ($groupid == 0) { // tackle all users
+            if ($groupid == 0) { // Tackle all users.
                 $selectedusers = $this->users;
-            } else { // tackle the users of a single group
+            } else { // Tackle the users of a single group.
                 $groupusers = groups_get_members($groupid);
-                $selectedusers = array_intersect_key($groupusers, $this->users); 
+                $selectedusers = array_intersect_key($groupusers, $this->users);
             }
-        } else { // tackle the users of the groups of a grouping
+        } else { // Tackle the users of the groups of a grouping.
             $groupsusers = groups_get_grouping_members($groupingid);
-            $selectedusers = array_intersect_key($groupsusers, $this->users); 
+            $selectedusers = array_intersect_key($groupsusers, $this->users);
         }
 
         $userids = array_keys($selectedusers);
@@ -275,7 +276,7 @@ class grade_report_gradedist extends grade_report_grader {
         $params = array('gradeitem' => $gradeitem, 'courseid' => $this->courseid);
 
         krsort($this->letters); // Just to be sure.
-        
+
         $total = 0;
         $count = 0;
 
@@ -323,7 +324,7 @@ class grade_report_gradedist extends grade_report_grader {
 
         // Map to range.
         $gradeint = $gradeitem->grademax - $gradeitem->grademin;
-        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ?
+        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? 
                  ($grade->finalgrade - $gradeitem->grademin) * 100 / $gradeint : $grade->finalgrade;
 
         // Calculate gradeletter.
