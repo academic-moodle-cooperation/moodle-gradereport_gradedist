@@ -324,8 +324,8 @@ class grade_report_gradedist extends grade_report_grader {
 
         // Map to range.
         $gradeint = $gradeitem->grademax - $gradeitem->grademin;
-        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? ($grade->finalgrade - $gradeitem->grademin)
-                * 100 / $gradeint : $grade->finalgrade;
+        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? ($grade->finalgrade - $gradeitem->grademin
+                ) * 100 / $gradeint : $grade->finalgrade;
 
         // Calculate gradeletter.
         $value = bounded_number(0, $value, 100); // Just in case.
