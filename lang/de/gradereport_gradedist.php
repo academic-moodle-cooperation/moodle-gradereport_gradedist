@@ -18,8 +18,6 @@
  * German lang file
  *
  * @package       gradereport_gradedist
- * @author        Andreas Hruska (andreas.hruska@tuwien.ac.at)
- * @author        Katarzyna Potocka (katarzyna.potocka@tuwien.ac.at)
  * @author        Günther Bernsteiner
  * @author        Andreas Krieger
  * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
