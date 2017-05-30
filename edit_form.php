@@ -60,7 +60,8 @@ class edit_letter_form extends moodleform {
             }
             $mform->addElement($selectgroup);
 
-            $selectgrouping = $mform->createElement('select', 'coursegrouping', get_string('labelgrouping', 'gradereport_gradedist'));
+            $selectgrouping = $mform->createElement('select', 'coursegrouping',
+                    get_string('labelgrouping', 'gradereport_gradedist'));
             foreach ($coursegroupings as $index => $curgrouping) {
                 $selectgrouping->addOption($curgrouping->name, $index, null);
             }
