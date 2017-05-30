@@ -114,9 +114,8 @@ M.gradereport_gradedist = {
                 }]
             })
         } else {
-            Y.one('#chart_container').setHTML('<br><p><i><strong>[ !!! '
-                    + M.str.gradereport_gradedist.highchartsmissing
-                    + ' !!! ]</strong></i></p><br>');
+            Y.one('#chart_container').setHTML(
+                    '<br><p><i><strong>[ !!! ' + M.str.gradereport_gradedist.highchartsmissing + ' !!! ]</strong></i></p><br>');
         };
 
         var update = function(id, o, args) {
