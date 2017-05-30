@@ -68,8 +68,8 @@ class grade_report_gradedist extends grade_report_grader {
         }
 
         // Limit to users with a gradeable role.
-        list($gradebookrolessql, $gradebookrolesparams) = 
-                $DB->get_in_or_equal(explode(',', $this->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
+        list($gradebookrolessql, $gradebookrolesparams) = $DB->get_in_or_equal(explode(',', $this->gradebookroles),
+                SQL_PARAMS_NAMED, 'grbr0');
 
         // Limit to users with an active enrollment.
         list($enrolledsql, $enrolledparams) = get_enrolled_sql($this->context);
@@ -78,8 +78,8 @@ class grade_report_gradedist extends grade_report_grader {
         $userfields = user_picture::fields('u', get_extra_user_fields($this->context));
 
         // We want to query both the current context and parent contexts.
-        list($relatedctxsql, $relatedctxparams) = 
-                $DB->get_in_or_equal($this->context->get_parent_context_ids(true), SQL_PARAMS_NAMED, 'relatedctx');
+        list($relatedctxsql, $relatedctxparams) = $DB->get_in_or_equal($this->context->get_parent_context_ids(true),
+                SQL_PARAMS_NAMED, 'relatedctx');
 
         $sortjoin = $sort = $params = null;
 
@@ -324,8 +324,8 @@ class grade_report_gradedist extends grade_report_grader {
 
         // Map to range.
         $gradeint = $gradeitem->grademax - $gradeitem->grademin;
-        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? 
-                 ($grade->finalgrade - $gradeitem->grademin) * 100 / $gradeint : $grade->finalgrade;
+        $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? ($grade->finalgrade - $gradeitem->grademin)
+                * 100 / $gradeint : $grade->finalgrade;
 
         // Calculate gradeletter.
         $value = bounded_number(0, $value, 100); // Just in case.

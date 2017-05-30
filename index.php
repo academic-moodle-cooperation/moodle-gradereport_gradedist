@@ -55,11 +55,11 @@ $PAGE->set_url('/grade/report/gradedist/index.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display.
 $PAGE->requires->jquery();
 
-if ($highcharts = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.src.js') && 
+if ($highcharts = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.src.js') &&
         file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.src.js')) {
     $PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
     $PAGE->requires->js('/grade/report/gradedist/js/exporting.src.js');
-} elseif ($highcharts = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.js') &&
+} else if ($highcharts = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.js') &&
         file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.js')) {
     $PAGE->requires->js('/grade/report/gradedist/js/highcharts.js');
     $PAGE->requires->js('/grade/report/gradedist/js/exporting.js');
@@ -83,11 +83,11 @@ $coursegroups = $grader->get_grouplist();
 $coursegroupings = $grader->get_groupinglist();
 
 $gradeitem = optional_param('gradeitem',
-        (isset($SESSION->gradereport_gradedist_gradeitem)) ? 
-        $SESSION->gradereport_gradedist_gradeitem : key($gradeitems), PARAM_INT);
+        (isset($SESSION->gradereport_gradedist_gradeitem)) ? $SESSION->gradereport_gradedist_gradeitem : key($gradeitems),
+        PARAM_INT);
 $boundariesnew = optional_param_array('grp_gradeboundaries_new',
-        (isset($SESSION->gradereport_gradedist_boundariesnew)) ? 
-        $SESSION->gradereport_gradedist_boundariesnew : array(), PARAM_TEXT);
+        (isset($SESSION->gradereport_gradedist_boundariesnew)) ? $SESSION->gradereport_gradedist_boundariesnew : array(),
+        PARAM_TEXT);
 
 $newletters = empty($boundariesnew) ? $letters : array();
 
@@ -152,7 +152,7 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
 
     $groupid = isset($data->coursegroup) ? $data->coursegroup : 0;
     $groupingid = isset($data->coursegrouping) ? $data->coursegrouping : 0;
-  
+
     // Export event.
     \gradereport_gradedist\event\gradedist_downloaded::create(
         array('context' => $context, 'other' => array('url' => $returnurl)))->trigger();

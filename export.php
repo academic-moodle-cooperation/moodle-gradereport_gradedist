@@ -171,7 +171,7 @@ class grade_export_gradedist {
         if ($this->groupingid != 0) {
             $groupsofgrouping = groups_get_all_groups($this->course->id, 0, $this->groupingid);
             foreach ($groupsofgrouping as $onegroup) {
-               array_push($selectedgroupids, $onegroup->id);
+                array_push($selectedgroupids, $onegroup->id);
             }
         }
         if ($this->groupid != 0) {
@@ -192,7 +192,9 @@ class grade_export_gradedist {
                 }
             }
 
-            if (!$ismemberofagroup) {continue;}
+            if (!$ismemberofagroup) {
+                continue;
+            }
 
             $grade = $userdata->grades[$this->gradeitem->id];
             $actualgrade = $this->grader->get_gradeletter($this->letters, $grade);
