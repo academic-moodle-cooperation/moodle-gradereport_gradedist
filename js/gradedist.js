@@ -56,7 +56,6 @@ M.gradereport_gradedist = {
         });
 
         if(data.highcharts) {
-            
             var chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'chart_container',
@@ -91,31 +90,33 @@ M.gradereport_gradedist = {
                     contextButtonTitle: M.str.gradereport_gradedist.contextbuttontitle
                 },
                 series:
-                    [{
-                        data: absolut,
-                        color: '#990000',
-                        dataLabels: {
-                            enabled: true,
-                            color: '#000000',
-                            style: {
-                                fontWeight: 'normal'
-                            }
+                [{
+                    data: absolut,
+                    color: '#990000',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        style: {
+                            fontWeight: 'normal'
                         }
-                    }, {
-                        data: absolutnew,
-                        color: '#33cc33',
-                        dataLabels: {
-                            enabled: true,
-                            color: '#000000',
-                            style: {
-                                fontWeight: 'normal'
-                            }
+                    }
+                },
+                {
+                    data: absolutnew,
+                    color: '#33cc33',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        style: {
+                            fontWeight: 'normal'
                         }
-                    }]
+                    }
+                }]
             })
         } else {
-            Y.one('#chart_container').setHTML('<br><p><i><strong>[ !!! '+
-                    M.str.gradereport_gradedist.highchartsmissing + ' !!! ]</strong></i></p><br>');    
+            Y.one('#chart_container').setHTML('<br><p><i><strong>[ !!! '
+                    + M.str.gradereport_gradedist.highchartsmissing
+                    + ' !!! ]</strong></i></p><br>');
         };
 
         var update = function(id, o, args) {
