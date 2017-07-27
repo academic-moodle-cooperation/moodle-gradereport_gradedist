@@ -1,10 +1,12 @@
 CHANGELOG
 =========
 
-3.3.0 (2017-05-11)
+3.3.0 (2017-07-27)
 ------------------
 
 * Moodle 3.3 compatible version
+* [FEATURE] #4290 Improve code checker conformity
+* [FEATURE] #4295 Add .travis.yml for CI (continuous integration)
 
 
 3.2.0 (2016-12-05)
