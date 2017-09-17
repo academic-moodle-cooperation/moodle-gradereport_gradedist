@@ -1,8 +1,8 @@
 @gradereport @gradereport_gradedist
-Feature: See gradedist in gradebook
-  In order to see the gradedist in the course gradebook
+Feature: View gradedist in gradebook
+  In order to view the gradedist in the course gradebook
   As a teacher
-  I need to follow the gradebook link of the course
+  I need to navigate to the course gradebook
 
   @javascript
   Scenario: follow the gradebook link of a course
@@ -16,9 +16,6 @@ Feature: See gradedist in gradebook
       | user | course | role |
       | teacher1 | C1 | editingteacher |
     And I log in as "teacher1"
-    And I follow "Course 1"
-    And I should see "Grades"
-    And I pause scenario execution
-    And I navigate to "Grades" node in "Course administration"
-    And I should see "Grade distribution"
+    And I am on "Course 1" course homepage
+    And I navigate to "View > Grade distribution" in the course gradebook
     And I log out
