@@ -1,18 +1,19 @@
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+/**
+ * This file is part of Moodle - http://moodle.org/
+ *
+ * Moodle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Moodle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /**
  * CSS
  *
@@ -25,28 +26,28 @@
 
 #page-grade-report-gradedist-index .notifyproblem,
 #page-grade-report-gradedist-index .notifysuccess {
-    margin-left:10px;
-    margin-bottom:10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 #page-grade-report-gradedist-index .b_error {
-    margin-top:5px;
-    padding-left:16%;
-    color: #990000;
+    margin-top: 5px;
+    padding-left: 16%;
+    color: #900;
 }
 
 #page-grade-report-gradedist-index .b_error span {
     margin-left: 10px;
-    color: #990000;
+    color: #900;
 }
 
 #page-grade-report-gradedist-index .actcoverage {
-    color:#990000;
+    color: #900;
 }
 
 #page-grade-report-gradedist-index .newcoverage,
 #page-grade-report-gradedist-index .b_error .newcoverage {
-    color:#33cc33;
+    color: #3c3;
 }
 
 #page-grade-report-gradedist-index #id_grp_description_description_1 {
@@ -58,15 +59,15 @@
 }
 
 #page-grade-report-gradedist-index #fgroup_id_grp_columns fieldset span:first-child label {
-    color: #990000;
+    color: #900;
 }
 
 #page-grade-report-gradedist-index #fgroup_id_grp_columns fieldset span label {
-    color: #33cc33;
+    color: #3c3;
 }
 
 #page-grade-report-gradedist-index #id_grp_export_export {
-    margin:0 0 0 20px;
+    margin: 0 0 0 20px;
 }
 
 #page-grade-report-gradedist-index #id_gradedist input[type="text"] {
