@@ -31,7 +31,7 @@ chart changes can be seen immediately.
 Requirements
 ------------
 
-The plugin is available for Moodle 2.7+. This version is for Moodle 3.3.
+The plugin is available for Moodle 2.7+. This version is for Moodle 3.4.
 
 The module requires the external [Highcharts JavaScript
 library](<http://www.highcharts.com/products/highcharts>), available free of charge for
