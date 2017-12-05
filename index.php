@@ -262,28 +262,10 @@ if ($confirm && !$boundaryerror) {
     $data->highcharts = $highcharts;
 
     // Start output.
-    $jsmodule = array(
-        'name' => 'gradereport_gradedist',
-        'fullpath' => '/grade/report/gradedist/js/gradedist.js',
-        'requires' => array('io-form'),
-        'strings'  => array(array('interval', 'gradereport_gradedist'),
-                            array('decimals', 'gradereport_gradedist'),
-                            array('predecessor', 'gradereport_gradedist'),
-                            array('coverage', 'gradereport_gradedist'),
-                            array('absolut', 'gradereport_gradedist'),
-                            array('percent', 'gradereport_gradedist'),
-                            array('gradeletter', 'gradereport_gradedist'),
-                            array('printchart', 'gradereport_gradedist'),
-                            array('downloadpng', 'gradereport_gradedist'),
-                            array('downloadjpeg', 'gradereport_gradedist'),
-                            array('downloadpdf', 'gradereport_gradedist'),
-                            array('downloadsvg', 'gradereport_gradedist'),
-                            array('contextbuttontitle', 'gradereport_gradedist'),
-                            array('highchartsmissing', 'gradereport_gradedist'),
-            ));
-    $PAGE->requires->js_init_call('M.gradereport_gradedist.init',
-            array($data), true, $jsmodule);
-
+    $params = new stdClass();
+    $params->data = $data;
+    $PAGE->requires->js_call_amd('gradereport_gradedist/settings', 'initializer', array($params));
+    
     print_grade_page_head($course->id, 'report', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
 
     if ($saved) {
