@@ -32,6 +32,8 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
      * @alias module:gradereport_gradedist/settings
      */
     var Settings = function() {
+        //this.chart;
+        //this.submit;
     };
 
     /*
@@ -42,33 +44,39 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
      */
     Settings.prototype.update = function(id, o) {
 
-        $.data = $.parseJSON(o.responseText);
+        alert(JSON.stringify(id, null, 4));
+        alert(JSON.stringify(o, null, 4));
+        
+        this.data = o;
 
-        if($.data.updateall == 1) {
-            $.absolut = [];
-            $.percent = [];
+        if(data.updateall == 1) {
+            absolut = [];
+            percent = [];
 
-            $.map($.data.actdist, function(grade) {
-                $.absolut.push(grade.count);
-                $.percent.push(grade.percentage);
+            $.map(data.actdist, function(grade) {
+                absolut.push(grade.count);
+                percent.push(grade.percentage);
             });
+            
 
-            var values = ($.mode == 1) ? $.percent : $.absolut;
-            $.chart.series[0].setData(values);
+            var values = (mode == 1) ? percent : absolut;
 
-            $.chart.setTitle({ text: $.data.title });
+            chart.series[0].setData(values);
+
+            chart.setTitle({ text: data.title });
         }
-        $.absolutnew = [];
-        $.percentnew = [];
+        
+        absolutnew = [];
+        percentnew = [];
 
-        $.map($.data.newdist, function(grade) {
-            $.absolutnew.push(grade.count);
-            $.percentnew.push(grade.percentage);
+        $.map(data.newdist, function(grade) {
+            absolutnew.push(grade.count);
+            percentnew.push(grade.percentage);
         });
 
-        $.coverage($.data);
-        var newvalues = ($.mode == 1) ? $.percentnew : $.absolutnew;
-        $.chart.series[1].setData(newvalues);
+        instance.coverage(data);
+        var newvalues = (mode == 1) ? percentnew : absolutnew;
+        chart.series[1].setData(newvalues);
     };
 
 
@@ -80,6 +88,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
      */
     Settings.prototype.validate = function() {
 
+        alert(JSON.stringify("in validate", null, 4));
         var error = false;
 
         var errdec = false;
@@ -94,7 +103,8 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
         var decimals = /^\d+([.]\d{1,2})?$/;
         var pre = 100.01;
 
-        $.boundaries.each(function(boundary) {
+        $.each($.boundaries, function(id, boundary) {
+        //$.boundaries.each(function(boundary) {
             var value = boundary.get('value').replace(/,/g,'.');
             if (value != '') {
                 if (!decimals.test(value)) {
@@ -141,8 +151,8 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             errprediv.remove();
         }
 
-        if ($.submit !== null) {
-            $.submit.prop('disabled', error || erremp);
+        if (submit !== null) {
+            submit.prop('disabled', error || erremp);
         }
         return !error;
     };
@@ -160,8 +170,9 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
         var errcov = Number(data.newcoverage[0]) != 0;
         var errcovdiv = $('#b_coverage').first();
 
-        $.boundaries.each(function(boundary) {
+        $.each($.boundaries, function(id, boundary) {
             if (boundary.get('value') == '') {
+                alert(JSON.stringify(boundary, null, 4));
                 erremp = true;
             }
         });
@@ -176,10 +187,9 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             errcovdiv.remove();
         }
 
-        $('.actcoverage').setContent(data.actcoverage[0] + '/' + data.actcoverage[1] + ' (' + data.actcoverage[2] + '%)');
-        $('.newcoverage').setContent(data.newcoverage[0] + '/' + data.newcoverage[1] + ' (' + data.newcoverage[2] + '%)');
+        $('.actcoverage').html(data.actcoverage[0] + '/' + data.actcoverage[1] + ' (' + data.actcoverage[2] + '%)');
+        $('.newcoverage').html(data.newcoverage[0] + '/' + data.newcoverage[1] + ' (' + data.newcoverage[2] + '%)');
     };
-
 
 
     var instance = new Settings();
@@ -188,10 +198,12 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
      * initializer(config) prepares settings form for JS-functionality
      */
     instance.initializer = function(config) {
-
+        
         log.info('Initialize settings JS', 'gradedist');
 
-        var mode = 0;
+        data = config.data;
+
+        mode = 0;
         var letters = [];
 
         var absolut = [];
@@ -199,10 +211,8 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
         var absolutnew = [];
         var percentnew = [];
 
-        var data = config.data;
-
         var submitSelector = "#id_submitbutton";
-        var submit = $(submitSelector).first();
+        submit = $(submitSelector).first();
         if (submit) {
             submit.prop('disabled', true);
         }
@@ -218,8 +228,11 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             percentnew.push(grade.percentage);
         });
 
+
+        chart = [];
         if(data.highcharts) {
-            var chart = new Highcharts.Chart({
+             //var chart = new Highcharts.Chart({
+             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'chart_container',
                     type: 'column'
@@ -283,6 +296,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                     + str.get_string('highchartsmissing', 'gradereport_gradedist') + ' !!! ]</strong></i></p><br>');
         }
 
+     
         var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + data.courseid;
 
         var cfg = {
@@ -294,11 +308,23 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                 id: 'letterform',
                 useDisabled: true,
                 upload: false
-            },
+            }/*,
             on: {
-                complete: instance.update()
-            }
+                complete: instance.validate()
+            }*/
         };
+
+
+        var mycfg = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            //success: instance.validate(),
+            data: 'updateall=1',
+            url: uri
+        };
+
 
         var gradeitemsSelector = "#id_gradeitem";
         var gradeitems = $(gradeitemsSelector).first();
@@ -308,7 +334,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                 success.remove();
             }
             cfg.data = 'updateall=1';
-            $.ajax({data: cfg.data, url: uri});
+            //$.ajax(mycfg);
         });
 
         var coursegroupsSelector = "#id_coursegroup";
@@ -321,7 +347,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                 }
                 cfg.data = 'updateall=1';
                 $('#id_coursegrouping').first().prop('value', '0');
-                $.ajax({data: cfg.data, url: uri});
+               // $.ajax({data: cfg.data, url: uri});
             });
         }
 
@@ -335,7 +361,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                 }
                 cfg.data = 'updateall=1';
                 $('#id_coursegroup').first().prop('value', '0');
-                $.ajax({data: cfg.data, url: uri});
+                // $.ajax({data: cfg.data, url: uri});
             });
         }
 
@@ -350,9 +376,9 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             if (success) {
                 success.remove();
             }
-            if (instance.validate()) {
-                $.ajax({data: cfg.data, url: uri});
-            }
+            //if (instance.validate()) {
+               // $.ajax({data: cfg.data, url: uri});
+            //}
         });
 
 
@@ -390,7 +416,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             }
         });
 
-        instance.validate();
+        //instance.validate();
     };
 
     return instance;
