@@ -192,6 +192,83 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
     };
 
 
+    Settings.prototype.dohigh = function() {
+ 
+        var tofetch = [
+            {key: 'gradeletter', component: 'gradereport_gradedist'},
+            {key: 'absolut', component: 'gradereport_gradedist'},
+            {key: 'perent', component: 'gradereport_gradedist'},
+            {key: 'printchart', component: 'gradereport_gradedist'},
+            {key: 'downloadpng', component: 'gradereport_gradedist'},
+            {key: 'downloadjpeg', component: 'gradereport_gradedist'},
+            {key: 'downloadpdf', component: 'gradereport_gradedist'},
+            {key: 'downloadsvg', component: 'gradereport_gradedist'},
+            {key: 'downloadjpeg', component: 'gradereport_gradedist'},
+            {key: 'contextbuttontitle', component: 'gradereport_gradedist'},
+                    ];
+        str.get_strings(tofetch).done(function(s) {
+
+            chart = new Highcharts.Chart({
+               chart: {
+                   renderTo: 'chart_container',
+                   type: 'column'
+               },
+               title: {
+                   text: data.title
+               },
+               xAxis: {
+                   title: {
+                       text: s[0]
+                   },
+                   categories: letters
+               },
+               yAxis: {
+                   title: {
+                       text: str.get_string('absolut', 'gradereport_gradedist')
+                   }
+               },
+               legend: {
+                   enabled: false
+               },
+               tooltip: {
+                   enabled: false
+               },
+               lang: {
+                   printChart: str.get_string('printchart', 'gradereport_gradedist'),
+                   downloadPNG: str.get_string('downloadpng', 'gradereport_gradedist'),
+                   downloadJPEG: str.get_string('downloadjpeg', 'gradereport_gradedist'),
+                   downloadPDF: str.get_string('downloadpdf', 'gradereport_gradedist'),
+                   downloadSVG: str.get_string('downloadsvg', 'gradereport_gradedist'),
+                   contextButtonTitle: str.get_string('contextbuttontitle', 'gradereport_gradedist')
+               },
+               series:
+               [{
+                   data: absolut,
+                   color: '#990000',
+                   dataLabels: {
+                       enabled: true,
+                       color: '#000000',
+                       style: {
+                           fontWeight: 'normal'
+                       }
+                   }
+               },
+               {
+                   data: absolutnew,
+                   color: '#33cc33',
+                   dataLabels: {
+                       enabled: true,
+                       color: '#000000',
+                       style: {
+                           fontWeight: 'normal'
+                       }
+                   }
+               }]
+           });
+    });
+    };
+
+
     var instance = new Settings();
 
     /*
@@ -204,12 +281,12 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
         data = config.data;
 
         mode = 0;
-        var letters = [];
+        letters = [];
 
-        var absolut = [];
-        var percent = [];
-        var absolutnew = [];
-        var percentnew = [];
+        absolut = [];
+        percent = [];
+        absolutnew = [];
+        percentnew = [];
 
         var submitSelector = "#id_submitbutton";
         submit = $(submitSelector).first();
@@ -231,64 +308,9 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
 
         chart = [];
         if(data.highcharts) {
-             //var chart = new Highcharts.Chart({
-             chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'chart_container',
-                    type: 'column'
-                },
-                title: {
-                    text: data.title
-                },
-                xAxis: {
-                    title: {
-                        text: str.get_string('gradeletter', 'gradereport_gradedist')
-                    },
-                    categories: letters
-                },
-                yAxis: {
-                    title: {
-                        text: str.get_string('absolut', 'gradereport_gradedist')
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                tooltip: {
-                    enabled: false
-                },
-                lang: {
-                    printChart: str.get_string('printchart', 'gradereport_gradedist'),
-                    downloadPNG: str.get_string('downloadpng', 'gradereport_gradedist'),
-                    downloadJPEG: str.get_string('downloadjpeg', 'gradereport_gradedist'),
-                    downloadPDF: str.get_string('downloadpdf', 'gradereport_gradedist'),
-                    downloadSVG: str.get_string('downloadsvg', 'gradereport_gradedist'),
-                    contextButtonTitle: str.get_string('contextbuttontitle', 'gradereport_gradedist')
-                },
-                series:
-                [{
-                    data: absolut,
-                    color: '#990000',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        style: {
-                            fontWeight: 'normal'
-                        }
-                    }
-                },
-                {
-                    data: absolutnew,
-                    color: '#33cc33',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        style: {
-                            fontWeight: 'normal'
-                        }
-                    }
-                }]
-            });
+            alert(JSON.stringify("here", null, 4));
+            instance.dohigh();
+            alert(JSON.stringify("there", null, 4));
         } else {
             var chartContainerSelector = "#chart_container";
             $(chartContainerSelector).first().html(
