@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * settings.js
+ * gradedist.js
  *
  * @package   gradereport_gradedist
  * @author    Andreas Krieger
@@ -23,66 +23,65 @@
  */
 
  /**
-  * @module gradereport_gradedist/settings
+  * @module gradereport_gradedist/gradedist
   */
-define(['jquery', 'core/log', 'core/str'], function($, log, str) {
 
+define(['jquery', 'core/log', 'core/str'], function($, log, str) {
     /**
      * @constructor
-     * @alias module:gradereport_gradedist/settings
+     * @alias module:gradereport_gradedist/gradedist
      */
-    var Settings = function() {
-        //this.chart;
-        //this.submit;
+    var Gradedist = function() {
     };
 
     /*
-     * updateSettings() updates the grade-selector appropriate to the given
-     * individual grades (flexiblenaming = 1) or the given amount of examples (flexiblenaming = 0)
+     * update() updates the chart according to the values currently set in the form
      *
      * @return true if everything's allright (no error handling by now)
      */
-    Settings.prototype.update = function(o) {
+    Gradedist.prototype.update = function(o) {
 
-        data = JSON.parse(o.responseText);
-        
+        var data = JSON.parse(o.responseText);
+
         if(data.updateall == 1) {
-            absolut = [];
-            percent = [];
+            window.absolut = [];
+            window.percent = [];
 
             $.map(data.actdist, function(grade) {
-                absolut.push(grade.count);
-                percent.push(grade.percentage);
+                window.absolut.push(grade.count);
+                window.percent.push(grade.percentage);
             });
 
-            var values = (mode == 1) ? percent : absolut;
+            var values = (window.mode == 1) ? window.percent : window.absolut;
 
-            chart.series[0].setData(values);
+            window.chart.series[0].setData(values);
 
-            chart.setTitle({ text: data.title });
+            window.chart.setTitle({ text: data.title });
         }
-        
-        absolutnew = [];
-        percentnew = [];
+
+        window.absolutnew = [];
+        window.percentnew = [];
 
         $.map(data.newdist, function(grade) {
-            absolutnew.push(grade.count);
-            percentnew.push(grade.percentage);
+            window.absolutnew.push(grade.count);
+            window.percentnew.push(grade.percentage);
         });
 
         instance.coverage(data);
-        var newvalues = (mode == 1) ? percentnew : absolutnew;
-        chart.series[1].setData(newvalues);
+        var newvalues = (window.mode == 1) ? window.percentnew : window.absolutnew;
+        window.chart.series[1].setData(newvalues);
+
+        return true;
     };
 
 
     /*
-     * updateSettings() updates the grade-selector appropriate to the given
-     * individual grades (flexiblenaming = 1) or the given amount of examples (flexiblenaming = 0)
+     * validate() checks if the current boundaries given in the form data are
+     * syntactically and semantically correct and displays warnings based on this
      *
-     * @return true if everything's allright (no error handling by now)
+     * @return true if everything's allright, false on detected error
      */
-    Settings.prototype.validate = function() {
+    Gradedist.prototype.validate = function() {
 
         var error = false;
 
@@ -98,7 +97,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
         var decimals = /^\d+([.]\d{1,2})?$/;
         var pre = 100.01;
 
-        $.each(boundaries, function(id, boundary) {
+        $.each(window.boundaries, function(id, boundary) {
             var value = boundary.value.replace(/,/g,'.');
             if (value != '') {
                 if (!decimals.test(value)) {
@@ -117,12 +116,12 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             }
         });
 
-        // for debugging: alert(JSON.stringify(errpre, null, 4));
-
         if (errdec) {
             if (!errdecdiv.length) {
-                $('#boundary_error_container').first().append('<div class="b_error" id="b_decimals"><span>'
-                        + 'This is decimals a bit crossy'  + '</span></div>');
+                str.get_string('decimals', 'gradereport_gradedist').done(function (s) {
+                    $('#boundary_error_container').first().append('<div class="b_error" id="b_decimals"><span>'
+                        + s + '</span></div>');
+                });
             }
             error = true;
         } else if (errdecdiv.length) {
@@ -130,8 +129,10 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
         }
         if (errint) {
             if (!errintdiv.length) {
-                $('#boundary_error_container').first().append('<div class="b_error" id="b_interval"><span>'
-                        + 'This is interval a bit crossy' + '</span></div>');
+                str.get_string('interval', 'gradereport_gradedist').done(function (s) {
+                    $('#boundary_error_container').first().append('<div class="b_error" id="b_interval"><span>'
+                        + s + '</span></div>');
+                });
             }
             error = true;
         } else if (errintdiv.length) {
@@ -139,34 +140,38 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
         }
         if (errpre) {
             if (!errprediv.length) {
-                $('#boundary_error_container').first().append('<div class="b_error" id="b_predecessor"><span>'
-                        + 'This is pre numbers a bit crossy' + '</span></div>');
+                str.get_string('predecessor', 'gradereport_gradedist').done(function (s) {
+                    $('#boundary_error_container').first().append('<div class="b_error" id="b_predecessor"><span>'
+                        + s + '</span></div>');
+                });
             }
             error = true;
         } else if (errprediv.length) {
             errprediv.remove();
         }
 
-        if (submit !== null) {
-            submit.prop('disabled', error || erremp);
+        if (window.submit.length) {
+            window.submit.prop('disabled', error || erremp);
         }
+
         return !error;
     };
 
 
     /*
-     * updateSettings() updates the grade-selector appropriate to the given
-     * individual grades (flexiblenaming = 1) or the given amount of examples (flexiblenaming = 0)
+     * coverage() determines how many grades are covered/not covered by
+     * the current forms grade distribution and displays this information
      *
-     * @return true if everything's allright (no error handling by now)
+     * @return true if everything's allright, false on detected error
      */
-    Settings.prototype.coverage = function(data) {
+    Gradedist.prototype.coverage = function(data) {
 
+        var error = false;
         var erremp = false;
         var errcov = Number(data.newcoverage[0]) != 0;
         var errcovdiv = $('#b_coverage').first();
 
-        $.each(boundaries, function(id, boundary) {
+        $.each(window.boundaries, function(id, boundary) {
             if (boundary.value == '') {
                 erremp = true;
             }
@@ -174,21 +179,26 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
 
         if (!erremp && errcov) {
             if (!errcovdiv.length) {
-                $('#boundary_error_container').first().append('<div class="b_error" id="b_coverage"><span>'
-                        + 'The coverage is a big strange' + '</span><span class="newcoverage">'
+                str.get_string('coverage', 'gradereport_gradedist').done(function (s) {
+                    $('#boundary_error_container').first().append('<div class="b_error" id="b_coverage"><span>'
+                        + s + '</span><span class="newcoverage">'
                         + data.newcoverage[0] + '/' + data.newcoverage[1] + '</span></div>');
+                });
             }
+            error = true;
         } else if (errcovdiv.length) {
             errcovdiv.remove();
         }
 
         $('.actcoverage').html(data.actcoverage[0] + '/' + data.actcoverage[1] + ' (' + data.actcoverage[2] + '%)');
         $('.newcoverage').html(data.newcoverage[0] + '/' + data.newcoverage[1] + ' (' + data.newcoverage[2] + '%)');
+
+        return !error;
     };
 
 
-    Settings.prototype.dohigh = function() {
- 
+    Gradedist.prototype.initChart = function(initdata, letters) {
+
         var tofetch = [
             {key: 'gradeletter', component: 'gradereport_gradedist'},
             {key: 'absolut', component: 'gradereport_gradedist'},
@@ -200,16 +210,15 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             {key: 'downloadsvg', component: 'gradereport_gradedist'},
             {key: 'downloadjpeg', component: 'gradereport_gradedist'},
             {key: 'contextbuttontitle', component: 'gradereport_gradedist'},
-                    ];
+        ];
         str.get_strings(tofetch).done(function(s) {
-
-            chart = new Highcharts.Chart({
+            window.chart = new Highcharts.Chart({
                chart: {
                    renderTo: 'chart_container',
                    type: 'column'
                },
                title: {
-                   text: data.title
+                   text: initdata.title
                },
                xAxis: {
                    title: {
@@ -238,7 +247,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                },
                series:
                [{
-                   data: absolut,
+                   data: window.absolut,
                    color: '#990000',
                    dataLabels: {
                        enabled: true,
@@ -249,7 +258,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                    }
                },
                {
-                   data: absolutnew,
+                   data: window.absolutnew,
                    color: '#33cc33',
                    dataLabels: {
                        enabled: true,
@@ -260,50 +269,50 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                    }
                }]
            });
-    });
+        });
     };
 
 
-    var instance = new Settings();
+    var instance = new Gradedist();
 
     /*
      * initializer(config) prepares settings form for JS-functionality
      */
     instance.initializer = function(config) {
-        
+
         log.info('Initialize settings JS', 'gradedist');
 
-        data = config.data;
+        var initdata = config.data;
 
-        mode = 0;
-        letters = [];
+        window.mode = 0;
+        var letters = [];
 
-        absolut = [];
-        percent = [];
-        absolutnew = [];
-        percentnew = [];
+        window.absolut = [];
+        window.percent = [];
+        window.absolutnew = [];
+        window.percentnew = [];
 
         var submitSelector = "#id_submitbutton";
-        submit = $(submitSelector).first();
-        if (submit) {
-            submit.prop('disabled', true);
+        window.submit = $(submitSelector);
+        if (window.submit.length) {
+            window.submit.prop('disabled', true);
         }
 
-        $.map(data.actdist, function(grade, index) {
+        $.map(initdata.actdist, function(grade, index) {
             letters.push(index);
-            absolut.push(grade.count);
-            percent.push(grade.percentage);
+            window.absolut.push(grade.count);
+            window.percent.push(grade.percentage);
         });
 
-        $.map(data.newdist, function(grade) {
-            absolutnew.push(grade.count);
-            percentnew.push(grade.percentage);
+        $.map(initdata.newdist, function(grade) {
+            window.absolutnew.push(grade.count);
+            window.percentnew.push(grade.percentage);
         });
 
 
-        chart = [];
-        if(data.highcharts) {
-            instance.dohigh();
+        window.chart = [];
+        if(initdata.highcharts) {
+            instance.initChart(initdata, letters);
         } else {
             var chartContainerSelector = "#chart_container";
             $(chartContainerSelector).first().html(
@@ -311,16 +320,16 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                     + str.get_string('highchartsmissing', 'gradereport_gradedist') + ' !!! ]</strong></i></p><br>');
         }
 
-     
-        var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + data.courseid;
 
-        var mycfg = {
+        var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + initdata.courseid;
+
+        var cfg = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             },
             complete: function(arg1) { instance.update(arg1);},
-            url: uri,
+            url: uri
         };
 
 
@@ -331,8 +340,8 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             if (success) {
                 success.remove();
             }
-            mycfg.data = $('#letterform').serialize() + "&updateall=1";
-            $.ajax(mycfg);
+            cfg.data = $('#letterform').serialize() + "&updateall=1";
+            $.ajax(cfg);
         });
 
         var coursegroupsSelector = "#id_coursegroup";
@@ -344,8 +353,8 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                     success.remove();
                 }
                 $('#id_coursegrouping').first().prop('value', '0');
-                mycfg.data = $('#letterform').serialize() + "&updateall=1";
-                $.ajax(mycfg);
+                cfg.data = $('#letterform').serialize() + "&updateall=1";
+                $.ajax(cfg);
             });
         }
 
@@ -358,13 +367,13 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                     success.remove();
                 }
                 $('#id_coursegroup').first().prop('value', '0');
-                mycfg.data = $('#letterform').serialize() + "&updateall=1";
-                $.ajax(mycfg);
+                cfg.data = $('#letterform').serialize() + "&updateall=1";
+                $.ajax(cfg);
             });
         }
 
-        boundaries = $('.gradeboundaries_new input[type=text], #fgroup_id_grp_gradeboundaries_new input[type=text]');
-        boundaries.change(instance, function () {
+        window.boundaries = $('.gradeboundaries_new input[type=text], #fgroup_id_grp_gradeboundaries_new input[type=text]');
+        window.boundaries.change(instance, function () {
             var notifications =
                     $('#page-grade-report-gradedist-index .notifyproblem, #page-grade-report-gradedist-index .notifysuccess');
             if (notifications) {
@@ -375,48 +384,48 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
                 success.remove();
             }
             if (instance.validate()) {
-                mycfg.data = $('#letterform').serialize() + "&updateall=1";
-                $.ajax(mycfg);
+                cfg.data = $('#letterform').serialize() + "&updateall=1";
+                $.ajax(cfg);
             }
         });
 
 
         var desc = $('input[name^="grp_description"]');
-        desc.change(instance, function (e) {
-            mode = this.value;
+        desc.change(instance, function () {
+            window.mode = this.value;
             var values, values_new;
 
             var s_y;
             var ext_y;
-            if (mode == 1) {
-                values = percent;
-                values_new = percentnew;
+            if (window.mode == 1) {
+                values = window.percent;
+                values_new = window.percentnew;
                 s_y = 'percent';
                 ext_y = 100;
             } else {
-                values = absolut;
-                values_new = absolutnew;
-                s_y = 'absolut'
+                values = window.absolut;
+                values_new = window.absolutnew;
+                s_y = 'absolut';
                 ext_y = null;
             }
 
             str.get_string(s_y, 'gradereport_gradedist').done(function(s) {
-                chart.yAxis[0].axisTitle.attr({
+                window.chart.yAxis[0].axisTitle.attr({
                     text: s
                 });
-                chart.yAxis[0].setExtremes(0, ext_y);
-                chart.series[0].setData(values);
-                chart.series[1].setData(values_new);
-            })
+                window.chart.yAxis[0].setExtremes(0, ext_y);
+                window.chart.series[0].setData(values);
+                window.chart.series[1].setData(values_new);
+            });
         });
 
         var cols = $('#id_grp_columns_actualcolumns, #id_grp_columns_newcolumns');
-        cols.click(instance, function (e) {
+        cols.click(instance, function () {
             var column = (this.id === 'id_grp_columns_actualcolumns') ? 0 : 1;
             if(this.checked) {
-                chart.series[column].show();
+                window.chart.series[column].show();
             } else {
-                chart.series[column].hide();
+                window.chart.series[column].hide();
             }
         });
 
