@@ -107,3 +107,5 @@ $string['confirmationtableviewed_description'] = 'Der Benutzer mit id {$a->useri
 
 $string['newletterssubmitted'] = 'Neue Notenstufen gespeichert';
 $string['newletterssubmitted_description'] = 'Der Benutzer mit id {$a->userid} speicherte die neuen Notenstufen.';
+
+$string['privacy:null_reason'] = 'Dieses Plugin speichert keine persönlichen Daten. Es bietet eine Schnittstelle an, von der aus eine visuelle Repräsentation der Notenverteilung in einem Kurs eingesehen werden kann. Existierende Daten können exportiert werden.';

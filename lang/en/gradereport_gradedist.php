@@ -107,3 +107,5 @@ $string['confirmationtableviewed_description'] = 'The user with id {$a->userid} 
 
 $string['newletterssubmitted'] = 'New grade letters submitted';
 $string['newletterssubmitted_description'] = 'The user with id {$a->userid} submitted the new grade letters.';
+
+$string['privacy:null_reason'] = 'This plugin does not store any personal information. It presents an interface to visually display and export the grade distribution of the graded elements within a course.';
