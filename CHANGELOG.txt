@@ -1,12 +1,13 @@
 CHANGELOG
 =========
 
-3.4.0 (2018-04-21)
+3.4.0 (2018-04-24)
 ------------------
 
 * Moodle 3.4 compatible version
 * [FEATURE] #3202 Check use of YUI and analyze rewrite to JQuery/Javascript Modules
 * [FEATURE] #5385 Add nullprovider for Privacy API
+* [FEATURE] #5114 Remove german lang strings from master (moved to moodledata dir)
 
 
 3.3.0 (2017-07-27)
