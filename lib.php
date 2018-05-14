@@ -250,7 +250,7 @@ class grade_report_gradedist extends grade_report_grader {
      * We supply the letters and gradeitem in this query, and get the distribution.
      */
     public function load_distribution($newletters, $gradeitem=0, $groupid=0, $groupingid=0) {
-        global $CFG, $DB;
+        global $DB;
 
         $this->load_users();
         $selectedusers = array();

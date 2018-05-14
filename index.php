@@ -265,7 +265,7 @@ if ($confirm && !$boundaryerror) {
     $params = new stdClass();
     $params->data = $data;
     $PAGE->requires->js_call_amd('gradereport_gradedist/gradedist', 'initializer', array($params));
-    
+
     print_grade_page_head($course->id, 'report', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
 
     if ($saved) {
