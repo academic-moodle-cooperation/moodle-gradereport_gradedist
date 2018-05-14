@@ -2,7 +2,7 @@
 language: php
 
 # This tells Travis CI to use its new architecture.  Everything is better!
-sudo: false
+sudo: required
 
 addons:
   firefox: "47.0.1"
