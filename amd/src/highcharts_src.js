@@ -1,12 +1,11 @@
-<?php
-// This file is part of gradereport_gradedist for Moodle - http://moodle.org/
+// This file is part of mod_checkmark for Moodle - http://moodle.org/
 //
-// Moodle is free software: you can redistribute it and/or modify
+// It is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Moodle is distributed in the hope that it will be useful,
+// It is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -15,17 +14,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * highcharts_src.js
+ *
  * @package   gradereport_gradedist
- * @author    Günther Bernsteiner
  * @author    Andreas Krieger
  * @copyright 2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+ /**
+  * @module gradereport_gradedist/highcharts_src
+  */
 
-$plugin->version  = 2018112800;
-$plugin->requires  = 2018112300;
-$plugin->component = 'gradereport_gradedist';
-$plugin->maturity  = MATURITY_BETA;
-$plugin->release   = "v3.6.0";
+
+define(['gradereport_gradedist/config', 'highcharts_src'], function(unused,highcharts_src) {
+      return highcharts_src;
+   }
+);
