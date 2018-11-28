@@ -18,7 +18,7 @@
  *
  * @package   gradereport_gradedist
  * @author    Andreas Krieger
- * @copyright 2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @copyright 2018 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,5 +29,4 @@
 
 define(['gradereport_gradedist/config', 'highcharts_src'], function(unused,highcharts_src) {
       return highcharts_src;
-   }
-);
+});

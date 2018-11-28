@@ -29,14 +29,14 @@
 define([], function () {
     window.requirejs.config({
         paths: {
-           //Enter the paths to your required java-script files  
-            "highcharts_src": M.cfg.wwwroot + '/grade/report/gradedist/js/highcharts.src',
-            "highcharts_min": M.cfg.wwwroot + '/grade/report/gradedist/js/highcharts',
+            // Enter the paths to your required java-script files.
+            "highcharts_src": M.cfg.wwwroot + '/grade/report/gradedist/js/exporting.src',
+            "highcharts_min": M.cfg.wwwroot + '/grade/report/gradedist/js/exporting',
         },
         shim: {
-           //Enter the "names" that will be used to refer to your libraries
-           'highcharts_src': {exports: 'Highcharts'},
-           'highcharts_min': {exports: 'Highcharts'},
-       }
+            // Enter the "names" that will be used to refer to your libraries.
+            'highcharts_src': {exports: 'Highcharts'},
+            'highcharts_min': {exports: 'Highcharts'},
+        }
     });
 });

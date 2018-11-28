@@ -18,7 +18,7 @@
  *
  * @package   gradereport_gradedist
  * @author    Andreas Krieger
- * @copyright 2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @copyright 2014-2018 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -74,7 +74,6 @@ function($, log, str) {
 
         return true;
     };
-
 
     /*
      * validate() checks if the current boundaries given in the form data are
@@ -158,7 +157,6 @@ function($, log, str) {
         return !error;
     };
 
-
     /*
      * coverage() determines how many grades are covered/not covered by
      * the current forms grade distribution and displays this information
@@ -197,7 +195,6 @@ function($, log, str) {
         return !error;
     };
 
-
     Gradedist.prototype.initChart = function(initdata, letters, HC) {
 
         var tofetch = [
@@ -215,65 +212,64 @@ function($, log, str) {
 
         str.get_strings(tofetch).done(function(s) {
             window.chart = new HC.Chart({
-               chart: {
-                   renderTo: 'chart_container',
-                   type: 'column'
-               },
-               title: {
-                   text: initdata.title
-               },
-               xAxis: {
-                   title: {
-                       text: s[0]
-                   },
-                   categories: letters
-               },
-               yAxis: {
-                   title: {
-                       text: s[1]
-                   }
-               },
-               legend: {
-                   enabled: false
-               },
-               tooltip: {
-                   enabled: false
-               },
-               lang: {
-                   printChart: s[3],
-                   downloadPNG: s[4],
-                   downloadJPEG: s[5],
-                   downloadPDF: s[6],
-                   downloadSVG: s[7],
-                   contextButtonTitle: s[8]
-               },
-               series:
-               [{
-                   data: window.absolut,
-                   color: '#990000',
-                   dataLabels: {
-                       enabled: true,
-                       color: '#000000',
-                       style: {
-                           fontWeight: 'normal'
-                       }
-                   }
-               },
-               {
-                   data: window.absolutnew,
-                   color: '#33cc33',
-                   dataLabels: {
-                       enabled: true,
-                       color: '#000000',
-                       style: {
-                           fontWeight: 'normal'
-                       }
-                   }
-               }]
-           });
+                chart: {
+                    renderTo: 'chart_container',
+                    type: 'column'
+                },
+                title: {
+                    text: initdata.title
+                },
+                xAxis: {
+                    title: {
+                        text: s[0]
+                    },
+                    categories: letters
+                },
+                yAxis: {
+                    title: {
+                        text: s[1]
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    enabled: false
+                },
+                lang: {
+                    printChart: s[3],
+                    downloadPNG: s[4],
+                    downloadJPEG: s[5],
+                    downloadPDF: s[6],
+                    downloadSVG: s[7],
+                    contextButtonTitle: s[8]
+                },
+                series:
+                [{
+                    data: window.absolut,
+                    color: '#990000',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        style: {
+                            fontWeight: 'normal'
+                        }
+                    }
+                },
+                {
+                    data: window.absolutnew,
+                    color: '#33cc33',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        style: {
+                            fontWeight: 'normal'
+                        }
+                    }
+                }]
+            });
         });
     };
-
 
     var instance = new Gradedist();
 
@@ -314,21 +310,20 @@ function($, log, str) {
         window.chart = [];
         if (initdata.highcharts_src) {
             require(['gradereport_gradedist/highcharts_src'], function (highcharts_src) {
-            instance.initChart(initdata,letters,highcharts_src);
+                instance.initChart(initdata,letters,highcharts_src);
             });
         } else if (initdata.highcharts_min) {
             require(['gradereport_gradedist/highcharts_min'], function (highcharts_min) {
-            instance.initChart(initdata,letters,highcharts_min);
+                instance.initChart(initdata,letters,highcharts_min);
             });
         } else {
             var chartContainerSelector = "#chart_container";
             str.get_string('highchartsmissing', 'gradereport_gradedist').done(function (s) {
-            $(chartContainerSelector).first().html(
+                $(chartContainerSelector).first().html(
                     '<br><p><i><strong>[ !!! '
                     + s + ' !!! ]</strong></i></p><br>');
             });
         }
-
 
         var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + initdata.courseid;
 
@@ -340,7 +335,6 @@ function($, log, str) {
             complete: function(arg1) { instance.update(arg1);},
             url: uri
         };
-
 
         var gradeitemsSelector = "#id_gradeitem";
         var gradeitems = $(gradeitemsSelector).first();
@@ -397,7 +391,6 @@ function($, log, str) {
                 $.ajax(cfg);
             }
         });
-
 
         var desc = $('input[name^="grp_description"]');
         desc.change(instance, function () {
