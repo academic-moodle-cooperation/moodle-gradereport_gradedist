@@ -26,7 +26,8 @@
   * @module gradereport_gradedist/gradedist
   */
 
-define(['jquery', 'core/log', 'core/str'], function($, log, str) {
+define(['jquery', 'core/log', 'core/str'],
+function($, log, str) {
     /**
      * @constructor
      * @alias module:gradereport_gradedist/gradedist
@@ -197,7 +198,7 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
     };
 
 
-    Gradedist.prototype.initChart = function(initdata, letters) {
+    Gradedist.prototype.initChart = function(initdata, letters, HC) {
 
         var tofetch = [
             {key: 'gradeletter', component: 'gradereport_gradedist'},
@@ -211,8 +212,9 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             {key: 'downloadjpeg', component: 'gradereport_gradedist'},
             {key: 'contextbuttontitle', component: 'gradereport_gradedist'},
         ];
+
         str.get_strings(tofetch).done(function(s) {
-            window.chart = new Highcharts.Chart({
+            window.chart = new HC.Chart({
                chart: {
                    renderTo: 'chart_container',
                    type: 'column'
@@ -309,15 +311,22 @@ define(['jquery', 'core/log', 'core/str'], function($, log, str) {
             window.percentnew.push(grade.percentage);
         });
 
-
         window.chart = [];
-        if(initdata.highcharts) {
-            instance.initChart(initdata, letters);
+        if (initdata.highcharts_src) {
+            require(['gradereport_gradedist/highcharts_src'], function (highcharts_src) {
+            instance.initChart(initdata,letters,highcharts_src);
+            });
+        } else if (initdata.highcharts_min) {
+            require(['gradereport_gradedist/highcharts_min'], function (highcharts_min) {
+            instance.initChart(initdata,letters,highcharts_min);
+            });
         } else {
             var chartContainerSelector = "#chart_container";
+            str.get_string('highchartsmissing', 'gradereport_gradedist').done(function (s) {
             $(chartContainerSelector).first().html(
                     '<br><p><i><strong>[ !!! '
-                    + str.get_string('highchartsmissing', 'gradereport_gradedist') + ' !!! ]</strong></i></p><br>');
+                    + s + ' !!! ]</strong></i></p><br>');
+            });
         }
 
 

@@ -55,15 +55,10 @@ $PAGE->set_url('/grade/report/gradedist/index.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display.
 $PAGE->requires->jquery();
 
-if ($highcharts = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.src.js') &&
-        file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.src.js')) {
-    $PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
-    $PAGE->requires->js('/grade/report/gradedist/js/exporting.src.js');
-} else if ($highcharts = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.js') &&
-        file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.js')) {
-    $PAGE->requires->js('/grade/report/gradedist/js/highcharts.js');
-    $PAGE->requires->js('/grade/report/gradedist/js/exporting.js');
-}
+$highcharts_src = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.src.js') &&
+        file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.src.js');
+$highcharts_min = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.js') &&
+        file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.js');
 
 $letters = grade_get_letters($context);
 krsort($letters, SORT_NUMERIC);
@@ -260,7 +255,9 @@ if ($confirm && !$boundaryerror) {
     $data->newcoverage = $newdist->coverage;
     $data->title = $gradeitems[$gradeitem]->name;
     $data->highcharts = $highcharts;
-
+    $data->highcharts_min = $highcharts_min;
+    $data->highcharts_src = $highcharts_src;
+    
     // Start output.
     $params = new stdClass();
     $params->data = $data;

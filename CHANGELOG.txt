@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+3.6.0 (2018-11-28)
+------------------
+
+* Moodle 3.6 compatible version
+* [FIXED] Conditionally load Highcharts src or min version per require-functionality
+
+
 3.5.0 (2018-05-12)
 ------------------
 
