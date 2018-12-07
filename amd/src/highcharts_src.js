@@ -27,6 +27,6 @@
   */
 
 
-define(['gradereport_gradedist/config', 'highcharts_src'], function(unused,highcharts_src) {
+define(['gradereport_gradedist/config', 'highcharts_src'], function(unused, highcharts_src) {
       return highcharts_src;
 });

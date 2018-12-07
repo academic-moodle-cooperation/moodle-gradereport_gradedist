@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+3.6.1 (2018-12-07)
+------------------
+
+* [FIXED] Fixed small bug "unknown variable highcharts"
+* [FIXED] Fixed a few settings to get travis-ci to build ok
+
+
 3.6.0 (2018-11-28)
 ------------------
 

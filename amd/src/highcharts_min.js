@@ -27,6 +27,6 @@
   */
 
 
-define(['gradereport_gradedist/config', 'highcharts_min'], function(unused,highcharts_min) {
+define(['gradereport_gradedist/config', 'highcharts_min'], function(unused, highcharts_min) {
       return highcharts_min;
 });
