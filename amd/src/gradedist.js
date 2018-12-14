@@ -309,11 +309,11 @@ function($, log, str) {
 
         window.chart = [];
         if (initdata.highcharts_src) {
-            require(['gradereport_gradedist/highcharts_src'], function(highcharts_src) {
+            require(['gradereport_gradedist/define_hc_src'], function(highcharts_src) {
                 instance.initChart(initdata, letters, highcharts_src);
             });
         } else if (initdata.highcharts_min) {
-            require(['gradereport_gradedist/highcharts_min'], function(highcharts_min) {
+            require(['gradereport_gradedist/define_hc_min'], function(highcharts_min) {
                 instance.initChart(initdata, letters, highcharts_min);
             });
         } else {
