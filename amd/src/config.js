@@ -26,7 +26,7 @@
   * @module gradereport_gradedist/config
   */
 
-define([], function () {
+define([], function() {
     window.requirejs.config({
         paths: {
             // Enter the paths to your required java-script files.
