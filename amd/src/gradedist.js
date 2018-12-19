@@ -44,7 +44,7 @@ function($, log, str) {
 
         var data = JSON.parse(o.responseText);
 
-        if(data.updateall == 1) {
+        if (data.updateall == 1) {
             window.absolut = [];
             window.percent = [];
 
@@ -57,7 +57,7 @@ function($, log, str) {
 
             window.chart.series[0].setData(values);
 
-            window.chart.setTitle({ text: data.title });
+            window.chart.setTitle({text: data.title});
         }
 
         window.absolutnew = [];
@@ -98,7 +98,7 @@ function($, log, str) {
         var pre = 100.01;
 
         $.each(window.boundaries, function(id, boundary) {
-            var value = boundary.value.replace(/,/g,'.');
+            var value = boundary.value.replace(/,/g, '.');
             if (value != '') {
                 if (!decimals.test(value)) {
                     errdec = true;
@@ -118,7 +118,7 @@ function($, log, str) {
 
         if (errdec) {
             if (!errdecdiv.length) {
-                str.get_string('decimals', 'gradereport_gradedist').done(function (s) {
+                str.get_string('decimals', 'gradereport_gradedist').done(function(s) {
                     $('#boundary_error_container').first().append('<div class="b_error" id="b_decimals"><span>'
                         + s + '</span></div>');
                 });
@@ -129,7 +129,7 @@ function($, log, str) {
         }
         if (errint) {
             if (!errintdiv.length) {
-                str.get_string('interval', 'gradereport_gradedist').done(function (s) {
+                str.get_string('interval', 'gradereport_gradedist').done(function(s) {
                     $('#boundary_error_container').first().append('<div class="b_error" id="b_interval"><span>'
                         + s + '</span></div>');
                 });
@@ -140,7 +140,7 @@ function($, log, str) {
         }
         if (errpre) {
             if (!errprediv.length) {
-                str.get_string('predecessor', 'gradereport_gradedist').done(function (s) {
+                str.get_string('predecessor', 'gradereport_gradedist').done(function(s) {
                     $('#boundary_error_container').first().append('<div class="b_error" id="b_predecessor"><span>'
                         + s + '</span></div>');
                 });
@@ -178,7 +178,7 @@ function($, log, str) {
 
         if (!erremp && errcov) {
             if (!errcovdiv.length) {
-                str.get_string('coverage', 'gradereport_gradedist').done(function (s) {
+                str.get_string('coverage', 'gradereport_gradedist').done(function(s) {
                     $('#boundary_error_container').first().append('<div class="b_error" id="b_coverage"><span>'
                         + s + '</span><span class="newcoverage">'
                         + data.newcoverage[0] + '/' + data.newcoverage[1] + '</span></div>');
@@ -309,16 +309,16 @@ function($, log, str) {
 
         window.chart = [];
         if (initdata.highcharts_src) {
-            require(['gradereport_gradedist/highcharts_src'], function (highcharts_src) {
-                instance.initChart(initdata,letters,highcharts_src);
+            require(['gradereport_gradedist/define_hc_src'], function(highcharts_src) {
+                instance.initChart(initdata, letters, highcharts_src);
             });
         } else if (initdata.highcharts_min) {
-            require(['gradereport_gradedist/highcharts_min'], function (highcharts_min) {
-                instance.initChart(initdata,letters,highcharts_min);
+            require(['gradereport_gradedist/define_hc_min'], function(highcharts_min) {
+                instance.initChart(initdata, letters, highcharts_min);
             });
         } else {
             var chartContainerSelector = "#chart_container";
-            str.get_string('highchartsmissing', 'gradereport_gradedist').done(function (s) {
+            str.get_string('highchartsmissing', 'gradereport_gradedist').done(function(s) {
                 $(chartContainerSelector).first().html(
                     '<br><p><i><strong>[ !!! '
                     + s + ' !!! ]</strong></i></p><br>');
@@ -332,13 +332,13 @@ function($, log, str) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             },
-            complete: function(arg1) { instance.update(arg1);},
+            complete: function(arg1) { instance.update(arg1); },
             url: uri
         };
 
         var gradeitemsSelector = "#id_gradeitem";
         var gradeitems = $(gradeitemsSelector).first();
-        gradeitems.change(instance, function () {
+        gradeitems.change(instance, function() {
             var success = $('.alert-success');
             if (success) {
                 success.remove();
@@ -350,7 +350,7 @@ function($, log, str) {
         var coursegroupsSelector = "#id_coursegroup";
         var coursegroups = $(coursegroupsSelector).first();
         if (coursegroups) {
-            coursegroups.change(instance, function () {
+            coursegroups.change(instance, function() {
                 var success = $('.alert-success');
                 if (success) {
                     success.remove();
@@ -364,7 +364,7 @@ function($, log, str) {
         var coursegroupingsSelector = "#id_coursegrouping";
         var coursegroupings = $(coursegroupingsSelector).first();
         if (coursegroupings) {
-            coursegroupings.change(instance, function () {
+            coursegroupings.change(instance, function() {
                 var success = $('.alert-success');
                 if (success) {
                     success.remove();
@@ -376,7 +376,7 @@ function($, log, str) {
         }
 
         window.boundaries = $('.gradeboundaries_new input[type=text], #fgroup_id_grp_gradeboundaries_new input[type=text]');
-        window.boundaries.change(instance, function () {
+        window.boundaries.change(instance, function() {
             var notifications =
                     $('#page-grade-report-gradedist-index .notifyproblem, #page-grade-report-gradedist-index .notifysuccess');
             if (notifications) {
@@ -393,7 +393,7 @@ function($, log, str) {
         });
 
         var desc = $('input[name^="grp_description"]');
-        desc.change(instance, function () {
+        desc.change(instance, function() {
             window.mode = this.value;
             var values, values_new;
 
@@ -422,9 +422,9 @@ function($, log, str) {
         });
 
         var cols = $('#id_grp_columns_actualcolumns, #id_grp_columns_newcolumns');
-        cols.click(instance, function () {
+        cols.click(instance, function() {
             var column = (this.id === 'id_grp_columns_actualcolumns') ? 0 : 1;
-            if(this.checked) {
+            if (this.checked) {
                 window.chart.series[column].show();
             } else {
                 window.chart.series[column].hide();

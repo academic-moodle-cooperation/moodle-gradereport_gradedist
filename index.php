@@ -260,7 +260,6 @@ if ($confirm && !$boundaryerror) {
     $data->actcoverage = $actdist->coverage;
     $data->newcoverage = $newdist->coverage;
     $data->title = $gradeitems[$gradeitem]->name;
-    $data->highcharts = $highcharts;
     $data->highcharts_min = $highchartsmin;
     $data->highcharts_src = $highchartssrc;
 
