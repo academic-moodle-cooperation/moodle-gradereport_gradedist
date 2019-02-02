@@ -103,7 +103,15 @@ class edit_letter_form extends moodleform {
         $mform->setDefault('description', 0);
 
         $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), array(''));
-
+        
+        $to_image = array();
+        $to_image[] =& $mform->createElement('radio', 'to_image', '', "to_png", false);
+        $to_image[] =& $mform->createElement('radio', 'to_image', '', "to_jpg", true);
+        $mform->setDefault('to_image', 0);
+        
+        $mform->addGroup($to_image, 'grp_to_image', "going to image", array(''));
+        
+        
         $columns = array();
         $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '',
                 get_string('actualcolumns', 'gradereport_gradedist'));
@@ -114,7 +122,7 @@ class edit_letter_form extends moodleform {
 
         $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
 
-        $mform->addElement('html', '<div id="chart_container"></div>');
+        $mform->addElement('html', '<canvas height="100" id="chart_container"></canvas>');
 
         $mform->addElement('html', html_writer::div(get_string('actcoverage', 'gradereport_gradedist')
                 .html_writer::span($actcoverage[0].'/'.$actcoverage[1].' ('.$actcoverage[2].'%)', 'actcoverage')));

@@ -55,8 +55,9 @@ function($, log, str) {
 
             var values = (window.mode == 1) ? window.percent : window.absolut;
 
-            window.chart.data.datasets[0].data = values;
-            window.chart.options.title.text = [data.title, ""];
+            window.chart.series[0].setData(values);
+
+            window.chart.setTitle({text: data.title});
         }
 
         window.absolutnew = [];
@@ -69,8 +70,7 @@ function($, log, str) {
 
         instance.coverage(data);
         var newvalues = (window.mode == 1) ? window.percentnew : window.absolutnew;
-        window.chart.data.datasets[1].data = newvalues;
-        chart.update();
+        window.chart.series[1].setData(newvalues);
 
         return true;
     };
@@ -195,7 +195,7 @@ function($, log, str) {
         return !error;
     };
 
-    Gradedist.prototype.initChart = function(initdata, letters) {
+    Gradedist.prototype.initChart = function(initdata, letters, HC) {
 
         var tofetch = [
             {key: 'gradeletter', component: 'gradereport_gradedist'},
@@ -211,73 +211,62 @@ function($, log, str) {
         ];
 
         str.get_strings(tofetch).done(function(s) {
-            window.chart = new Chart($("#chart_container"), {
-                type: 'bar',
-                data: {
-                    labels: letters,
-                    datasets: [{
-                        data: window.absolut,
-                        backgroundColor: '#990000',
-                        borderWidth: 1,
-                    },
-                    {
-                        data: window.absolutnew,
-                        backgroundColor: '#33cc33',
-                        borderWidth: 1
-                    }]
+            window.chart = new HC.Chart({
+                chart: {
+                    renderTo: 'chart_container',
+                    type: 'column'
                 },
-                options: {
+                title: {
+                    text: initdata.title
+                },
+                xAxis: {
                     title: {
-                        display: true,
-                        text: [initdata.title, ""],
-                        fontSize: 18,
-                        fontStyle: 'normal'
+                        text: s[0]
                     },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                //maxTicksLimit: 6,
-                                padding: 10
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: s[1],
-                                fontColor: "#4d759e",
-                                fontSize: 15
-                            },
-                            gridLines: {
-                                drawBorder: false,
-                                lineWidth: 0.5,
-                                color: '#000000',
-                                zeroLineColor: '#c0e0d0'
-                            },
-                        }],
-                        xAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: s[0],
-                                fontColor: "#4d759e",
-                                fontSize: 15
-                            },
-                            gridLines: {
-                                drawOnChartArea: false,
-
-                            },
-                            barPercentage: 0.8
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    },
-                    plugins: {
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            color: '#000000'
+                    categories: letters
+                },
+                yAxis: {
+                    title: {
+                        text: s[1]
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    enabled: false
+                },
+                lang: {
+                    printChart: s[3],
+                    downloadPNG: s[4],
+                    downloadJPEG: s[5],
+                    downloadPDF: s[6],
+                    downloadSVG: s[7],
+                    contextButtonTitle: s[8]
+                },
+                series:
+                [{
+                    data: window.absolut,
+                    color: '#990000',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        style: {
+                            fontWeight: 'normal'
                         }
                     }
-                }
+                },
+                {
+                    data: window.absolutnew,
+                    color: '#33cc33',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        style: {
+                            fontWeight: 'normal'
+                        }
+                    }
+                }]
             });
         });
     };
@@ -319,7 +308,6 @@ function($, log, str) {
         });
 
         window.chart = [];
-        /*
         if (initdata.highcharts_src) {
             require(['gradereport_gradedist/define_hc_src'], function(highcharts_src) {
                 instance.initChart(initdata, letters, highcharts_src);
@@ -336,20 +324,6 @@ function($, log, str) {
                     + s + ' !!! ]</strong></i></p><br>');
             });
         }
-        */
-
-        require(['gradereport_gradedist/define_chart'], function(Chart) {
-            Chart.plugins.register({
-                beforeDraw: function(chartInstance) {
-                    var ctx = chartInstance.chart.ctx;
-                    ctx.fillStyle = "white";
-                    ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
-                }
-            });
-            require(['gradereport_gradedist/define_datalabels'], function() {
-                instance.initChart(initdata, letters);
-            });
-        });
 
         var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + initdata.courseid;
 
@@ -434,16 +408,16 @@ function($, log, str) {
                 values = window.absolut;
                 values_new = window.absolutnew;
                 s_y = 'absolut';
-                ext_y = Math.max(Math.max.apply(this, window.absolut),Math.max.apply(this, window.absolutnew));
+                ext_y = null;
             }
-            
+
             str.get_string(s_y, 'gradereport_gradedist').done(function(s) {
-                window.chart.options.scales.yAxes[0].scaleLabel.labelString = s;
-                window.chart.options.scales.yAxes[0].ticks.suggestedMax = ext_y;
-                
-                window.chart.data.datasets[0].data = values;
-                window.chart.data.datasets[1].data = values_new;
-                window.chart.update();
+                window.chart.yAxis[0].axisTitle.attr({
+                    text: s
+                });
+                window.chart.yAxis[0].setExtremes(0, ext_y);
+                window.chart.series[0].setData(values);
+                window.chart.series[1].setData(values_new);
             });
         });
 
@@ -451,60 +425,11 @@ function($, log, str) {
         cols.click(instance, function() {
             var column = (this.id === 'id_grp_columns_actualcolumns') ? 0 : 1;
             if (this.checked) {
-                window.chart.data.datasets[column].hidden = false;
-                window.chart.update();
+                window.chart.series[column].show();
             } else {
-                window.chart.data.datasets[column].hidden = true;
-                window.chart.update();
+                window.chart.series[column].hide();
             }
         });
-
-        var toimg = $('input[name^="grp_to_image"]');
-
-
-        /* this very well works 
-        toimg.change(instance, function() {
-            require(['gradereport_gradedist/define_html2pdf'], function(html2pdf) {
-                var container = document.getElementById('chart_container');
-                var opt = {
-                  margin:       1,
-                  filename:     'myfile.pdf',
-                  image:        { type: 'jpeg', quality: 0.98 },
-                  //html2canvas:  { scale: 2 },
-                  jsPDF:        { unit: 'px', format: [1000,400], orientation: 'landscape' }
-                };
-                html2pdf(container, opt);
-            });
-        });
-        */
-        /* this does not work, jsPDF() not defined it says
-        toimg.change(instance, function() {
-            require(['gradereport_gradedist/define_jspdf'], function() {
-                //alert(JSON.stringify(jsPDF, false));
-                var imgData = document.getElementById('chart_container').toDataURL("image/jpg", 1.0);
-                var pdf = new jsPDF();
-                pdf.addImage(imgData, 'JPEG', 0, 0);
-                pdf.save("download.pdf");
-            });
-        });
-        */
-        /* to png (works)
-        toimg.change(instance, function() {
-            require(['gradereport_gradedist/define_filesaver'], function() {
-                $("#chart_container").get(0).toBlob(function(blob) {
-                    saveAs(blob, "chart_1.png");
-                });
-            });
-        });
-        */
-        /* to jpg (works)
-        toimg.change(instance, function() {
-            require(['gradereport_gradedist/define_filesaver'], function() {
-                var imgData = document.getElementById('chart_container').toDataURL("image/jpeg", 1.0);
-                saveAs(imgData, "chart_1.jpg");
-            });
-        });
-        */               
 
         instance.validate();
     };
