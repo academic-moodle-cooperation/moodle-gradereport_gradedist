@@ -246,7 +246,7 @@ function($, log, str) {
                 },
                 series:
                 [{
-                    data: window.absolut,
+                    data: Array.from(window.absolut),
                     color: '#990000',
                     dataLabels: {
                         enabled: true,
@@ -257,7 +257,7 @@ function($, log, str) {
                     }
                 },
                 {
-                    data: window.absolutnew,
+                    data: Array.from(window.absolutnew),
                     color: '#33cc33',
                     dataLabels: {
                         enabled: true,
@@ -400,13 +400,13 @@ function($, log, str) {
             var s_y;
             var ext_y;
             if (window.mode == 1) {
-                values = window.percent;
-                values_new = window.percentnew;
+                values = Array.from(window.percent);
+                values_new = Array.from(window.percentnew);
                 s_y = 'percent';
                 ext_y = 100;
             } else {
-                values = window.absolut;
-                values_new = window.absolutnew;
+                values = Array.from(window.absolut);
+                values_new = Array.from(window.absolutnew);
                 s_y = 'absolut';
                 ext_y = null;
             }
