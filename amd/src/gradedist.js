@@ -26,8 +26,8 @@
   * @module gradereport_gradedist/gradedist
   */
 
-define(['jquery', 'core/log', 'core/str'],
-function($, log, str) {
+define(['jquery', 'core/log', 'core/str', 'core/chartjs'],
+function($, log, str, xchart) {
     /**
      * @constructor
      * @alias module:gradereport_gradedist/gradedist
@@ -70,7 +70,7 @@ function($, log, str) {
         instance.coverage(data);
         var newvalues = (window.mode == 1) ? window.percentnew : window.absolutnew;
         window.chart.data.datasets[1].data = newvalues;
-        chart.update();
+        window.chart.update();
 
         return true;
     };
@@ -211,7 +211,7 @@ function($, log, str) {
         ];
 
         str.get_strings(tofetch).done(function(s) {
-            window.chart = new Chart($("#chart_container"), {
+            window.chart = new xchart($("#chart_container"), {
                 type: 'bar',
                 data: {
                     labels: letters,
@@ -436,11 +436,11 @@ function($, log, str) {
                 s_y = 'absolut';
                 ext_y = Math.max(Math.max.apply(this, window.absolut),Math.max.apply(this, window.absolutnew));
             }
-            
+
             str.get_string(s_y, 'gradereport_gradedist').done(function(s) {
                 window.chart.options.scales.yAxes[0].scaleLabel.labelString = s;
                 window.chart.options.scales.yAxes[0].ticks.suggestedMax = ext_y;
-                
+
                 window.chart.data.datasets[0].data = values;
                 window.chart.data.datasets[1].data = values_new;
                 window.chart.update();
@@ -461,8 +461,7 @@ function($, log, str) {
 
         var toimg = $('input[name^="grp_to_image"]');
 
-
-        /* this very well works 
+        /* this very well works */
         toimg.change(instance, function() {
             require(['gradereport_gradedist/define_html2pdf'], function(html2pdf) {
                 var container = document.getElementById('chart_container');
@@ -476,7 +475,7 @@ function($, log, str) {
                 html2pdf(container, opt);
             });
         });
-        */
+
         /* this does not work, jsPDF() not defined it says
         toimg.change(instance, function() {
             require(['gradereport_gradedist/define_jspdf'], function() {
