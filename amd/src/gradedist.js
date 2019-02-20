@@ -211,7 +211,7 @@ function($, log, str, xchart) {
         ];
 
         str.get_strings(tofetch).done(function(s) {
-            window.chart = new xchart($("#chart_container"), {
+            window.chart = new Chart($("#chart_container"), {
                 type: 'bar',
                 data: {
                     labels: letters,
