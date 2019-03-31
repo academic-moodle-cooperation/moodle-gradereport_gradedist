@@ -30,21 +30,17 @@ define([], function() {
     window.requirejs.config({
         paths: {
             // Enter the paths to your required java-script files.
-            "highcharts_src": M.cfg.wwwroot + '/grade/report/gradedist/js/exporting.src',
-            "highcharts_min": M.cfg.wwwroot + '/grade/report/gradedist/js/exporting',
-            //"filesaver": M.cfg.wwwroot + '/grade/report/gradedist/js/FileSaver',
+            "filesaver": M.cfg.wwwroot + '/grade/report/gradedist/js/FileSaver',
             "html2pdf": M.cfg.wwwroot + '/grade/report/gradedist/js/html2pdf.bundle.min',
-            "chart": M.cfg.wwwroot + '/grade/report/gradedist/js/chart.bundle',
-            "ChartDataLabels": M.cfg.wwwroot + '/grade/report/gradedist/js/chartjs-plugin-datalabels',
+            "canvas2svg": M.cfg.wwwroot + '/grade/report/gradedist/js/canvas2svg',
+            "ChartDataLabels": M.cfg.wwwroot + '/grade/report/gradedist/js/plugins/chartjs-plugin-datalabels',
         },
         shim: {
             // Enter the "names" that will be used to refer to your libraries.
-            'highcharts_src': {exports: 'Highcharts'},
-            'highcharts_min': {exports: 'Highcharts'},
-            //'filesaver': {exports: 'saveAs'},
+            'filesaver': {exports: 'saveAs'},
             'html2pdf': {exports: 'html2pdf'},
-            'chart': {exports: 'Chart'},
-            'ChartDataLabels': {exports: 'ChartDataLabels'},
+            'canvas2svg': {exports: 'C2S'},
+            'ChartDataLabels': {exports: 'Chart'},
         }
     });
 });

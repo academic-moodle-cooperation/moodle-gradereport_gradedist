@@ -105,11 +105,12 @@ class edit_letter_form extends moodleform {
         $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), array(''));
         
         $to_image = array();
-        $to_image[] =& $mform->createElement('radio', 'to_image', '', "to_png", false);
-        $to_image[] =& $mform->createElement('radio', 'to_image', '', "to_jpg", true);
+        $to_image[] =& $mform->createElement('html', '<a href="#png" class="grgd_png">PNG&nbsp;</a>');
+        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">JPG&nbsp;</a>');
+        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">PDF&nbsp;</a>');
         $mform->setDefault('to_image', 0);
         
-        $mform->addGroup($to_image, 'grp_to_image', "going to image", array(''));
+        $mform->addGroup($to_image, 'grp_to_image', "Export chart as image", array(''));
         
         
         $columns = array();

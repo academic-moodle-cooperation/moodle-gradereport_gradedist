@@ -26,8 +26,8 @@
   * @module gradereport_gradedist/gradedist
   */
 
-define(['jquery', 'core/log', 'core/str', 'core/chartjs'],
-function($, log, str, xchart) {
+define(['jquery', 'core/log', 'core/str'],
+function($, log, str) {
     /**
      * @constructor
      * @alias module:gradereport_gradedist/gradedist
@@ -210,6 +210,8 @@ function($, log, str, xchart) {
             {key: 'contextbuttontitle', component: 'gradereport_gradedist'},
         ];
 
+
+        
         str.get_strings(tofetch).done(function(s) {
             window.chart = new Chart($("#chart_container"), {
                 type: 'bar',
@@ -248,7 +250,7 @@ function($, log, str, xchart) {
                             },
                             gridLines: {
                                 drawBorder: false,
-                                lineWidth: 0.5,
+                                lineWidth: 0.3,
                                 color: '#000000',
                                 zeroLineColor: '#c0e0d0'
                             },
@@ -319,26 +321,8 @@ function($, log, str, xchart) {
         });
 
         window.chart = [];
-        /*
-        if (initdata.highcharts_src) {
-            require(['gradereport_gradedist/define_hc_src'], function(highcharts_src) {
-                instance.initChart(initdata, letters, highcharts_src);
-            });
-        } else if (initdata.highcharts_min) {
-            require(['gradereport_gradedist/define_hc_min'], function(highcharts_min) {
-                instance.initChart(initdata, letters, highcharts_min);
-            });
-        } else {
-            var chartContainerSelector = "#chart_container";
-            str.get_string('highchartsmissing', 'gradereport_gradedist').done(function(s) {
-                $(chartContainerSelector).first().html(
-                    '<br><p><i><strong>[ !!! '
-                    + s + ' !!! ]</strong></i></p><br>');
-            });
-        }
-        */
 
-        require(['gradereport_gradedist/define_chart'], function(Chart) {
+        require(['gradereport_gradedist/define_datalabels'], function() {
             Chart.plugins.register({
                 beforeDraw: function(chartInstance) {
                     var ctx = chartInstance.chart.ctx;
@@ -346,9 +330,7 @@ function($, log, str, xchart) {
                     ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
                 }
             });
-            require(['gradereport_gradedist/define_datalabels'], function() {
-                instance.initChart(initdata, letters);
-            });
+            instance.initChart(initdata, letters);
         });
 
         var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + initdata.courseid;
@@ -459,51 +441,37 @@ function($, log, str, xchart) {
             }
         });
 
-        var toimg = $('input[name^="grp_to_image"]');
-
-        /* this very well works */
-        toimg.change(instance, function() {
+        var topdf = $('.grgd_pdf');
+        topdf.click(instance, function() {
             require(['gradereport_gradedist/define_html2pdf'], function(html2pdf) {
                 var container = document.getElementById('chart_container');
                 var opt = {
                   margin:       1,
                   filename:     'myfile.pdf',
-                  image:        { type: 'jpeg', quality: 0.98 },
+                  image:        { type: 'jpeg', quality: 1.00 },
                   //html2canvas:  { scale: 2 },
-                  jsPDF:        { unit: 'px', format: [1000,400], orientation: 'landscape' }
+                  jsPDF:        { unit: 'px', format: [1200,400], orientation: 'landscape' }
                 };
                 html2pdf(container, opt);
             });
         });
 
-        /* this does not work, jsPDF() not defined it says
-        toimg.change(instance, function() {
-            require(['gradereport_gradedist/define_jspdf'], function() {
-                //alert(JSON.stringify(jsPDF, false));
-                var imgData = document.getElementById('chart_container').toDataURL("image/jpg", 1.0);
-                var pdf = new jsPDF();
-                pdf.addImage(imgData, 'JPEG', 0, 0);
-                pdf.save("download.pdf");
-            });
-        });
-        */
-        /* to png (works)
-        toimg.change(instance, function() {
+        var topng = $('.grgd_png');
+        topng.click(instance, function() {
             require(['gradereport_gradedist/define_filesaver'], function() {
                 $("#chart_container").get(0).toBlob(function(blob) {
                     saveAs(blob, "chart_1.png");
                 });
             });
         });
-        */
-        /* to jpg (works)
-        toimg.change(instance, function() {
+
+        var tojpg = $('.grgd_jpg');
+        tojpg.click(instance, function() {
             require(['gradereport_gradedist/define_filesaver'], function() {
                 var imgData = document.getElementById('chart_container').toDataURL("image/jpeg", 1.0);
                 saveAs(imgData, "chart_1.jpg");
             });
         });
-        */               
 
         instance.validate();
     };
