@@ -441,6 +441,27 @@ function($, log, str) {
             }
         });
 
+        var toprint = $('.grgd_print');
+        toprint.click(instance, function() {
+            var imagePath = document.getElementById('chart_container').toDataURL("image/png");
+            var width = $(window).width() * 0.9;
+            var height = $(window).height() * 0.9;
+            var content = '<!DOCTYPE html>' + 
+                  '<html>' +
+                  '<head><title></title></head>' +
+                  '<body onload="window.focus(); window.print(); window.close();">' + 
+                  '<img src="' + imagePath + '" style="width: 100%;" />' +
+                  '</body>' +
+                  '</html>';
+            var options = "toolbar=no,location=no,directories=no,menubar=no,scrollbars=yes,width=" + width + ",height=" + height;
+            var printWindow = window.open('', 'print', options);
+            printWindow.document.open();
+            printWindow.document.write(content);
+            printWindow.document.close();
+            printWindow.focus();
+        });
+
+
         var topdf = $('.grgd_pdf');
         topdf.click(instance, function() {
             require(['gradereport_gradedist/define_html2pdf'], function(html2pdf) {

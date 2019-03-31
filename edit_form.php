@@ -98,9 +98,10 @@ class edit_letter_form extends moodleform {
         $mform->addElement('header', 'chart', get_string('chart', 'gradereport_gradedist'));
 
         $to_image = array();
-        $to_image[] =& $mform->createElement('html', '(<a href="#png" class="grgd_png">&nbsp;PNG&nbsp;</a>| ');
-        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">&nbsp;JPG&nbsp;</a>|');
-        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">&nbsp;PDF&nbsp;</a>)');
+        $to_image[] =& $mform->createElement('html', '(<a href="#png" class="grgd_png">&nbsp;'.get_string('downloadpng', 'gradereport_gradedist').'&nbsp;</a>| ');
+        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">&nbsp;'.get_string('downloadjpeg', 'gradereport_gradedist').'&nbsp;</a>|');
+        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">&nbsp;'.get_string('downloadpdf', 'gradereport_gradedist').'&nbsp;</a>)');
+        $to_image[] =& $mform->createElement('html', '(<a href="#print" class="grgd_print">&nbsp;'.get_string('printchart', 'gradereport_gradedist').'&nbsp;</a>)');
         $mform->setDefault('to_image', 0);
         $mform->addGroup($to_image, 'grp_to_image', get_string('exportasimage', 'gradereport_gradedist'), array(''));
 
@@ -121,7 +122,7 @@ class edit_letter_form extends moodleform {
 
         $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
 
-        $mform->addElement('html', '<canvas height="100" id="chart_container"></canvas>');
+        $mform->addElement('html', '<canvas height="100" id="chart_container" class="hey"></canvas>');
 
         $mform->addElement('html', html_writer::div(get_string('actcoverage', 'gradereport_gradedist')
                 .html_writer::span($actcoverage[0].'/'.$actcoverage[1].' ('.$actcoverage[2].'%)', 'actcoverage')));
