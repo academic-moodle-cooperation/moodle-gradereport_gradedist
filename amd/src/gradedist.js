@@ -445,12 +445,16 @@ function($, log, str) {
         topdf.click(instance, function() {
             require(['gradereport_gradedist/define_html2pdf'], function(html2pdf) {
                 var container = document.getElementById('chart_container');
+                var positionInfo = container.getBoundingClientRect();
+                var contheight = positionInfo.height;
+                var contwidth = positionInfo.width;
                 var opt = {
                   margin:       1,
-                  filename:     'myfile.pdf',
-                  image:        { type: 'jpeg', quality: 1.00 },
-                  //html2canvas:  { scale: 2 },
-                  jsPDF:        { unit: 'px', format: [1200,400], orientation: 'landscape' }
+                  filename:     'chart.pdf',
+                  image:        { type: 'png'},
+                  pagebreak:    { mode: 'avoid-all' },
+                  html2canvas:  { backgroundColor: '#ffffff'},
+                  jsPDF:        { unit: 'px', format: [contwidth,contheight*1.1], orientation: 'landscape' }
                 };
                 html2pdf(container, opt);
             });
@@ -460,7 +464,7 @@ function($, log, str) {
         topng.click(instance, function() {
             require(['gradereport_gradedist/define_filesaver'], function() {
                 $("#chart_container").get(0).toBlob(function(blob) {
-                    saveAs(blob, "chart_1.png");
+                    saveAs(blob, "chart.png");
                 });
             });
         });
@@ -469,7 +473,7 @@ function($, log, str) {
         tojpg.click(instance, function() {
             require(['gradereport_gradedist/define_filesaver'], function() {
                 var imgData = document.getElementById('chart_container').toDataURL("image/jpeg", 1.0);
-                saveAs(imgData, "chart_1.jpg");
+                saveAs(imgData, "chart.jpg");
             });
         });
 

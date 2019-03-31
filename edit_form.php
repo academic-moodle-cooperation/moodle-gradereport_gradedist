@@ -97,21 +97,19 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('header', 'chart', get_string('chart', 'gradereport_gradedist'));
 
+        $to_image = array();
+        $to_image[] =& $mform->createElement('html', '(<a href="#png" class="grgd_png">&nbsp;PNG&nbsp;</a>| ');
+        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">&nbsp;JPG&nbsp;</a>|');
+        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">&nbsp;PDF&nbsp;</a>)');
+        $mform->setDefault('to_image', 0);
+        $mform->addGroup($to_image, 'grp_to_image', get_string('exportasimage', 'gradereport_gradedist'), array(''));
+
         $description = array();
         $description[] =& $mform->createElement('radio', 'description', '', get_string('absolut', 'gradereport_gradedist'), false);
         $description[] =& $mform->createElement('radio', 'description', '', get_string('percent', 'gradereport_gradedist'), true);
         $mform->setDefault('description', 0);
 
         $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), array(''));
-        
-        $to_image = array();
-        $to_image[] =& $mform->createElement('html', '<a href="#png" class="grgd_png">PNG&nbsp;</a>');
-        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">JPG&nbsp;</a>');
-        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">PDF&nbsp;</a>');
-        $mform->setDefault('to_image', 0);
-        
-        $mform->addGroup($to_image, 'grp_to_image', "Export chart as image", array(''));
-        
         
         $columns = array();
         $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '',

@@ -55,6 +55,8 @@ $string['downloadpdf'] = 'Download PDF document';
 $string['downloadsvg'] = 'Download SVG vector image';
 $string['contextbuttontitle'] = 'Chart context menu';
 
+$string['exportasimage'] = 'Export chart as image';
+
 $string['description'] = 'Labelling';
 $string['absolut'] = 'Absolute';
 $string['percent'] = 'Percent';
