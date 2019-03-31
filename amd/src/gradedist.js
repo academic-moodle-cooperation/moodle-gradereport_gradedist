@@ -211,7 +211,7 @@ function($, log, str) {
         ];
 
 
-        
+
         str.get_strings(tofetch).done(function(s) {
             window.chart = new Chart($("#chart_container"), {
                 type: 'bar',
@@ -446,10 +446,10 @@ function($, log, str) {
             var imagePath = document.getElementById('chart_container').toDataURL("image/png");
             var width = $(window).width() * 0.9;
             var height = $(window).height() * 0.9;
-            var content = '<!DOCTYPE html>' + 
+            var content = '<!DOCTYPE html>' +
                   '<html>' +
                   '<head><title></title></head>' +
-                  '<body onload="window.focus(); window.print(); window.close();">' + 
+                  '<body onload="window.focus(); window.print(); window.close();">' +
                   '<img src="' + imagePath + '" style="width: 100%;" />' +
                   '</body>' +
                   '</html>';
