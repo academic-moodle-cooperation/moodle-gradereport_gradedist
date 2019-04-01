@@ -32,13 +32,15 @@ define([], function() {
             // Enter the paths to your required java-script files.
             "filesaver": M.cfg.wwwroot + '/grade/report/gradedist/js/FileSaver',
             "html2pdf": M.cfg.wwwroot + '/grade/report/gradedist/js/html2pdf.bundle.min',
-            "ChartDataLabels": M.cfg.wwwroot + '/grade/report/gradedist/js/plugins/chartjs-plugin-datalabels',
+            "ChartDataLabels": M.cfg.wwwroot + '/grade/report/gradedist/js/chartjs-plugin-datalabels.min',
+            "canvastoBlob": M.cfg.wwwroot + '/grade/report/gradedist/js/canvas-toBlob',
         },
         shim: {
             // Enter the "names" that will be used to refer to your libraries.
             'filesaver': {exports: 'saveAs'},
             'html2pdf': {exports: 'html2pdf'},
             'ChartDataLabels': {exports: 'Chart'},
+            'canvastoBlob': {exports: 'saveAs'},
         }
     });
 });

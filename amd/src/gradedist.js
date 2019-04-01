@@ -483,7 +483,10 @@ function($, log, str) {
 
         var topng = $('.grgd_png');
         topng.click(instance, function() {
-            require(['gradereport_gradedist/define_filesaver'], function() {
+            // Cross-browser compatibility (with IE 11) required.
+            require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
+                function(saveAs, toBlob) {
+                // Cross-browser compatibility (with IE 11) required.
                 $("#chart_container").get(0).toBlob(function(blob) {
                     saveAs(blob, "chart.png");
                 });
@@ -492,9 +495,12 @@ function($, log, str) {
 
         var tojpg = $('.grgd_jpg');
         tojpg.click(instance, function() {
-            require(['gradereport_gradedist/define_filesaver'], function() {
-                var imgData = document.getElementById('chart_container').toDataURL("image/jpeg", 1.0);
-                saveAs(imgData, "chart.jpg");
+            require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
+                function(saveAs, toBlob) {
+                // Cross-browser compatibility (with IE 11) required.
+                $("#chart_container").get(0).toBlob(function(blob) {
+                    saveAs(blob, "chart.jpg");
+                }, "image/jpeg");
             });
         });
 

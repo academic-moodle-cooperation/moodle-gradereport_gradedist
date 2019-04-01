@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * define_chart.js
+ * canvas-toBlob.js
  *
  * @package   gradereport_gradedist
  * @author    Andreas Krieger
@@ -23,10 +23,10 @@
  */
 
  /**
-  * @module gradereport_gradedist/define_chart.js
+  * @module gradereport_gradedist/canvas-toBlob.js
   */
 
 
-define(['gradereport_gradedist/config', 'chart'], function(unused, chart) {
-      return chart;
+define(['gradereport_gradedist/config', 'canvastoBlob'], function(unused, canvastoBlob) {
+      return canvastoBlob;
 });
