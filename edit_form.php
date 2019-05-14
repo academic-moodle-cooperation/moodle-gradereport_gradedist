@@ -97,14 +97,6 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('header', 'chart', get_string('chart', 'gradereport_gradedist'));
 
-        $to_image = array();
-        $to_image[] =& $mform->createElement('html', '(<a href="#png" class="grgd_png">&nbsp;'.get_string('downloadpng', 'gradereport_gradedist').'&nbsp;</a>| ');
-        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">&nbsp;'.get_string('downloadjpeg', 'gradereport_gradedist').'&nbsp;</a>|');
-        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">&nbsp;'.get_string('downloadpdf', 'gradereport_gradedist').'&nbsp;</a>)');
-        $to_image[] =& $mform->createElement('html', '(<a href="#print" class="grgd_print">&nbsp;'.get_string('printchart', 'gradereport_gradedist').'&nbsp;</a>)');
-        $mform->setDefault('to_image', 0);
-        $mform->addGroup($to_image, 'grp_to_image', get_string('exportasimage', 'gradereport_gradedist'), array(''));
-
         $description = array();
         $description[] =& $mform->createElement('radio', 'description', '', get_string('absolut', 'gradereport_gradedist'), false);
         $description[] =& $mform->createElement('radio', 'description', '', get_string('percent', 'gradereport_gradedist'), true);
@@ -140,6 +132,14 @@ class edit_letter_form extends moodleform {
             $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
             $mform->closeHeaderBefore('submitbutton');
         }
+
+        $to_image = array();
+        $to_image[] =& $mform->createElement('html', '(<a href="#png" class="grgd_png">&nbsp;'.get_string('downloadpng', 'gradereport_gradedist').'&nbsp;</a>| ');
+        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">&nbsp;'.get_string('downloadjpeg', 'gradereport_gradedist').'&nbsp;</a>|');
+        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">&nbsp;'.get_string('downloadpdf', 'gradereport_gradedist').'&nbsp;</a>)');
+        $to_image[] =& $mform->createElement('html', '(<a href="#print" class="grgd_print">&nbsp;'.get_string('printchart', 'gradereport_gradedist').'&nbsp;</a>)');
+        $mform->setDefault('to_image', 0);
+        $mform->addGroup($to_image, 'grp_to_image', get_string('exportasimage', 'gradereport_gradedist'), array(''));
 
         $export = array();
         $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
