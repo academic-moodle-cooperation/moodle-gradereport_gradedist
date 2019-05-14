@@ -103,7 +103,7 @@ class edit_letter_form extends moodleform {
         $mform->setDefault('description', 0);
 
         $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), array(''));
-
+        
         $columns = array();
         $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '',
                 get_string('actualcolumns', 'gradereport_gradedist'));
@@ -114,7 +114,7 @@ class edit_letter_form extends moodleform {
 
         $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
 
-        $mform->addElement('html', '<div id="chart_container"></div>');
+        $mform->addElement('html', '<canvas height="100" id="chart_container" class="hey"></canvas>');
 
         $mform->addElement('html', html_writer::div(get_string('actcoverage', 'gradereport_gradedist')
                 .html_writer::span($actcoverage[0].'/'.$actcoverage[1].' ('.$actcoverage[2].'%)', 'actcoverage')));
@@ -132,6 +132,14 @@ class edit_letter_form extends moodleform {
             $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
             $mform->closeHeaderBefore('submitbutton');
         }
+
+        $to_image = array();
+        $to_image[] =& $mform->createElement('html', '(<a href="#png" class="grgd_png">&nbsp;'.get_string('downloadpng', 'gradereport_gradedist').'&nbsp;</a>| ');
+        $to_image[] =& $mform->createElement('html', '<a href="#jpg" class="grgd_jpg">&nbsp;'.get_string('downloadjpeg', 'gradereport_gradedist').'&nbsp;</a>|');
+        $to_image[] =& $mform->createElement('html', '<a href="#pdf" class="grgd_pdf">&nbsp;'.get_string('downloadpdf', 'gradereport_gradedist').'&nbsp;</a>)');
+        $to_image[] =& $mform->createElement('html', '(<a href="#print" class="grgd_print">&nbsp;'.get_string('printchart', 'gradereport_gradedist').'&nbsp;</a>)');
+        $mform->setDefault('to_image', 0);
+        $mform->addGroup($to_image, 'grp_to_image', get_string('exportasimage', 'gradereport_gradedist'), array(''));
 
         $export = array();
         $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',

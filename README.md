@@ -31,21 +31,13 @@ chart changes can be seen immediately.
 Requirements
 ------------
 
-The plugin is available for Moodle 2.7+. This version is for Moodle 3.6.
-
-The module requires the external [Highcharts JavaScript
-library](<http://www.highcharts.com/products/highcharts>), available free of charge for
-non-commercial use.
+The plugin is available for Moodle 2.7+. This version is for Moodle 3.7.
 
 
 Installation
 ------------
 
 * Copy the module code directly to the *moodleroot/grade/report/gradedist* directory.
-
-* Download version 4.x of the Highcharts library from <http://www.highcharts.com/download>. Copy
-  both, the core module *highcharts.src.js* from the *js* subdirectory and the *exporting.src.js*
-  module from the *js/modules* subdirectory into the directory *grade/report/gradedist/js*.
 
 * Log into Moodle as administrator.
 

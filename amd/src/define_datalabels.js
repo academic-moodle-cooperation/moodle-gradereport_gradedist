@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * highcharts_src.js
+ * define_datalabels.js
  *
  * @package   gradereport_gradedist
  * @author    Andreas Krieger
@@ -23,10 +23,10 @@
  */
 
  /**
-  * @module gradereport_gradedist/highcharts_src
+  * @module gradereport_gradedist/define_datalabels.js
   */
 
 
-define(['gradereport_gradedist/config', 'highcharts_src'], function(unused, highcharts_src) {
-      return highcharts_src;
+define(['gradereport_gradedist/config', 'ChartDataLabels'], function(unused, datalabels) {
+    return datalabels;
 });

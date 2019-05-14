@@ -55,9 +55,8 @@ function($, log, str) {
 
             var values = (window.mode == 1) ? window.percent : window.absolut;
 
-            window.chart.series[0].setData(values);
-
-            window.chart.setTitle({text: data.title});
+            window.chart.data.datasets[0].data = values;
+            window.chart.options.title.text = [data.title, ""];
         }
 
         window.absolutnew = [];
@@ -70,7 +69,8 @@ function($, log, str) {
 
         instance.coverage(data);
         var newvalues = (window.mode == 1) ? window.percentnew : window.absolutnew;
-        window.chart.series[1].setData(newvalues);
+        window.chart.data.datasets[1].data = newvalues;
+        window.chart.update();
 
         return true;
     };
@@ -195,7 +195,7 @@ function($, log, str) {
         return !error;
     };
 
-    Gradedist.prototype.initChart = function(initdata, letters, HC) {
+    Gradedist.prototype.initChart = function(initdata, letters) {
 
         var tofetch = [
             {key: 'gradeletter', component: 'gradereport_gradedist'},
@@ -210,63 +210,76 @@ function($, log, str) {
             {key: 'contextbuttontitle', component: 'gradereport_gradedist'},
         ];
 
+
+
         str.get_strings(tofetch).done(function(s) {
-            window.chart = new HC.Chart({
-                chart: {
-                    renderTo: 'chart_container',
-                    type: 'column'
-                },
-                title: {
-                    text: initdata.title
-                },
-                xAxis: {
-                    title: {
-                        text: s[0]
+            window.chart = new Chart($("#chart_container"), {
+                type: 'bar',
+                data: {
+                    labels: letters,
+                    datasets: [{
+                        data: window.absolut,
+                        backgroundColor: '#990000',
+                        borderWidth: 1,
                     },
-                    categories: letters
+                    {
+                        data: window.absolutnew,
+                        backgroundColor: '#33cc33',
+                        borderWidth: 1
+                    }]
                 },
-                yAxis: {
+                options: {
                     title: {
-                        text: s[1]
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                tooltip: {
-                    enabled: false
-                },
-                lang: {
-                    printChart: s[3],
-                    downloadPNG: s[4],
-                    downloadJPEG: s[5],
-                    downloadPDF: s[6],
-                    downloadSVG: s[7],
-                    contextButtonTitle: s[8]
-                },
-                series:
-                [{
-                    data: Array.from(window.absolut),
-                    color: '#990000',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        style: {
-                            fontWeight: 'normal'
+                        display: true,
+                        text: [initdata.title, ""],
+                        fontSize: 18,
+                        fontStyle: 'normal'
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                //maxTicksLimit: 6,
+                                padding: 10
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: s[1],
+                                fontColor: "#4d759e",
+                                fontSize: 15
+                            },
+                            gridLines: {
+                                drawBorder: false,
+                                lineWidth: 0.3,
+                                color: '#000000',
+                                zeroLineColor: '#c0e0d0'
+                            },
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: s[0],
+                                fontColor: "#4d759e",
+                                fontSize: 15
+                            },
+                            gridLines: {
+                                drawOnChartArea: false,
+
+                            },
+                            barPercentage: 0.8
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            color: '#000000'
                         }
                     }
-                },
-                {
-                    data: Array.from(window.absolutnew),
-                    color: '#33cc33',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        style: {
-                            fontWeight: 'normal'
-                        }
-                    }
-                }]
+                }
             });
         });
     };
@@ -308,22 +321,17 @@ function($, log, str) {
         });
 
         window.chart = [];
-        if (initdata.highcharts_src) {
-            require(['gradereport_gradedist/define_hc_src'], function(highcharts_src) {
-                instance.initChart(initdata, letters, highcharts_src);
+
+        require(['gradereport_gradedist/define_datalabels'], function() {
+            Chart.plugins.register({
+                beforeDraw: function(chartInstance) {
+                    var ctx = chartInstance.chart.ctx;
+                    ctx.fillStyle = "white";
+                    ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+                }
             });
-        } else if (initdata.highcharts_min) {
-            require(['gradereport_gradedist/define_hc_min'], function(highcharts_min) {
-                instance.initChart(initdata, letters, highcharts_min);
-            });
-        } else {
-            var chartContainerSelector = "#chart_container";
-            str.get_string('highchartsmissing', 'gradereport_gradedist').done(function(s) {
-                $(chartContainerSelector).first().html(
-                    '<br><p><i><strong>[ !!! '
-                    + s + ' !!! ]</strong></i></p><br>');
-            });
-        }
+            instance.initChart(initdata, letters);
+        });
 
         var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + initdata.courseid;
 
@@ -408,16 +416,16 @@ function($, log, str) {
                 values = Array.from(window.absolut);
                 values_new = Array.from(window.absolutnew);
                 s_y = 'absolut';
-                ext_y = null;
+                ext_y = Math.max(Math.max.apply(this, window.absolut),Math.max.apply(this, window.absolutnew));
             }
 
             str.get_string(s_y, 'gradereport_gradedist').done(function(s) {
-                window.chart.yAxis[0].axisTitle.attr({
-                    text: s
-                });
-                window.chart.yAxis[0].setExtremes(0, ext_y);
-                window.chart.series[0].setData(values);
-                window.chart.series[1].setData(values_new);
+                window.chart.options.scales.yAxes[0].scaleLabel.labelString = s;
+                window.chart.options.scales.yAxes[0].ticks.suggestedMax = ext_y;
+
+                window.chart.data.datasets[0].data = values;
+                window.chart.data.datasets[1].data = values_new;
+                window.chart.update();
             });
         });
 
@@ -425,10 +433,75 @@ function($, log, str) {
         cols.click(instance, function() {
             var column = (this.id === 'id_grp_columns_actualcolumns') ? 0 : 1;
             if (this.checked) {
-                window.chart.series[column].show();
+                window.chart.data.datasets[column].hidden = false;
+                window.chart.update();
             } else {
-                window.chart.series[column].hide();
+                window.chart.data.datasets[column].hidden = true;
+                window.chart.update();
             }
+        });
+
+        var toprint = $('.grgd_print');
+        toprint.click(instance, function() {
+            var imagePath = document.getElementById('chart_container').toDataURL("image/png");
+            var width = $(window).width() * 0.9;
+            var height = $(window).height() * 0.9;
+            var content = '<!DOCTYPE html>' +
+                  '<html>' +
+                  '<head><title></title></head>' +
+                  '<body onload="window.focus(); window.print(); window.close();">' +
+                  '<img src="' + imagePath + '" style="width: 100%;" />' +
+                  '</body>' +
+                  '</html>';
+            var options = "toolbar=no,location=no,directories=no,menubar=no,scrollbars=yes,width=" + width + ",height=" + height;
+            var printWindow = window.open('', 'print', options);
+            printWindow.document.open();
+            printWindow.document.write(content);
+            printWindow.document.close();
+            printWindow.focus();
+        });
+
+
+        var topdf = $('.grgd_pdf');
+        topdf.click(instance, function() {
+            require(['gradereport_gradedist/define_html2pdf'], function(html2pdf) {
+                var container = document.getElementById('chart_container');
+                var positionInfo = container.getBoundingClientRect();
+                var contheight = positionInfo.height;
+                var contwidth = positionInfo.width;
+                var opt = {
+                  margin:       1,
+                  filename:     'chart.pdf',
+                  image:        { type: 'png'},
+                  pagebreak:    { mode: 'avoid-all' },
+                  html2canvas:  { backgroundColor: '#ffffff'},
+                  jsPDF:        { unit: 'px', format: [contwidth,contheight*1.1], orientation: 'landscape' }
+                };
+                html2pdf(container, opt);
+            });
+        });
+
+        var topng = $('.grgd_png');
+        topng.click(instance, function() {
+            // Cross-browser compatibility (with IE 11) required.
+            require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
+                function(saveAs, toBlob) {
+                // Cross-browser compatibility (with IE 11) required.
+                $("#chart_container").get(0).toBlob(function(blob) {
+                    saveAs(blob, "chart.png");
+                });
+            });
+        });
+
+        var tojpg = $('.grgd_jpg');
+        tojpg.click(instance, function() {
+            require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
+                function(saveAs, toBlob) {
+                // Cross-browser compatibility (with IE 11) required.
+                $("#chart_container").get(0).toBlob(function(blob) {
+                    saveAs(blob, "chart.jpg");
+                }, "image/jpeg");
+            });
         });
 
         instance.validate();

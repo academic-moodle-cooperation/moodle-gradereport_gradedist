@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * highcharts_min.js
+ * canvas-toBlob.js
  *
  * @package   gradereport_gradedist
  * @author    Andreas Krieger
@@ -23,10 +23,10 @@
  */
 
  /**
-  * @module gradereport_gradedist/highcharts_min
+  * @module gradereport_gradedist/canvas-toBlob.js
   */
 
 
-define(['gradereport_gradedist/config', 'highcharts_min'], function(unused, highcharts_min) {
-      return highcharts_min;
+define(['gradereport_gradedist/config', 'canvastoBlob'], function(unused, canvastoBlob) {
+      return canvastoBlob;
 });
