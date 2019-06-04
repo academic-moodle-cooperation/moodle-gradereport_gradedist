@@ -130,7 +130,6 @@ class edit_letter_form extends moodleform {
         // Buttons.
         if ($edit) {
             $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
-            $mform->closeHeaderBefore('submitbutton');
         }
 
         $to_image = array();

@@ -408,13 +408,13 @@ function($, log, str) {
             var s_y;
             var ext_y;
             if (window.mode == 1) {
-                values = Array.from(window.percent);
-                values_new = Array.from(window.percentnew);
+                values = window.percent;
+                values_new = window.percentnew;
                 s_y = 'percent';
                 ext_y = 100;
             } else {
-                values = Array.from(window.absolut);
-                values_new = Array.from(window.absolutnew);
+                values = window.absolut;
+                values_new = window.absolutnew;
                 s_y = 'absolut';
                 ext_y = Math.max(Math.max.apply(this, window.absolut),Math.max.apply(this, window.absolutnew));
             }
