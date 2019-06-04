@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.7.0 (2019-05-17)
+3.7.0 (2019-06-04)
 ------------------
 * #5981 Moodle 3.7 compatible version
 * [FEATURE] #3888 Replace Highcharts with Chart.js
