@@ -49,11 +49,13 @@ $string['gradeboundary_new_help'] = 'You can see the effects of new lower bounda
 $string['chart'] = 'Chart';
 
 $string['printchart'] = 'Print chart';
-$string['downloadpng'] = 'Download PNG image';
-$string['downloadjpeg'] = 'Download JPEG image';
-$string['downloadpdf'] = 'Download PDF document';
+$string['downloadpng'] = 'PNG image';
+$string['downloadjpeg'] = 'JPEG image';
+$string['downloadpdf'] = 'PDF document';
 $string['downloadsvg'] = 'Download SVG vector image';
 $string['contextbuttontitle'] = 'Chart context menu';
+
+$string['exportasimage'] = 'Download chart as';
 
 $string['description'] = 'Labelling';
 $string['absolut'] = 'Absolute';

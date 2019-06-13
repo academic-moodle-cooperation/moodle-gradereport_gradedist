@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+3.7.0 (2019-06-04)
+------------------
+* #5981 Moodle 3.7 compatible version
+* [FEATURE] #3888 Replace Highcharts with Chart.js
+
+
+3.6.2 (2019-02-06)
+------------------
+
+* [FIXED] #5908 Using Highcharts 4.x causes weird mixing of percent/absolute values
+
+
 3.6.1 (2018-12-07)
 ------------------
 
