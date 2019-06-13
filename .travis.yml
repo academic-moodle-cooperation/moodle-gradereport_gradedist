@@ -95,7 +95,7 @@ script:
 
   - moodle-plugin-ci savepoints
   - moodle-plugin-ci mustache
-  - moodle-plugin-ci grunt
+  - moodle-plugin-ci grunt --force
 
 # This step runs the PHPUnit tests of your plugin.  If your plugin has PHPUnit tests,
 # then it is highly recommended that you keep this step.
