@@ -28,6 +28,15 @@ namespace gradereport_gradedist\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class provider
+ *
+ * @package       gradereport_gradedist
+ * @author        Günther Bernsteiner
+ * @author        Andreas Krieger
+ * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class provider implements \core_privacy\local\metadata\null_provider {
 
     /**

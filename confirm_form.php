@@ -30,8 +30,22 @@ if (!defined('MOODLE_INTERNAL')) {
 
 require_once($CFG->libdir.'/formslib.php');
 
+/**
+ * Class confirm_letter_form
+ *
+ * @package       gradereport_gradedist
+ * @author        Günther Bernsteiner
+ * @author        Andreas Krieger
+ * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class confirm_letter_form extends moodleform {
 
+    /**
+     * defines the form
+     *
+     * @throws coding_exception
+     */
     protected function definition() {
         $mform     =&$this->_form;
         $id        = $this->_customdata['id'];

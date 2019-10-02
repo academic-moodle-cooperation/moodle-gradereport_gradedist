@@ -28,6 +28,15 @@ namespace gradereport_gradedist\event;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class confirmation_table_viewed
+ *
+ * @package       gradereport_gradedist
+ * @author        Günther Bernsteiner
+ * @author        Andreas Krieger
+ * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class confirmation_table_viewed extends \core\event\base {
 
     /**

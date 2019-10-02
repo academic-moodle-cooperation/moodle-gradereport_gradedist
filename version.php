@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * version file
+ *
  * @package   gradereport_gradedist
  * @author    Günther Bernsteiner
  * @author    Andreas Krieger
