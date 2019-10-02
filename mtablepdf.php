@@ -17,21 +17,21 @@
 /**
  * mtablepdf.php
  *
- * @package       mtablepdf
+ * @package       gradereport_gradedist
  * @author        Andreas Windbichler
  * @author        Andreas Krieger
  * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once('../../../config.php');
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/pdflib.php');
 
 /**
  * MTablePDF class handles exports to PDF, XLSX, ODS, CSV...
  *
- * @package       mod_checkmark
+ * @package       gradereport_gradedist
  * @author        Andreas Windbichler
  * @author        Andreas Krieger
  * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}

@@ -20,7 +20,7 @@
  * @package       gradereport_gradedist
  * @author        Günther Bernsteiner
  * @author        Andreas Krieger
- * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @copyright     2019 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,8 +31,13 @@ require_once($CFG->libdir.'/grade/constants.php');
 
 /**
  * Class providing an API for the overview report building and displaying.
+ *
  * @uses grade_report
- * @package gradereport_overview
+ * @package       gradereport_gradedist
+ * @author        Günther Bernsteiner
+ * @author        Andreas Krieger
+ * @copyright     2019 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class grade_report_gradedist extends grade_report_grader {
 
@@ -248,6 +253,13 @@ class grade_report_gradedist extends grade_report_grader {
 
     /**
      * We supply the letters and gradeitem in this query, and get the distribution.
+     *
+     * @param array $newletters
+     * @param int $gradeitem
+     * @param int $groupid
+     * @param int $groupingid
+     * @return stdClass
+     * @throws dml_exception
      */
     public function load_distribution($newletters, $gradeitem=0, $groupid=0, $groupingid=0) {
         global $DB;
@@ -317,6 +329,13 @@ class grade_report_gradedist extends grade_report_grader {
         return $return;
     }
 
+    /**
+     * gets the letter for a specific grade
+     *
+     * @param array $letters
+     * @param stdClass $grade
+     * @return string
+     */
     public function get_gradeletter($letters, $grade) {
         if (is_null($grade->finalgrade) || !$gradeitem = grade_item::fetch(array('id' => $grade->itemid))) {
             return '-';

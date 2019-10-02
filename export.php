@@ -29,22 +29,64 @@ defined('MOODLE_INTERNAL') || die();
 require_once('mtablepdf.php');
 
 /**
+ * Grade report grade distribution class
+ *
  * @package   gradereport_gradedist
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class grade_export_gradedist {
 
+    /**
+     * @var stdClass
+     */
     private $course;
+    /**
+     * @var grade_report_gradedist
+     */
     private $grader;
+    /**
+     * @var stdClass
+     */
     private $gradeitem;
+    /**
+     * @var array
+     */
     private $letters;
+    /**
+     * @var array
+     */
     private $newletters;
+    /**
+     * @var int
+     */
     private $exportformat;
+    /**
+     * @var string
+     */
     private $filename;
+    /**
+     * @var int
+     */
     private $groupid;
+    /**
+     * @var int
+     */
     private $groupingid;
 
+    /**
+     * initialization function
+     *
+     * @param stdClass $course
+     * @param grade_report_gradedist $grader
+     * @param stdClass $gradeitem
+     * @param array $letters
+     * @param array $newletters
+     * @param int $exportformat
+     * @param string $filename
+     * @param int $groupid
+     * @param int $groupingid
+     */
     public function init($course, $grader, $gradeitem, $letters, $newletters, $exportformat, $filename, $groupid=0, $groupingid=0) {
         $this->course = $course;
         $this->grader = $grader;
@@ -57,6 +99,12 @@ class grade_export_gradedist {
         $this->groupingid = $groupingid;
     }
 
+    /**
+     * prints the distributed grades
+     *
+     * @throws coding_exception
+     * @throws dml_exception
+     */
     public function print_grades() {
         global $DB, $USER;
 

@@ -28,6 +28,15 @@ namespace gradereport_gradedist\event;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class gradedist_downloaded
+ *
+ * @package       gradereport_gradedist
+ * @author        Günther Bernsteiner
+ * @author        Andreas Krieger
+ * @copyright     2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class gradedist_downloaded extends \core\event\base {
 
     /**
