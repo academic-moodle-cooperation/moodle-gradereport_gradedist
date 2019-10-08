@@ -312,7 +312,6 @@ class grade_report_gradedist extends grade_report_grader {
                 $gradedist->percentage = ($total > 0) ? round($gradedist->count * 100 / $total, 2) : 0;
             }
         }
-
         $return->coverage = array($total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0);
         return $return;
     }

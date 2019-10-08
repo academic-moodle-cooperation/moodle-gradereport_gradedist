@@ -47,12 +47,6 @@ function($, log, str) {
         if (data.updateall == 1) {
             window.absolut = [];
             window.percent = [];
-/*
-            $.map(data.actdist, function(grade) {
-                window.absolut.push(grade.count);
-                window.percent.push(grade.percentage);
-            });
-*/
 
             $.map(data.letters, function(letter) {
                 window.absolut.push(data.actdist[letter].count);
@@ -67,13 +61,6 @@ function($, log, str) {
 
         window.absolutnew = [];
         window.percentnew = [];
-/*
-        $.map(data.newdist, function(grade) {
-            window.absolutnew.push(grade.count);
-            window.percentnew.push(grade.percentage);
-        });
-*/
-
 
         $.map(data.letters, function(letter) {
             window.absolutnew.push(data.newdist[letter].count);
@@ -226,7 +213,7 @@ function($, log, str) {
 
 
         str.get_strings(tofetch).done(function(s) {
-            window.chart = new Chart($("#chart_container"), {
+            window.chart = new window.Chart($("#chart_container"), {
                 type: 'bar',
                 data: {
                     labels: letters,
@@ -329,21 +316,10 @@ function($, log, str) {
             window.percentnew.push(initdata.newdist[letter].percentage);
         });
 
-/*
-        $.map(initdata.actdist, function(grade, index) {
-            window.absolut.push(grade.count);
-            window.percent.push(grade.percentage);
-        });
-
-        $.map(initdata.newdist, function(grade) {
-            window.absolutnew.push(grade.count);
-            window.percentnew.push(grade.percentage);
-        });*/
-
         window.chart = [];
 
         require(['gradereport_gradedist/define_datalabels'], function() {
-            Chart.plugins.register({
+            window.Chart.plugins.register({
                 beforeDraw: function(chartInstance) {
                     var ctx = chartInstance.chart.ctx;
                     ctx.fillStyle = "white";
@@ -505,7 +481,7 @@ function($, log, str) {
         topng.click(instance, function() {
             // Cross-browser compatibility (with IE 11) required.
             require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
-                function(saveAs, toBlob) {
+                function(saveAs) {
                 // Cross-browser compatibility (with IE 11) required.
                 $("#chart_container").get(0).toBlob(function(blob) {
                     saveAs(blob, "chart.png");
@@ -516,7 +492,7 @@ function($, log, str) {
         var tojpg = $('.grgd_jpg');
         tojpg.click(instance, function() {
             require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
-                function(saveAs, toBlob) {
+                function(saveAs) {
                 // Cross-browser compatibility (with IE 11) required.
                 $("#chart_container").get(0).toBlob(function(blob) {
                     saveAs(blob, "chart.jpg");
