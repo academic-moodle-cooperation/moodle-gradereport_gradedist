@@ -125,6 +125,8 @@ foreach ($letters as $boundary => $letter) {
     $i++;
 }
 
+var_dump($newletters);
+
 $groupid = 0; $groupingid = 0;
 $actdist = $grader->load_distribution($letters, $gradeitem, $groupid, $groupingid);
 $newdist = $grader->load_distribution($newletters, $gradeitem, $groupid, $groupingid);
