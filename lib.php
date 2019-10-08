@@ -272,10 +272,7 @@ class grade_report_gradedist extends grade_report_grader {
                   FROM {grade_items} gi,
                        {grade_grades} g
                 WHERE g.itemid = gi.id AND gi.courseid = :courseid
-                AND g.itemid = :gradeitem
-                ORDER BY
-                    gi.grademax DESC
-                ";
+                AND g.itemid = :gradeitem";
         $params = array('gradeitem' => $gradeitem, 'courseid' => $this->courseid);
 
         krsort($this->letters); // Just to be sure.

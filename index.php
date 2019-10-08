@@ -67,7 +67,9 @@ if ($highchartssrc) {
 }
 
 $letters = grade_get_letters($context);
+var_dump($letters);
 krsort($letters, SORT_NUMERIC);
+var_dump($letters);
 
 $gpr = new grade_plugin_return(array('type' => 'report', 'plugin' => 'gradedist', 'courseid' => $course->id));
 $returnurl = $gpr->get_return_url('index.php');
