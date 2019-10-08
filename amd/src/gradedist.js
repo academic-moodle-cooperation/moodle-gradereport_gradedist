@@ -332,6 +332,9 @@ function($, log, str) {
             });
             instance.initChart(initdata, letters);
         });
+        console.log(letters);
+
+        console.log(initdata);
 
         var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + initdata.courseid;
 

@@ -282,7 +282,6 @@ class grade_report_gradedist extends grade_report_grader {
 
         $return = new stdClass();
         $return->distribution = array_fill_keys($this->letters, null);
-        var_dump($return);
         $return->coverage = array(0, 0);
 
         foreach ($this->letters as $letter) {
@@ -291,8 +290,6 @@ class grade_report_gradedist extends grade_report_grader {
             $gradedist->percentage  = 0;
             $return->distribution[$letter] = $gradedist;
         }
-        var_dump($return);
-
         if ($grades = $DB->get_records_sql($sql, $params)) {
             foreach ($grades as $grade) {
                 if (in_array($grade->userid, $userids) && array_key_exists($grade->itemid, $this->gtree->get_items())) {
@@ -315,7 +312,7 @@ class grade_report_gradedist extends grade_report_grader {
                 $gradedist->percentage = ($total > 0) ? round($gradedist->count * 100 / $total, 2) : 0;
             }
         }
-        var_dump($return);
+
         $return->coverage = array($total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0);
         return $return;
     }
