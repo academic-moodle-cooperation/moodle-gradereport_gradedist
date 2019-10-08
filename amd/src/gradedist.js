@@ -47,10 +47,16 @@ function($, log, str) {
         if (data.updateall == 1) {
             window.absolut = [];
             window.percent = [];
-
+/*
             $.map(data.actdist, function(grade) {
                 window.absolut.push(grade.count);
                 window.percent.push(grade.percentage);
+            });
+*/
+
+            $.map(data.letters, function(letter) {
+                window.absolut.push(data.actdist[letter].count);
+                window.percent.push(data.actdist[letter].percentage);
             });
 
             var values = (window.mode == 1) ? window.percent : window.absolut;
@@ -61,10 +67,17 @@ function($, log, str) {
 
         window.absolutnew = [];
         window.percentnew = [];
-
+/*
         $.map(data.newdist, function(grade) {
             window.absolutnew.push(grade.count);
             window.percentnew.push(grade.percentage);
+        });
+*/
+
+
+        $.map(data.letters, function(letter) {
+            window.absolutnew.push(data.newdist[letter].count);
+            window.percentnew.push(data.newdist[letter].percentage);
         });
 
         instance.coverage(data);
@@ -292,11 +305,11 @@ function($, log, str) {
     instance.initializer = function(config) {
 
         log.info('Initialize settings JS', 'gradedist');
-        console.log(config);
+
         var initdata = config.data;
 
         window.mode = 0;
-        var letters = [];
+        var letters = initdata.letters;
 
         window.absolut = [];
         window.percent = [];
@@ -308,9 +321,16 @@ function($, log, str) {
         if (window.submit.length) {
             window.submit.prop('disabled', true);
         }
-        console.log(initdata.actdist);
+
+        $.map(letters, function(letter) {
+            window.absolut.push(initdata.actdist[letter].count);
+            window.percent.push(initdata.actdist[letter].percentage);
+            window.absolutnew.push(initdata.newdist[letter].count);
+            window.percentnew.push(initdata.newdist[letter].percentage);
+        });
+
+/*
         $.map(initdata.actdist, function(grade, index) {
-            letters.push(index);
             window.absolut.push(grade.count);
             window.percent.push(grade.percentage);
         });
@@ -318,7 +338,7 @@ function($, log, str) {
         $.map(initdata.newdist, function(grade) {
             window.absolutnew.push(grade.count);
             window.percentnew.push(grade.percentage);
-        });
+        });*/
 
         window.chart = [];
 
@@ -332,9 +352,6 @@ function($, log, str) {
             });
             instance.initChart(initdata, letters);
         });
-        console.log(letters);
-
-        console.log(initdata);
 
         var uri = M.cfg.wwwroot + '/grade/report/gradedist/ajax_handler.php?id=' + initdata.courseid;
 
