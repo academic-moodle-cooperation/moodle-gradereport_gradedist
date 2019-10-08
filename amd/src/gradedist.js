@@ -292,7 +292,7 @@ function($, log, str) {
     instance.initializer = function(config) {
 
         log.info('Initialize settings JS', 'gradedist');
-
+        console.log(config);
         var initdata = config.data;
 
         window.mode = 0;
@@ -308,7 +308,7 @@ function($, log, str) {
         if (window.submit.length) {
             window.submit.prop('disabled', true);
         }
-
+        console.log(initdata.actdist);
         $.map(initdata.actdist, function(grade, index) {
             letters.push(index);
             window.absolut.push(grade.count);
