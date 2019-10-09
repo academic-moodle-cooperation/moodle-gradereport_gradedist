@@ -259,6 +259,7 @@ if ($confirm && !$boundaryerror) {
     $data->newdist = $newdist->distribution;
     $data->actcoverage = $actdist->coverage;
     $data->newcoverage = $newdist->coverage;
+    $data->letters = array_keys($actdist->distribution);
     $data->title = $gradeitems[$gradeitem]->name;
     $data->highcharts_min = $highchartsmin;
     $data->highcharts_src = $highchartssrc;
