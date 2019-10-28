@@ -290,7 +290,6 @@ class grade_report_gradedist extends grade_report_grader {
             $gradedist->percentage  = 0;
             $return->distribution[$letter] = $gradedist;
         }
-
         if ($grades = $DB->get_records_sql($sql, $params)) {
             foreach ($grades as $grade) {
                 if (in_array($grade->userid, $userids) && array_key_exists($grade->itemid, $this->gtree->get_items())) {

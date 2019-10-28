@@ -88,6 +88,7 @@ $data->actdist = $actdist->distribution;
 $data->newdist = $newdist->distribution;
 $data->actcoverage = $actdist->coverage;
 $data->newcoverage = $newdist->coverage;
+$data->letters = array_keys($actdist->distribution);
 
 $data->courseid = $courseid;
 $data->gradeitem = $gradeitem;

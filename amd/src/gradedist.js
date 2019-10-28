@@ -48,9 +48,9 @@ function($, log, str) {
             window.absolut = [];
             window.percent = [];
 
-            $.map(data.actdist, function(grade) {
-                window.absolut.push(grade.count);
-                window.percent.push(grade.percentage);
+            $.map(data.letters, function(letter) {
+                window.absolut.push(data.actdist[letter].count);
+                window.percent.push(data.actdist[letter].percentage);
             });
 
             var values = (window.mode == 1) ? window.percent : window.absolut;
@@ -62,9 +62,9 @@ function($, log, str) {
         window.absolutnew = [];
         window.percentnew = [];
 
-        $.map(data.newdist, function(grade) {
-            window.absolutnew.push(grade.count);
-            window.percentnew.push(grade.percentage);
+        $.map(data.letters, function(letter) {
+            window.absolutnew.push(data.newdist[letter].count);
+            window.percentnew.push(data.newdist[letter].percentage);
         });
 
         instance.coverage(data);
@@ -213,7 +213,7 @@ function($, log, str) {
 
 
         str.get_strings(tofetch).done(function(s) {
-            window.chart = new Chart($("#chart_container"), {
+            window.chart = new window.Chart($("#chart_container"), {
                 type: 'bar',
                 data: {
                     labels: letters,
@@ -296,7 +296,7 @@ function($, log, str) {
         var initdata = config.data;
 
         window.mode = 0;
-        var letters = [];
+        var letters = initdata.letters;
 
         window.absolut = [];
         window.percent = [];
@@ -309,21 +309,17 @@ function($, log, str) {
             window.submit.prop('disabled', true);
         }
 
-        $.map(initdata.actdist, function(grade, index) {
-            letters.push(index);
-            window.absolut.push(grade.count);
-            window.percent.push(grade.percentage);
-        });
-
-        $.map(initdata.newdist, function(grade) {
-            window.absolutnew.push(grade.count);
-            window.percentnew.push(grade.percentage);
+        $.map(letters, function(letter) {
+            window.absolut.push(initdata.actdist[letter].count);
+            window.percent.push(initdata.actdist[letter].percentage);
+            window.absolutnew.push(initdata.newdist[letter].count);
+            window.percentnew.push(initdata.newdist[letter].percentage);
         });
 
         window.chart = [];
 
         require(['gradereport_gradedist/define_datalabels'], function() {
-            Chart.plugins.register({
+            window.Chart.plugins.register({
                 beforeDraw: function(chartInstance) {
                     var ctx = chartInstance.chart.ctx;
                     ctx.fillStyle = "white";
@@ -485,7 +481,7 @@ function($, log, str) {
         topng.click(instance, function() {
             // Cross-browser compatibility (with IE 11) required.
             require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
-                function(saveAs, toBlob) {
+                function(saveAs) {
                 // Cross-browser compatibility (with IE 11) required.
                 $("#chart_container").get(0).toBlob(function(blob) {
                     saveAs(blob, "chart.png");
@@ -496,7 +492,7 @@ function($, log, str) {
         var tojpg = $('.grgd_jpg');
         tojpg.click(instance, function() {
             require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
-                function(saveAs, toBlob) {
+                function(saveAs) {
                 // Cross-browser compatibility (with IE 11) required.
                 $("#chart_container").get(0).toBlob(function(blob) {
                     saveAs(blob, "chart.jpg");
