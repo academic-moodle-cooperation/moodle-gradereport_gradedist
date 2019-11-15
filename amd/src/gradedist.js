@@ -26,7 +26,7 @@
   * @module gradereport_gradedist/gradedist
   */
 
-define(['jquery', 'core/log', 'core/str'],
+define(['jquery', 'core/log', 'core/str', 'gradereport_gradedist/config'],
 function($, log, str) {
     /**
      * @constructor
@@ -293,6 +293,8 @@ function($, log, str) {
 
         log.info('Initialize settings JS', 'gradedist');
 
+
+        define(['canvastoBlob']); // load canvastoBlob
         var initdata = config.data;
 
         window.mode = 0;
@@ -318,7 +320,7 @@ function($, log, str) {
 
         window.chart = [];
 
-        require(['gradereport_gradedist/define_datalabels'], function() {
+        require(['ChartDataLabels'], function() {
             window.Chart.plugins.register({
                 beforeDraw: function(chartInstance) {
                     var ctx = chartInstance.chart.ctx;
@@ -438,29 +440,24 @@ function($, log, str) {
         });
 
         var toprint = $('.grgd_print');
+        var $printframe = $('#printframe');
         toprint.click(instance, function() {
             var imagePath = document.getElementById('chart_container').toDataURL("image/png");
-            var width = $(window).width() * 0.9;
-            var height = $(window).height() * 0.9;
             var content = '<!DOCTYPE html>' +
                   '<html>' +
-                  '<head><title></title></head>' +
-                  '<body onload="window.focus(); window.print(); window.close();">' +
+                  '<head><title></title><script></script></head>' +
+                  '<body onload="">' +
                   '<img src="' + imagePath + '" style="width: 100%;" />' +
                   '</body>' +
                   '</html>';
-            var options = "toolbar=no,location=no,directories=no,menubar=no,scrollbars=yes,width=" + width + ",height=" + height;
-            var printWindow = window.open('', 'print', options);
-            printWindow.document.open();
-            printWindow.document.write(content);
-            printWindow.document.close();
-            printWindow.focus();
+            $printframe[0].contentWindow.document.write(content);
+            setTimeout(function() { $printframe[0].contentWindow.print();}, 200);
         });
 
 
         var topdf = $('.grgd_pdf');
         topdf.click(instance, function() {
-            require(['gradereport_gradedist/define_html2pdf'], function(html2pdf) {
+            require(['html2pdf'], function(html2pdf) {
                 var container = document.getElementById('chart_container');
                 var positionInfo = container.getBoundingClientRect();
                 var contheight = positionInfo.height;
@@ -480,7 +477,7 @@ function($, log, str) {
         var topng = $('.grgd_png');
         topng.click(instance, function() {
             // Cross-browser compatibility (with IE 11) required.
-            require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
+            require(['filesaver'],
                 function(saveAs) {
                 // Cross-browser compatibility (with IE 11) required.
                 $("#chart_container").get(0).toBlob(function(blob) {
@@ -491,7 +488,7 @@ function($, log, str) {
 
         var tojpg = $('.grgd_jpg');
         tojpg.click(instance, function() {
-            require(['gradereport_gradedist/define_filesaver', 'gradereport_gradedist/define_canvas-toBlob'],
+            require(['filesaver'],
                 function(saveAs) {
                 // Cross-browser compatibility (with IE 11) required.
                 $("#chart_container").get(0).toBlob(function(blob) {

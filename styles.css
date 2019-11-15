@@ -77,3 +77,9 @@
 .highcharts-contextmenu hr {
     margin: 5px 0;
 }
+
+#page-grade-report-gradedist-index #printframe {
+    width: 1px;
+    height: 1px;
+    border: 0;
+}
