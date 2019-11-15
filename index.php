@@ -279,7 +279,7 @@ if ($confirm && !$boundaryerror) {
 
     // Gradedist settings.
     $mform->display();
-
+    echo '<iframe id="printframe"></iframe>';
     // View event.
     \gradereport_gradedist\event\gradedist_viewed::create(
         array('context' => $context, 'other' => array('url' => $returnurl)))->trigger();

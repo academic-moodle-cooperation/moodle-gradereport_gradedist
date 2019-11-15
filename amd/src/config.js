@@ -40,7 +40,7 @@ define([], function() {
             'filesaver': {exports: 'saveAs'},
             'html2pdf': {exports: 'html2pdf'},
             'ChartDataLabels': {exports: 'Chart'},
-            'canvastoBlob': {exports: 'saveAs'},
+            'canvastoBlob': {exports: 'canvastoBlob'},
         }
     });
 });
