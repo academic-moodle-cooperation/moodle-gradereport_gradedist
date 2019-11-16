@@ -293,8 +293,7 @@ function($, log, str) {
 
         log.info('Initialize settings JS', 'gradedist');
 
-
-        define(['canvastoBlob']); // load canvastoBlob
+        require(['canvastoBlob']); // load canvastoBlob
         var initdata = config.data;
 
         window.mode = 0;

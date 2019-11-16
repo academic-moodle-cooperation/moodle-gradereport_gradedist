@@ -40,7 +40,7 @@ define([], function() {
             'filesaver': {exports: 'saveAs'},
             'html2pdf': {exports: 'html2pdf'},
             'ChartDataLabels': {exports: 'Chart'},
-            'canvastoBlob': {exports: 'canvastoBlob'},
+            'canvastoBlob': {exports: 'M'}, //dirty hack to make sure the exported variable is valid, window.M is exported by moodle
         }
     });
 });
