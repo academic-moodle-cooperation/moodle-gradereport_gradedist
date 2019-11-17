@@ -154,6 +154,8 @@ function($, log, str) {
             window.submit.prop('disabled', error || erremp);
         }
 
+        $('#id_grp_export_export').prop('disabled', false);
+
         return !error;
     };
 
@@ -496,9 +498,8 @@ function($, log, str) {
             });
         });
 
-        var $submitbtns = $('#letterform input[type="submit"]');
-        $submitbtns.click(function() {
-            setTimeout(function() {$submitbtns.prop('disabled', false); instance.validate();}, 500);
+        $('#letterform input[type="submit"]').click(function() {
+            setTimeout(function() {instance.validate();}, 1000);
         });
 
         instance.validate();
