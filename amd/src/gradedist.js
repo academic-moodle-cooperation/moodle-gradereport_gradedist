@@ -496,6 +496,11 @@ function($, log, str) {
             });
         });
 
+        var $submitbtns = $('#letterform input[type="submit"]');
+        $submitbtns.click(function() {
+            setTimeout(function() {$submitbtns.prop('disabled', false); instance.validate();}, 500);
+        });
+
         instance.validate();
     };
 
