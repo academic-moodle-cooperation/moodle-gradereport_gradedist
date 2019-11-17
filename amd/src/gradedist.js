@@ -154,6 +154,8 @@ function($, log, str) {
             window.submit.prop('disabled', error || erremp);
         }
 
+        $('#id_grp_export_export').prop('disabled', false);
+
         return !error;
     };
 
@@ -494,6 +496,10 @@ function($, log, str) {
                     saveAs(blob, "chart.jpg");
                 }, "image/jpeg");
             });
+        });
+
+        $('#letterform input[type="submit"]').click(function() {
+            setTimeout(function() {instance.validate();}, 1000);
         });
 
         instance.validate();
