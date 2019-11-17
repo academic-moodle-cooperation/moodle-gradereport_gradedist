@@ -46,7 +46,7 @@ if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 }
 require_login($course);
 $context = context_course::instance($course->id);
-if (!has_capability('gradereport/gradedist:view', $context) && !has_capability('gradereport/gradedist:edit', $context)) {
+if (!has_capability('gradereport/gradedist:view', $context)) {// && !has_capability('gradereport/gradedist:edit', $context)) {
     print_error('nopermissiontoviewletergrade');
 }
 $edit = (has_capability('gradereport/gradedist:edit', $context) && has_capability('moodle/grade:manageletters', $context));
