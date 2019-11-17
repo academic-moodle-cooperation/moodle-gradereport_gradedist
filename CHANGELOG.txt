@@ -4,10 +4,13 @@ CHANGELOG
 3.8.0 (2019-11-15)
 ------------------
 * Moodle 3.8 compatible version
+* [FIXED] #6394 - Update readme
+* [FIXED] #6393 - Fix view permission check
+* [FIXED] #6392 - Fix download button getting disabled on form submission
 
 3.7.1 (2019-11-13)
 ------------------
-* [BUG] #6298 - fix numerical grade letters
+* [FIXED] #6298 - fix numerical grade letters
 
 3.7.0 (2019-06-04)
 ------------------
