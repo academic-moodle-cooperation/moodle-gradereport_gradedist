@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+3.10.0 (2020-11-09)
+------------------
+* Moodle 3.10 compatible version
+
 3.9.0 (2020-06-15)
 ------------------
 * Moodle 3.9 compatible version
