@@ -19,4 +19,3 @@ Feature: View gradedist in gradebook
     And I am on "Course 1" course homepage
     And I navigate to "View > Grade distribution" in the course gradebook
     And I log out
-
