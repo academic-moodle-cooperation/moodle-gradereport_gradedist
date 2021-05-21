@@ -80,7 +80,8 @@ class grade_report_gradedist extends grade_report_grader {
         list($enrolledsql, $enrolledparams) = get_enrolled_sql($this->context);
 
         // Fields we need from the user table.
-        $userfields = user_picture::fields('u', get_extra_user_fields($this->context));
+        $userfields = \core_user\fields::for_userpic()->with_identity($this->context)
+            ->get_sql('u', false, '', 'id', false)->selects;
 
         // We want to query both the current context and parent contexts.
         list($relatedctxsql, $relatedctxparams) = $DB->get_in_or_equal($this->context->get_parent_context_ids(true),
