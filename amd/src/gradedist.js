@@ -16,7 +16,7 @@
 /**
  * gradedist.js
  *
- * @package   gradereport_gradedist
+ * @package
  * @author    Andreas Krieger
  * @copyright 2014-2018 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

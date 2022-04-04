@@ -20,14 +20,15 @@
  * @package   gradereport_gradedist
  * @author    Günther Bernsteiner
  * @author    Andreas Krieger
+ * @author    Thomas Niedermaier
  * @copyright 2014 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2021062300;
-$plugin->requires  = 2021051700;
+$plugin->version  = 2022032100;
+$plugin->requires  = 2022030800;
 $plugin->component = 'gradereport_gradedist';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = "v3.11.0";
+$plugin->release   = "v4.0";

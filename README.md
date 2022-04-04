@@ -3,7 +3,7 @@ Grade Distribution
 
 This file is part of the gradereport_gradedist plugin for Moodle - <http://moodle.org/>
 
-*Author:*    Andreas Krieger, Günther Bernsteiner, Simeon Naydenov
+*Author:*    Thomas Niedermaier, Andreas Krieger, Günther Bernsteiner, Simeon Naydenov
 
 *Copyright:* 2019 [Academic Moodle Cooperation](http://www.academic-moodle-cooperation.org)
 
