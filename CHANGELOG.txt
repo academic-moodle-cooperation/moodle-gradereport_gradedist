@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+4.1 (2022-07-28)
+------------------
+* [FIXED] #7266 Debug Info if custom user profile fields are used as useridentity
+
 4.0 (2022-03-21)
 ------------------
 * #7050 Moodle 4.0 compatible version
