@@ -80,14 +80,11 @@ class grade_report_gradedist extends grade_report_grader {
         list($enrolledsql, $enrolledparams) = get_enrolled_sql($this->context);
 
         // Fields we need from the user table.
-        $userfields = \core_user\fields::for_userpic()->with_identity($this->context)
-            ->get_sql('u', false, '', 'id', false)->selects;
+        $userfields = "u.id";
 
         // We want to query both the current context and parent contexts.
         list($relatedctxsql, $relatedctxparams) = $DB->get_in_or_equal($this->context->get_parent_context_ids(true),
                 SQL_PARAMS_NAMED, 'relatedctx');
-
-        $sortjoin = $sort = $params = null;
 
         // If the user has clicked one of the sort asc/desc arrows.
         if (is_numeric($this->sortitemid)) {
