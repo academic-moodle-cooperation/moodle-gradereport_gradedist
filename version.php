@@ -31,4 +31,4 @@ $plugin->version  = 2022032101;
 $plugin->requires  = 2022030800;
 $plugin->component = 'gradereport_gradedist';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = "v4.1";
+$plugin->release   = "v4.0.1";
