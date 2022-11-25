@@ -186,24 +186,30 @@ class grade_report_gradedist extends grade_report_grader {
             }
 
             $gradeitem = new stdClass();
+            if ($g->display == 0) { // If display type is "default" check what default is.
+                if ($coursedefault = $DB->get_field('grade_settings', 'value', array('courseid' => $g->courseid,
+                    'name' => 'displaytype'))) { // If course default exists take it.
+                    $g->display = $coursedefault;
+                } else { // Else take system default.
+                    $g->display = $CFG->grade_displaytype;
+                }
+            }
+            $gradeitem->disable = !in_array($g->display, $gradetypes);
 
-            if (strcmp($g->itemtype, 'course') == 0) {
+            if (strcmp($g->itemtype, 'course') == 0) { // Item for the whole course.
                 $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
-                $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
-
                 // Small hack to get coursesum in front.
                 $gradeitems = array_reverse($gradeitems, true);
                 $gradeitems[$g->id] = $gradeitem;
                 $gradeitems = array_reverse($gradeitems, true);
-                continue;
-            } else if (strcmp($g->itemtype, 'category') == 0) {
+            } else if (strcmp($g->itemtype, 'category') == 0) {  // Category item.
                 $gc = $DB->get_record('grade_categories', array('id' => $g->iteminstance ));
                 $gradeitem->name = $gc->fullname;
+                $gradeitems[$g->id] = $gradeitem;
             } else {
                 $gradeitem->name = $g->itemname;
+                $gradeitems[$g->id] = $gradeitem;
             }
-            $gradeitem->disable = ($g->display != 0 && !in_array($g->display, $gradetypes));
-            $gradeitems[$g->id] = $gradeitem;
         }
         return $gradeitems;
     }
