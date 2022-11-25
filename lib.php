@@ -187,7 +187,7 @@ class grade_report_gradedist extends grade_report_grader {
 
             $gradeitem = new stdClass();
             if ($g->display == 0) { // If display type is "default" check what default is.
-                if ($coursedefault = $DB->get_field('grade_Settings', 'value', array('courseid' => $g->courseid,
+                if ($coursedefault = $DB->get_field('grade_settings', 'value', array('courseid' => $g->courseid,
                     'name' => 'displaytype'))) { // If course default exists take it.
                     $g->display = $coursedefault;
                 } else { // Else take system default.
