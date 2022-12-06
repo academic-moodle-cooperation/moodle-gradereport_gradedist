@@ -57,8 +57,8 @@ class edit_letter_form extends moodleform {
         $actcoverage      = $this->_customdata['actcoverage'];
         $newcoverage      = $this->_customdata['newcoverage'];
 
-        $mform->addElement('header', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
-        $mform->addHelpButton('gradedist', 'pluginname', 'gradereport_gradedist');
+        $mform->addElement('header', 'gradedistheader', get_string('gradeletter', 'gradereport_gradedist'));
+        $mform->addHelpButton('gradedistheader', 'pluginname', 'gradereport_gradedist');
 
         $select = $mform->createElement('select', 'gradeitem', get_string('gradeitem', 'gradereport_gradedist'));
         foreach ($gradeitems as $index => $gradeitem) {
@@ -108,7 +108,7 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('html', '<div id="boundary_error_container"></div>');
 
-        $mform->addElement('header', 'chart', get_string('chart', 'gradereport_gradedist'));
+        $mform->addElement('header', 'chartheader', get_string('chart', 'gradereport_gradedist'));
 
         $description = array();
         $description[] =& $mform->createElement('radio', 'description', '', get_string('absolut', 'gradereport_gradedist'), false);
@@ -129,9 +129,11 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('html', '<canvas height="100" id="chart_container" class="hey"></canvas>');
 
-        $mform->addElement('html', html_writer::div(get_string('actcoverage', 'gradereport_gradedist')
+        $mform->addElement('html', html_writer::div(
+            html_writer::span(get_string('actcoverage', 'gradereport_gradedist')."&nbsp;", 'coveragetext')
                 .html_writer::span($actcoverage[0].'/'.$actcoverage[1].' ('.$actcoverage[2].'%)', 'actcoverage')));
-        $mform->addElement('html', html_writer::div(get_string('newcoverage', 'gradereport_gradedist')
+        $mform->addElement('html', html_writer::div(
+            html_writer::span(get_string('newcoverage', 'gradereport_gradedist')."&nbsp;", 'coveragetext')
                 .html_writer::span($newcoverage[0].'/'.$newcoverage[1].' ('.$newcoverage[2].'%)', 'newcoverage')));
 
         // Hidden params.
@@ -140,30 +142,16 @@ class edit_letter_form extends moodleform {
         $mform->addElement('hidden', 'confirm', true);
         $mform->setType('confirm', PARAM_BOOL);
 
-        // Buttons.
-        if ($edit) {
-            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
-        }
+        $mform->addElement('html', '<div class="grgd">'.
+            get_string('exportasimage', 'gradereport_gradedist').'&nbsp;&nbsp;&nbsp;'.
+            '<a href="#png" class="grgd_png">&nbsp;'.get_string('downloadpng', 'gradereport_gradedist').'&nbsp;</a>| '.
+            '<a href="#jpg" class="grgd_jpg">&nbsp;'.get_string('downloadjpeg', 'gradereport_gradedist').'&nbsp;</a>| '.
+            '<a href="#pdf" class="grgd_pdf">&nbsp;'.get_string('downloadpdf', 'gradereport_gradedist').'&nbsp;</a>| '.
+            '<a href="#print" class="grgd_print">&nbsp;'.get_string('printchart', 'gradereport_gradedist').'&nbsp;</a>'.
+            '</div>'
+        );
 
-        $toimage = array();
-        $toimage[] =& $mform->createElement(
-            'html',
-            '(<a href="#png" class="grgd_png">&nbsp;'.get_string('downloadpng', 'gradereport_gradedist').'&nbsp;</a>| '
-        );
-        $toimage[] =& $mform->createElement(
-            'html',
-            '<a href="#jpg" class="grgd_jpg">&nbsp;'.get_string('downloadjpeg', 'gradereport_gradedist').'&nbsp;</a>|'
-        );
-        $toimage[] =& $mform->createElement(
-            'html',
-            '<a href="#pdf" class="grgd_pdf">&nbsp;'.get_string('downloadpdf', 'gradereport_gradedist').'&nbsp;</a>)'
-        );
-        $toimage[] =& $mform->createElement(
-            'html',
-            '(<a href="#print" class="grgd_print">&nbsp;'.get_string('printchart', 'gradereport_gradedist').'&nbsp;</a>)'
-        );
-        $mform->setDefault('to_image', 0);
-        $mform->addGroup($toimage, 'grp_to_image', get_string('exportasimage', 'gradereport_gradedist'), array(''));
+        $mform->addElement('header', 'submitheader', get_string('submitanddownload', 'gradereport_gradedist'));
 
         $export = array();
         $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
@@ -174,5 +162,13 @@ class edit_letter_form extends moodleform {
         $export[] =& $mform->createElement('submit', 'export', get_string('download', 'gradereport_gradedist'));
         $mform->addGroup($export, 'grp_export', get_string('export', 'gradereport_gradedist'), array(''));
         $mform->setDefault('grp_export[exportformat]', MTablePDF::OUTPUT_FORMAT_XLSX);
+
+        $mform->setExpanded('chartheader');
+        $mform->setExpanded('submitheader');
+
+        // Buttons.
+        if ($edit) {
+            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
+        }
     }
 }

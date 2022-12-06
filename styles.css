@@ -83,3 +83,12 @@
     height: 1px;
     border: 0;
 }
+
+#page-grade-report-gradedist-index .coveragetext {
+    display: inline-block;
+    width: 450px;
+}
+
+#page-grade-report-gradedist-index .grgd {
+    margin-bottom: 1em;
+}
