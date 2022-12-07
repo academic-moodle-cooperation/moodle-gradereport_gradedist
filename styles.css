@@ -86,7 +86,7 @@
 
 #page-grade-report-gradedist-index .coveragetext {
     display: inline-block;
-    width: 450px;
+    width: 300px;
 }
 
 #page-grade-report-gradedist-index .grgd {
@@ -94,5 +94,5 @@
 }
 
 #page-grade-report-gradedist-index select option:disabled {
-    color: #e8e8e8;
+    color: #cccccc;
 }
