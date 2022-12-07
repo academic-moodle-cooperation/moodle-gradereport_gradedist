@@ -73,13 +73,15 @@ $string['coverage_export'] = 'Items not included by letters:';
 $string['actcoverage'] = 'Items not included by current letters: ';
 $string['newcoverage'] = 'Items not included by new letters: ';
 
-$string['changeletters'] = 'Change grade letters';
-$string['confirm'] = 'Change grade letters';
+$string['changeletters'] = 'Save changed grade letters';
+$string['confirm'] = 'Save changed grade letters';
 
 $string['notification'] = 'Note: The definition of grade letters applies to all grade items in the course.';
 
 $string['boundaryerror'] = 'Some entries for new grade letters may be invalid. There must be input on each field';
 $string['saved'] = 'Grade letters successfully changed.';
+
+$string['submitanddownload'] = 'Save changes';
 
 $string['export'] = 'Download data as';
 $string['download'] = 'Download';

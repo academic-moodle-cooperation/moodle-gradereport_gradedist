@@ -3,6 +3,7 @@ CHANGELOG
 
 4.1 (2022-11-17)
 ------------------
+* [FEATURE] #7418 Optimize page structure
 * #7144 Moodle 4.1 compatible version
 
 4.0.1 (2022-07-28)
