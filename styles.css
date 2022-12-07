@@ -92,3 +92,7 @@
 #page-grade-report-gradedist-index .grgd {
     margin-bottom: 1em;
 }
+
+#page-grade-report-gradedist-index select option:disabled {
+    color: #e8e8e8;
+}
