@@ -87,6 +87,7 @@
 #page-grade-report-gradedist-index .coveragetext {
     display: inline-block;
     width: 300px;
+    white-space: nowrap;
 }
 
 #page-grade-report-gradedist-index .grgd {
