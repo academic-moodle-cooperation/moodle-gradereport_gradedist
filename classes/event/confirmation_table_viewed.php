@@ -26,8 +26,6 @@
 
 namespace gradereport_gradedist\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class confirmation_table_viewed
  *

@@ -26,8 +26,6 @@
 
 namespace gradereport_gradedist\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class newletters_submitted
  *
