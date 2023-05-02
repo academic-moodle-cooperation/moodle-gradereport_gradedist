@@ -36,9 +36,7 @@ Installation
 ------------
 
 * Copy the module code directly to the *moodleroot/grade/report/gradedist* directory.
-
 * Log into Moodle as administrator.
-
 * Open the administration area (*http://your-moodle-site/admin*) to start the installation
   automatically.
 
