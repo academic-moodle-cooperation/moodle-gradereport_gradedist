@@ -28,17 +28,11 @@ analysed visually, saved and therefore overwritten if necessary. By means of an 
 chart changes can be seen immediately.
 
 
-Requirements
-------------
-
-
 Installation
 ------------
 
 * Copy the module code directly to the *moodleroot/grade/report/gradedist* directory.
-
 * Log into Moodle as administrator.
-
 * Open the administration area (*http://your-moodle-site/admin*) to start the installation
   automatically.
 
@@ -62,8 +56,8 @@ following:
 
 
 Documentation
--------------
-https://www.academic-moodle-cooperation.org/en/module/grade-distribution/
+--------------
+
 You can find a cheat sheet for the plugin on the [AMC
 website](http://www.academic-moodle-cooperation.org/en/module/grade-distribution/) and a video
 tutorial in german only in the [AMC YouTube
