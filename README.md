@@ -4,9 +4,7 @@ Grade Distribution
 This file is part of the gradereport_gradedist plugin for Moodle - <http://moodle.org/>
 
 *Author:*    Thomas Niedermaier, Andreas Krieger, Günther Bernsteiner, Simeon Naydenov
-
 *Copyright:* 2019 [Academic Moodle Cooperation](http://www.academic-moodle-cooperation.org)
-
 *License:*   [GNU GPL v3 or later](http://www.gnu.org/copyleft/gpl.html)
 
 
@@ -26,10 +24,6 @@ term. Occasionally it occurs that changes to letter grades are necessary. The gr
 visualizes the grades of students. Changes to letter grades (i.e. the boundary of a grade) can be
 analysed visually, saved and therefore overwritten if necessary. By means of an alternating graphic
 chart changes can be seen immediately.
-
-
-Requirements
-------------
 
 
 Installation
@@ -60,8 +54,8 @@ following:
 
 
 Documentation
--------------
-https://www.academic-moodle-cooperation.org/en/module/grade-distribution/
+--------------
+
 You can find a cheat sheet for the plugin on the [AMC
 website](http://www.academic-moodle-cooperation.org/en/module/grade-distribution/) and a video
 tutorial in german only in the [AMC YouTube
