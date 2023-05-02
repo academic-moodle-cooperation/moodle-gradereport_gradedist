@@ -65,7 +65,7 @@ class grade_report_gradedist extends grade_report_grader {
     /**
      * Pulls out the userids of the users to be display, and sorts them.
      */
-    public function load_users() {
+    public function load_users(bool $allusers = false) {
         global $CFG, $DB;
 
         if (!empty($this->users)) {
