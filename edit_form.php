@@ -67,7 +67,8 @@ class edit_letter_form extends moodleform {
             $name = $gradeitem->name;
             // If showgradeitemtype-setting is off property module is empty.
             if ($showgradeitemtypes && $gradeitem->module) {
-                $name .= " ($gradeitem->module)";
+                $modname = 'mod_'.$gradeitem->module;
+                $name .= " (".get_string('pluginname', $modname).")";
             } else if ($showgradeitemtypes && $gradeitem->type == "manual") {
                 $name .= " (".get_string('manualitem', 'grades').")";
             } else if ($gradeitem->type == get_string('gradecategory', 'grades')) {
