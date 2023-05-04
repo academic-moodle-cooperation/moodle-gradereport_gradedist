@@ -38,7 +38,6 @@ require_once('export.php');
 $courseid = required_param('id', PARAM_INT);
 $confirm = optional_param('confirm', false, PARAM_BOOL);
 $saved = optional_param('saved', false, PARAM_BOOL);
-$export = optional_param('grp_export[export]', '', PARAM_TEXT);
 
 // Basic access checks.
 if (!$course = $DB->get_record('course', array('id' => $courseid))) {
@@ -148,10 +147,20 @@ $mform = new edit_letter_form($returnurl, array(
             'post', '', array('id' => 'letterform'));
 $mform->set_data($mdata);
 
-if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
+if (($data = $mform->get_data()) && isset($data->grp_export) && $data->grp_export) {
     // Export.
     $export = new grade_export_gradedist();
-    $exportformat = $data->grp_export['exportformat'];
+    $exportformat = $data->grp_export;
+    switch($exportformat) {
+        case 'xlsx':
+            $efcode = MTablePDF::OUTPUT_FORMAT_XLSX;
+            break;
+        case 'ods':
+            $efcode = MTablePDF::OUTPUT_FORMAT_ODS;
+            break;
+        case 'csv':
+            $efcode = MTablePDF::OUTPUT_FORMAT_CSV_TAB;
+    }
 
     $gradeitem = new stdClass();
     $gradeitem->id = $data->gradeitem;
@@ -169,7 +178,7 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
                   $gradeitem,
                   $letters,
                   $newletters,
-                  $exportformat,
+                  $efcode,
                   $course->shortname.'_'.$gradeitems[$data->gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false),
                   $groupid,
                   $groupingid);

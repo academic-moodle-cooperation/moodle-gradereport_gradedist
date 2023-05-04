@@ -85,6 +85,9 @@ $string['submitanddownload'] = 'Save changes';
 
 $string['export'] = 'Download data as';
 $string['download'] = 'Download';
+$string['xlsx'] = 'xlsx';
+$string['ods'] = 'ods';
+$string['csv'] = 'csv';
 
 $string['showgradeitem'] = 'Display grade item';
 $string['showgradeitem_description'] = 'Show grade display type as choice for grade item.';
