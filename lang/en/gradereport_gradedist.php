@@ -88,6 +88,8 @@ $string['download'] = 'Download';
 
 $string['showgradeitem'] = 'Display grade item';
 $string['showgradeitem_description'] = 'Show grade display type as choice for grade item.';
+$string['showgradeitemtype'] = 'Display grade item type';
+$string['showgradeitemtype_help'] = 'Show grade item type like quiz, assignment etc.';
 
 $string['category'] = 'Gradecategory';
 $string['a'] = ' (absolute)';

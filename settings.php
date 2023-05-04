@@ -47,4 +47,7 @@ if ($ADMIN->fulltree) {
         get_string('showgradeitem', 'gradereport_gradedist'),
         get_string('showgradeitem_description', 'gradereport_gradedist'), $selection, $displaytypes));
 
+    $settings->add(new admin_setting_configcheckbox('gradedist_showgradeitemtype', get_string('showgradeitemtype', 'gradereport_gradedist'),
+        get_string('showgradeitemtype_help', 'gradereport_gradedist'), 0));
+
 }

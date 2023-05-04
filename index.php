@@ -74,8 +74,14 @@ $returnurl = $gpr->get_return_url('index.php');
 $boundaryerror = false;
 
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
-$gradeitems = $grader->get_gradeitems();
-reset($gradeitems);
+$gradeitemsunsorted = $grader->get_gradeitems();
+usort($gradeitemsunsorted, function($a, $b) {
+    return (int)$a->sortorder - (int)$b->sortorder;
+});
+$gradeitems = array();
+foreach ($gradeitemsunsorted as $gi) {
+    $gradeitems[$gi->gid] = $gi;
+}
 
 $groupmode = groups_get_course_groupmode($course);
 

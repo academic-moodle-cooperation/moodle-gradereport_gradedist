@@ -44,6 +44,8 @@ class edit_letter_form extends moodleform {
      * @throws coding_exception
      */
     public function definition() {
+        global $CFG;
+
         $mform            =&$this->_form;
         $id               = $this->_customdata['id'];
         $num              = $this->_customdata['num'];
@@ -55,12 +57,23 @@ class edit_letter_form extends moodleform {
         $actcoverage      = $this->_customdata['actcoverage'];
         $newcoverage      = $this->_customdata['newcoverage'];
 
+        $showgradeitemtypes = (isset($CFG->gradedist_showgradeitemtype)) ? $CFG->gradedist_showgradeitemtype : 0;
+
         $mform->addElement('header', 'gradedistheader', get_string('gradeletter', 'gradereport_gradedist'));
         $mform->addHelpButton('gradedistheader', 'pluginname', 'gradereport_gradedist');
 
         $select = $mform->createElement('select', 'gradeitem', get_string('gradeitem', 'gradereport_gradedist'));
         foreach ($gradeitems as $index => $gradeitem) {
-            $select->addOption($gradeitem->name, $index, ($gradeitem->disable) ? array( 'disabled' => 'disabled') : null);
+            $name = $gradeitem->name;
+            // If showgradeitemtype-setting is off property module is empty.
+            if ($showgradeitemtypes && $gradeitem->module) {
+                $name .= " ($gradeitem->module)";
+            } else if ($showgradeitemtypes && $gradeitem->type == "manual") {
+                $name .= " (".get_string('manualitem', 'grades').")";
+            } else if ($gradeitem->type == get_string('gradecategory', 'grades')) {
+                $name .= " (".get_string('gradecategory', 'grades').")";
+            }
+            $select->addOption($name, $index, ($gradeitem->disable) ? array( 'disabled' => 'disabled') : null);
         }
         $mform->addElement($select);
 
