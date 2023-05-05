@@ -120,6 +120,11 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('html', '<div id="boundary_error_container"></div>');
 
+        // Buttons.
+        if ($edit) {
+            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
+        }
+
         $mform->addElement('header', 'chartheader', get_string('chart', 'gradereport_gradedist'));
 
         $description = array();
@@ -179,11 +184,5 @@ class edit_letter_form extends moodleform {
 
         $mform->setExpanded('chartheader');
 
-        // Buttons.
-        if ($edit) {
-            $mform->addElement('header', 'submitheader', get_string('submitanddownload', 'gradereport_gradedist'));
-            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
-            $mform->setExpanded('submitheader');
-        }
     }
 }
