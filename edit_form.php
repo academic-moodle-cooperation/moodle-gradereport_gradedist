@@ -120,6 +120,11 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('html', '<div id="boundary_error_container"></div>');
 
+        // Buttons.
+        if ($edit) {
+            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
+        }
+
         $mform->addElement('header', 'chartheader', get_string('chart', 'gradereport_gradedist'));
 
         $description = array();
@@ -148,39 +153,36 @@ class edit_letter_form extends moodleform {
             html_writer::span(get_string('newcoverage', 'gradereport_gradedist')."&nbsp;", 'coveragetext')
                 .html_writer::span($newcoverage[0].'/'.$newcoverage[1].' ('.$newcoverage[2].'%)', 'newcoverage')));
 
+        $mform->addElement('html', '<div>&nbsp;</div>');
+
         // Hidden params.
         $mform->addElement('hidden', 'id', $id);
         $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'confirm', true);
         $mform->setType('confirm', PARAM_BOOL);
+        $mform->addElement('hidden', 'grp_export', '');
+        $mform->setType('grp_export', PARAM_TEXT);
+
+        $mform->addElement('header', 'downloadheader', get_string('download', 'gradereport_gradedist'));
 
         $mform->addElement('html', '<div class="grgd">'.
-            get_string('exportasimage', 'gradereport_gradedist').'&nbsp;&nbsp;&nbsp;'.
-            '<a href="#png" class="grgd_png">&nbsp;'.get_string('downloadpng', 'gradereport_gradedist').'&nbsp;</a>| '.
-            '<a href="#jpg" class="grgd_jpg">&nbsp;'.get_string('downloadjpeg', 'gradereport_gradedist').'&nbsp;</a>| '.
-            '<a href="#pdf" class="grgd_pdf">&nbsp;'.get_string('downloadpdf', 'gradereport_gradedist').'&nbsp;</a>| '.
-            '<a href="#print" class="grgd_print">&nbsp;'.get_string('printchart', 'gradereport_gradedist').'&nbsp;</a>'.
+            get_string('exportasimage', 'gradereport_gradedist').'&nbsp;'.
+            '&nbsp;<a href="#png" class="grgd_png">'.get_string('downloadpng', 'gradereport_gradedist').'</a>&nbsp;|'.
+            '&nbsp;<a href="#jpg" class="grgd_jpg">'.get_string('downloadjpeg', 'gradereport_gradedist').'</a>&nbsp;|'.
+            '&nbsp;<a href="#pdf" class="grgd_pdf">'.get_string('downloadpdf', 'gradereport_gradedist').'</a>&nbsp;|'.
+            '&nbsp;<a href="#print" class="grgd_print">'.get_string('printchart', 'gradereport_gradedist').'</a>'.
             '</div>'
         );
 
-        $mform->addElement('header', 'submitheader', get_string('submitanddownload', 'gradereport_gradedist'));
-
-        $export = array();
-        $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
-                               MTablePDF::OUTPUT_FORMAT_CSV_TAB => 'csv',
-                               MTablePDF::OUTPUT_FORMAT_XLSX     => 'xlsx');
-
-        $export[] =& $mform->createElement('select', 'exportformat', '', $exportformats);
-        $export[] =& $mform->createElement('submit', 'export', get_string('download', 'gradereport_gradedist'));
-        $mform->addGroup($export, 'grp_export', get_string('export', 'gradereport_gradedist'), array(''));
-        $mform->setDefault('grp_export[exportformat]', MTablePDF::OUTPUT_FORMAT_XLSX);
+        $mform->addElement('html', '<div class="grgd">'.
+            get_string('export', 'gradereport_gradedist').'&nbsp;'.
+            '&nbsp;<a href="#xlsx" class="grgd_xlsx">'.get_string('xlsx', 'gradereport_gradedist').'</a>&nbsp;|'.
+            '&nbsp;<a href="#ods" class="grgd_ods">'.get_string('ods', 'gradereport_gradedist').'</a>&nbsp;|'.
+            '&nbsp;<a href="#csv" class="grgd_csv">'.get_string('csv', 'gradereport_gradedist').'</a>'.
+            '</div>'
+        );
 
         $mform->setExpanded('chartheader');
-        $mform->setExpanded('submitheader');
 
-        // Buttons.
-        if ($edit) {
-            $mform->addElement('submit', 'submitbutton', get_string('changeletters', 'gradereport_gradedist'));
-        }
     }
 }

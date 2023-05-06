@@ -1,8 +1,10 @@
 CHANGELOG
 =========
 
-4.2 (2023-05-02)
+4.2 (2023-05-17)
 ------------------
+* [FEATURE] #7574 Improve design of download data functions
+* [FEATURE] #7573 Grade columns like in grader report, displaying module type
 * #7490 Moodle 4.2 compatible version
 
 4.1 (2022-11-17)
