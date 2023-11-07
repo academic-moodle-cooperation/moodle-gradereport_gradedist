@@ -180,8 +180,8 @@ class grade_report_gradedist extends grade_report_grader {
     public function get_gradeitems() {
         global $CFG, $DB;
 
-        $gradeitems = array();
-        $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
+        $gradeitems = [];
+        $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : [];
         $showgradeitemtypes = (isset($CFG->gradedist_showgradeitemtype)) ? $CFG->gradedist_showgradeitemtype : 0;
 
         foreach ($this->gtree->get_items() as $g) {

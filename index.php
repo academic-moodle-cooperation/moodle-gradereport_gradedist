@@ -40,7 +40,7 @@ $confirm = optional_param('confirm', false, PARAM_BOOL);
 $saved = optional_param('saved', false, PARAM_BOOL);
 
 // Basic access checks.
-if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+if (!$course = $DB->get_record('course', ['id' => $courseid])) {
     throw new moodle_exception('nocourseid');
 }
 require_login($course);
@@ -77,7 +77,7 @@ $gradeitemsunsorted = $grader->get_gradeitems();
 usort($gradeitemsunsorted, function($a, $b) {
     return (int)$a->sortorder - (int)$b->sortorder;
 });
-$gradeitems = array();
+$gradeitems = [];
 foreach ($gradeitemsunsorted as $gi) {
     $gradeitems[$gi->gid] = $gi;
 }

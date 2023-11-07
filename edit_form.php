@@ -75,7 +75,7 @@ class edit_letter_form extends moodleform {
             } else if ($gradeitem->type == get_string('gradecategory', 'grades')) {
                 $name .= " (".get_string('gradecategory', 'grades').")";
             }
-            $select->addOption($name, $index, ($gradeitem->disable) ? array( 'disabled' => 'disabled') : null);
+            $select->addOption($name, $index, ($gradeitem->disable) ? [ 'disabled' => 'disabled' ] : null);
         }
         $mform->addElement($select);
 
