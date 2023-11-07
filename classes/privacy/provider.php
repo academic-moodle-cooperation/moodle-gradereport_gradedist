@@ -26,8 +26,6 @@
 
 namespace gradereport_gradedist\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class provider
  *

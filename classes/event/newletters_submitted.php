@@ -26,8 +26,6 @@
 
 namespace gradereport_gradedist\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class newletters_submitted
  *
@@ -84,7 +82,7 @@ class newletters_submitted extends \core\event\base {
      * @return array
      */
     protected function get_legacy_logdata() {
-        return array($this->courseid, 'course', get_string('pluginname', 'gradereport_gradedist'),
-            $this->other['url'], $this->courseid);
+        return [$this->courseid, 'course', get_string('pluginname', 'gradereport_gradedist'),
+            $this->other['url'], $this->courseid, ];
     }
 }

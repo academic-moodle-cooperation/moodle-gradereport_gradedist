@@ -24,9 +24,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.'); // It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
@@ -62,7 +60,7 @@ class edit_letter_form extends moodleform {
 
         $select = $mform->createElement('select', 'gradeitem', get_string('gradeitem', 'gradereport_gradedist'));
         foreach ($gradeitems as $index => $gradeitem) {
-            $select->addOption($gradeitem->name, $index, ($gradeitem->disable) ? array( 'disabled' => 'disabled') : null);
+            $select->addOption($gradeitem->name, $index, ($gradeitem->disable) ? [ 'disabled' => 'disabled' ] : null);
         }
         $mform->addElement($select);
 
@@ -80,29 +78,29 @@ class edit_letter_form extends moodleform {
             }
             $mform->addElement($selectgrouping);
         }
-        $gradeletters = array();
-        $gradeboundaries = array();
-        $gradeboundariesnew = array();
-        $attributes = array('style' => 'width:65px;margin-right:10px');
+        $gradeletters = [];
+        $gradeboundaries = [];
+        $gradeboundariesnew = [];
+        $attributes = ['style' => 'width:65px;margin-right:10px'];
 
         for ($i = 1; $i < $num + 1; $i++) {
             $gradeletters[] =& $mform->createElement('text', $i, false,
-                    array_merge(array('class' => 'gradeletters', 'disabled' => 'disabled'), $attributes));
+                    array_merge(['class' => 'gradeletters', 'disabled' => 'disabled'], $attributes));
             $gradeboundaries[] =& $mform->createElement('text', $i, false,
-                    array_merge(array('class' => 'gradeboundaries', 'disabled' => 'disabled'), $attributes));
+                    array_merge(['class' => 'gradeboundaries', 'disabled' => 'disabled'], $attributes));
             $gradeboundariesnew[] =& $mform->createElement('text', $i, false,
-                    array_merge(array('class' => 'gradeboundaries_new'), $attributes));
+                    array_merge(['class' => 'gradeboundaries_new'], $attributes));
         }
 
         $mform->addGroup($gradeletters, 'grp_gradeletters',
-                get_string('gradeletter', 'gradereport_gradedist'), array(''));
+                get_string('gradeletter', 'gradereport_gradedist'), ['']);
         $mform->setType('grp_gradeletters', PARAM_TEXT);
         $mform->addGroup($gradeboundaries, 'grp_gradeboundaries',
-                get_string('gradeboundary', 'gradereport_gradedist'), array(''));
+                get_string('gradeboundary', 'gradereport_gradedist'), ['']);
         $mform->setType('grp_gradeboundaries', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries', 'gradeboundary', 'gradereport_gradedist');
         $mform->addGroup($gradeboundariesnew, 'grp_gradeboundaries_new',
-                get_string('gradeboundary_new', 'gradereport_gradedist'), array(''));
+                get_string('gradeboundary_new', 'gradereport_gradedist'), ['']);
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries_new', 'gradeboundary_new', 'gradereport_gradedist');
 
@@ -110,14 +108,14 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('header', 'chartheader', get_string('chart', 'gradereport_gradedist'));
 
-        $description = array();
+        $description = [];
         $description[] =& $mform->createElement('radio', 'description', '', get_string('absolut', 'gradereport_gradedist'), false);
         $description[] =& $mform->createElement('radio', 'description', '', get_string('percent', 'gradereport_gradedist'), true);
         $mform->setDefault('description', 0);
 
-        $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), array(''));
+        $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), ['']);
 
-        $columns = array();
+        $columns = [];
         $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '',
                 get_string('actualcolumns', 'gradereport_gradedist'));
         $columns[] =& $mform->createElement('advcheckbox', 'newcolumns', '',
@@ -125,7 +123,7 @@ class edit_letter_form extends moodleform {
         $mform->setDefault('grp_columns[actualcolumns]', true);
         $mform->setDefault('grp_columns[newcolumns]', true);
 
-        $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), array(''));
+        $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), ['']);
 
         $mform->addElement('html', '<canvas height="100" id="chart_container" class="hey"></canvas>');
 
@@ -153,14 +151,15 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('header', 'submitheader', get_string('submitanddownload', 'gradereport_gradedist'));
 
-        $export = array();
-        $exportformats = array(MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
+        $export = [];
+        $exportformats = [MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
                                MTablePDF::OUTPUT_FORMAT_CSV_TAB => 'csv',
-                               MTablePDF::OUTPUT_FORMAT_XLSX     => 'xlsx');
+                               MTablePDF::OUTPUT_FORMAT_XLSX     => 'xlsx',
+                            ];
 
         $export[] =& $mform->createElement('select', 'exportformat', '', $exportformats);
         $export[] =& $mform->createElement('submit', 'export', get_string('download', 'gradereport_gradedist'));
-        $mform->addGroup($export, 'grp_export', get_string('export', 'gradereport_gradedist'), array(''));
+        $mform->addGroup($export, 'grp_export', get_string('export', 'gradereport_gradedist'), ['']);
         $mform->setDefault('grp_export[exportformat]', MTablePDF::OUTPUT_FORMAT_XLSX);
 
         $mform->setExpanded('chartheader');

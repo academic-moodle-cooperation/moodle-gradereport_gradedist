@@ -78,16 +78,16 @@ class MTablePDF extends \pdf {
     private $showheaderfooter = true;
 
     /** @var $columnwidths columns widths */
-    private $columnwidths = array();
+    private $columnwidths = [];
     /** @var $titles columns titles */
     private $titles = null;
     /** @var $columnformat columns formats */
     private $columnformat;
     /** @var $headerformat */
-    private $headerformat = array('title' => array(), 'desc' => array());
+    private $headerformat = ['title' => [], 'desc' => []];
 
     /** @var $data tables data */
-    private $data = array();
+    private $data = [];
 
     /**
      * Constructor
@@ -106,11 +106,11 @@ class MTablePDF extends \pdf {
         $this->columnwidths = $columnwidths;
 
         $this->orientation = $orientation;
-        $this->columnformat = array();
+        $this->columnformat = [];
         for ($i = 0; $i < count($columnwidths); $i++) {
-            $this->columnformat[] = array();
-            $this->columnformat[$i][] = array("fill" => 0, "align" => "L");
-            $this->columnformat[$i][] = array("fill" => 1, "align" => "L");
+            $this->columnformat[] = [];
+            $this->columnformat[$i][] = ["fill" => 0, "align" => "L"];
+            $this->columnformat[$i][] = ["fill" => 1, "align" => "L"];
         }
     }
 
@@ -121,7 +121,7 @@ class MTablePDF extends \pdf {
      */
     public function setcolumnformat($columnformat) {
         if (count($columnformat) != count($this->columnwidths)) {
-            print_error("Columnformat (" . count($columnformat) . ") count doesnt match " .
+            moodle_exception("Columnformat (" . count($columnformat) . ") count doesnt match " .
                 "column count (" . count($this->columnwidths) . ")");
         }
 
@@ -146,8 +146,8 @@ class MTablePDF extends \pdf {
      */
     public function setheadertext($title1, $desc1, $title2, $desc2, $title3, $desc3,
             $title4, $desc4, $title5, $desc5, $title6, $desc6) {
-        $this->header = array($title1, $desc1, $title2, $desc2, $title3, $desc3,
-                $title4, $desc4, $title5, $desc5, $title6, $desc6);
+        $this->header = [$title1, $desc1, $title2, $desc2, $title3, $desc3,
+                $title4, $desc4, $title5, $desc5, $title6, $desc6, ];
     }
 
     /**
@@ -242,7 +242,7 @@ class MTablePDF extends \pdf {
      */
     public function settitles($titles) {
         if (count($titles) != count($this->columnwidths)) {
-            print_error("Error: Title count doesnt match column count");
+            moodle_exception("Error: Title count doesnt match column count");
             exit();
         }
 
@@ -296,7 +296,7 @@ class MTablePDF extends \pdf {
      */
     public function addrow($row) {
         if (count($row) != count($this->columnwidths)) {
-            print_error("number of columns from row (" . count($row) . ") doenst match " .
+            moodle_exception("number of columns from row (" . count($row) . ") doenst match " .
                 "the number defined (" . count($this->columnwidths) . ")");
             return false;
         }
@@ -310,23 +310,23 @@ class MTablePDF extends \pdf {
 
         if ($fastmode) {
             // Fast mode.
-            $tmp = array();
+            $tmp = [];
 
             foreach ($row as $idx => $value) {
                 if (is_array($value)) {
-                    print_error("Error: if you want to add a row using the fast mode, you cannot pass me an array");
+                    moodle_exception("Error: if you want to add a row using the fast mode, you cannot pass me an array");
                 }
 
-                $tmp[] = array("rowspan" => 0, "data" => $value);
+                $tmp[] = ["rowspan" => 0, "data" => $value];
             }
 
             $row = $tmp;
         } else {
             foreach ($row as $idx => $value) {
                 if (!is_array($value)) {
-                    $row[$idx] = array("rowspan" => 0, "data" => $value);
+                    $row[$idx] = ["rowspan" => 0, "data" => $value];
                 } else if (!isset($value["data"])) {
-                    print_error("Error: you need to set a value for [\"data\"]");
+                    moodle_exception("Error: you need to set a value for [\"data\"]");
                     exit();
                 } else {
                     if (!isset($value["rowspan"])) {
@@ -420,7 +420,7 @@ class MTablePDF extends \pdf {
         $sumfix = 0;
         $sumrelativ = 0;
 
-        $rowspans = array();
+        $rowspans = [];
         $allfixed = true;
         $sum = 0;
 
@@ -435,12 +435,12 @@ class MTablePDF extends \pdf {
                 $sumrelativ += $width['value'];
                 $allfixed = false;
             } else {
-                print_error("ERROR: unvalid columnwidth format");
+                moodle_exception("ERROR: unvalid columnwidth format");
                 exit();
             }
         }
 
-        $w = array();
+        $w = [];
         foreach ($this->columnwidths as $idx => $width) {
             if ($allfixed) {
                 $w[$idx] = round(
@@ -507,7 +507,7 @@ class MTablePDF extends \pdf {
         // Data.
         $fill = 0;
 
-        $rowheights = array();
+        $rowheights = [];
 
         // Calculate line heights for not rowspanned fields.
         foreach ($this->data as $rownum => $row) {
@@ -554,7 +554,7 @@ class MTablePDF extends \pdf {
             $fsize = self::FONTSIZE_LARGE;
         }
 
-        $spaceonpage = array();
+        $spaceonpage = [];
 
         if ($this->fontsize == self::FONTSIZE_SMALL) {
             if ($this->orientation == self::PORTRAIT) {
@@ -583,7 +583,7 @@ class MTablePDF extends \pdf {
                 $spaceonpage[1] = 28;
             }
         } else {
-            print_error("an unexpected error occured. Please report this to your administrator.");
+            moodle_exception("an unexpected error occured. Please report this to your administrator.");
             exit();
         }
 
@@ -722,11 +722,12 @@ class MTablePDF extends \pdf {
         $time = userdate($time);
         $worksheet = $workbook->add_worksheet($time);
 
-        $headlineprop = array('size' => 12,
+        $headlineprop = ['size' => 12,
             'bold' => 1,
             'bottom' => 1,
             'align' => 'center',
-            'v_align' => 'vcenter');
+            'v_align' => 'vcenter',
+        ];
         $headlineformat = $workbook->add_format($headlineprop);
         $headlineformat->set_left(1);
         $headlinefirst = $workbook->add_format($headlineprop);
@@ -745,9 +746,10 @@ class MTablePDF extends \pdf {
             $hdrright->set_align('left');
         }
 
-        $textprop = array('size' => 10,
+        $textprop = ['size' => 10,
             'align' => 'left',
-            'v_align' => 'vcenter');
+            'v_align' => 'vcenter',
+        ];
         $text = $workbook->add_format($textprop);
         $text->set_left(1);
         $textfirst = $workbook->add_format($textprop);
@@ -877,7 +879,7 @@ class MTablePDF extends \pdf {
      * @param char $sep Character used to separate the data (usually tab or semicolon)
      */
     public function get_csv($filename, $sep = "\t") {
-        $lines = array();
+        $lines = [];
 
         // Course information.
         for ($i = 0; $i < count($this->header); $i += 2) {
@@ -891,7 +893,7 @@ class MTablePDF extends \pdf {
 
         // Data.
         foreach ($this->data as $row) {
-            $r = array();
+            $r = [];
             foreach ($row as $idx => $cell) {
                 if (is_null($cell['data'])) {
                     $cell['data'] = $prev[$idx]['data'];

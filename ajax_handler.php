@@ -38,26 +38,26 @@ $groupid = optional_param('coursegroup', 0, PARAM_INT);
 $groupingid = optional_param('coursegrouping', 0, PARAM_INT);
 $updateall = optional_param('updateall', false, PARAM_BOOL);
 
-$gradeletters  = optional_param_array('grp_gradeletters', array(), PARAM_TEXT);
-$boundaries    = optional_param_array('grp_gradeboundaries', array(), PARAM_TEXT);
-$boundariesnew = optional_param_array('grp_gradeboundaries_new', array(), PARAM_TEXT);
+$gradeletters  = optional_param_array('grp_gradeletters', [], PARAM_TEXT);
+$boundaries    = optional_param_array('grp_gradeboundaries', [], PARAM_TEXT);
+$boundariesnew = optional_param_array('grp_gradeboundaries_new', [], PARAM_TEXT);
 
 // Basic access checks.
-if (!$course = $DB->get_record('course', array('id' => $courseid))) {
-    print_error('nocourseid');
+if (!$course = $DB->get_record('course', ['id' => $courseid])) {
+    moodle_exception('nocourseid');
 }
 require_login($course);
 $context = context_course::instance($course->id);
 require_capability('gradereport/gradedist:view', $context);
 
-$PAGE->set_url('/grade/report/gradedist/ajax_handler.php', array('id' => $courseid));
+$PAGE->set_url('/grade/report/gradedist/ajax_handler.php', ['id' => $courseid]);
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display.
 
-$gpr = new grade_plugin_return(array('type' => 'report', 'plugin' => 'gradedist', 'courseid' => $course->id));
-$returnurl = $gpr->get_return_url('index.php', array('id' => $course->id));
+$gpr = new grade_plugin_return(['type' => 'report', 'plugin' => 'gradedist', 'courseid' => $course->id]);
+$returnurl = $gpr->get_return_url('index.php', ['id' => $course->id]);
 
 $letters = grade_get_letters($context);
-$newletters = array();
+$newletters = [];
 
 $i = 1;
 foreach ($letters as $letter) {

@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+4.3 (2023-11-06)
+* [FIXED] #7722 Resolved Code Checker Issues
+* Moodle 4.3 compatible version
+
 4.1 (2022-11-17)
 ------------------
 * [FEATURE] #7418 Optimize page structure
