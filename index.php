@@ -38,16 +38,15 @@ require_once('export.php');
 $courseid = required_param('id', PARAM_INT);
 $confirm = optional_param('confirm', false, PARAM_BOOL);
 $saved = optional_param('saved', false, PARAM_BOOL);
-$export = optional_param('grp_export[export]', '', PARAM_TEXT);
 
 // Basic access checks.
-if (!$course = $DB->get_record('course', ['id' => $courseid])) {
-    moodle_exception('nocourseid');
+if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+    throw new moodle_exception('nocourseid');
 }
 require_login($course);
 $context = context_course::instance($course->id);
-if (!has_capability('gradereport/gradedist:view', $context)) { // ...&& !has_capability('gradereport/gradedist:edit', $context)) {
-    moodle_exception('nopermissiontoviewletergrade');
+if (!has_capability('gradereport/gradedist:view', $context)) {
+    throw new moodle_exception('nopermissiontoviewletergrade');
 }
 $edit = (has_capability('gradereport/gradedist:edit', $context) && has_capability('moodle/grade:manageletters', $context));
 
@@ -74,8 +73,14 @@ $returnurl = $gpr->get_return_url('index.php');
 $boundaryerror = false;
 
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
-$gradeitems = $grader->get_gradeitems();
-reset($gradeitems);
+$gradeitemsunsorted = $grader->get_gradeitems();
+usort($gradeitemsunsorted, function($a, $b) {
+    return (int)$a->sortorder - (int)$b->sortorder;
+});
+$gradeitems = array();
+foreach ($gradeitemsunsorted as $gi) {
+    $gradeitems[$gi->gid] = $gi;
+}
 
 $groupmode = groups_get_course_groupmode($course);
 
@@ -144,10 +149,20 @@ $mform = new edit_letter_form($returnurl, [
         );
 $mform->set_data($mdata);
 
-if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
+if (($data = $mform->get_data()) && isset($data->grp_export) && $data->grp_export) {
     // Export.
     $export = new grade_export_gradedist();
-    $exportformat = $data->grp_export['exportformat'];
+    $exportformat = $data->grp_export;
+    switch($exportformat) {
+        case 'xlsx':
+            $efcode = MTablePDF::OUTPUT_FORMAT_XLSX;
+            break;
+        case 'ods':
+            $efcode = MTablePDF::OUTPUT_FORMAT_ODS;
+            break;
+        case 'csv':
+            $efcode = MTablePDF::OUTPUT_FORMAT_CSV_TAB;
+    }
 
     $gradeitem = new stdClass();
     $gradeitem->id = $data->gradeitem;
@@ -165,7 +180,7 @@ if (($data = $mform->get_data()) && isset($data->grp_export['export'])) {
                   $gradeitem,
                   $letters,
                   $newletters,
-                  $exportformat,
+                  $efcode,
                   $course->shortname.'_'.$gradeitems[$data->gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false),
                   $groupid,
                   $groupingid);

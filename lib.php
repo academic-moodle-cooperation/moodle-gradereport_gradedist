@@ -65,6 +65,7 @@ class grade_report_gradedist extends grade_report_grader {
     /**
      * Pulls out the userids of the users to be display, and sorts them.
      * @param bool $allusers
+     * @return array|void
      */
     public function load_users(bool $allusers = false) {
         global $CFG, $DB;
@@ -179,8 +180,9 @@ class grade_report_gradedist extends grade_report_grader {
     public function get_gradeitems() {
         global $CFG, $DB;
 
-        $gradeitems = [];
-        $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : [];
+        $gradeitems = array();
+        $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
+        $showgradeitemtypes = (isset($CFG->gradedist_showgradeitemtype)) ? $CFG->gradedist_showgradeitemtype : 0;
 
         foreach ($this->gtree->get_items() as $g) {
             if ($g->gradetype != GRADE_TYPE_VALUE) {
@@ -200,18 +202,25 @@ class grade_report_gradedist extends grade_report_grader {
 
             if (strcmp($g->itemtype, 'course') == 0) { // Item for the whole course.
                 $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
-                // Small hack to get coursesum in front.
-                $gradeitems = array_reverse($gradeitems, true);
-                $gradeitems[$g->id] = $gradeitem;
-                $gradeitems = array_reverse($gradeitems, true);
+                $gradeitem->sortorder = 0;
+                $gradeitem->type = $g->itemtype;
+                $gradeitem->module = '';
+                $gradeitem->gid = $g->id;
             } else if (strcmp($g->itemtype, 'category') == 0) {  // Category item.
                 $gc = $DB->get_record('grade_categories', ['id' => $g->iteminstance ]);
                 $gradeitem->name = $gc->fullname;
-                $gradeitems[$g->id] = $gradeitem;
+                $gradeitem->sortorder = $g->sortorder;
+                $gradeitem->type = get_string('gradecategory', 'grades');
+                $gradeitem->module = '';
+                $gradeitem->gid = $g->id;
             } else {
                 $gradeitem->name = $g->itemname;
-                $gradeitems[$g->id] = $gradeitem;
+                $gradeitem->sortorder = $g->sortorder;
+                $gradeitem->type = $g->itemtype;
+                $gradeitem->module = $showgradeitemtypes ? $g->itemmodule : '';
+                $gradeitem->gid = $g->id;
             }
+            $gradeitems[] = $gradeitem;
         }
         return $gradeitems;
     }
