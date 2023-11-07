@@ -175,18 +175,6 @@ class edit_letter_form extends moodleform {
             '</div>'
         );
 
-        $mform->addElement('header', 'submitheader', get_string('submitanddownload', 'gradereport_gradedist'));
-
-        $export = [];
-        $exportformats = [MTablePDF::OUTPUT_FORMAT_ODS     => 'ods',
-                               MTablePDF::OUTPUT_FORMAT_CSV_TAB => 'csv',
-                               MTablePDF::OUTPUT_FORMAT_XLSX     => 'xlsx',
-                            ];
-
-        $export[] =& $mform->createElement('select', 'exportformat', '', $exportformats);
-        $export[] =& $mform->createElement('submit', 'export', get_string('download', 'gradereport_gradedist'));
-        $mform->addGroup($export, 'grp_export', get_string('export', 'gradereport_gradedist'), ['']);
-        $mform->setDefault('grp_export[exportformat]', MTablePDF::OUTPUT_FORMAT_XLSX);
         $mform->addElement('html', '<div class="grgd">'.
             get_string('export', 'gradereport_gradedist').'&nbsp;'.
             '&nbsp;<a href="#xlsx" class="grgd_xlsx">'.get_string('xlsx', 'gradereport_gradedist').'</a>&nbsp;|'.
