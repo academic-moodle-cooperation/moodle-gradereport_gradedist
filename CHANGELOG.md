@@ -1,9 +1,9 @@
 CHANGELOG
 =========
 
-4.3 (2023-11-06)
+4.3 (2023-11-14)
 * [FIXED] #7722 Resolved Code Checker Issues
-* Moodle 4.3 compatible version
+* #7730 Moodle 4.3 compatible version
 
 4.2 (2023-05-17)
 ------------------
