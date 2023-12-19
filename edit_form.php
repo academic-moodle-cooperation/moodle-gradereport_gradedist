@@ -64,7 +64,6 @@ class edit_letter_form extends moodleform {
 
         $select = $mform->createElement('select', 'gradeitem', get_string('gradeitem', 'gradereport_gradedist'));
         foreach ($gradeitems as $index => $gradeitem) {
-            $select->addOption($gradeitem->name, $index, ($gradeitem->disable) ? [ 'disabled' => 'disabled' ] : null);
             $name = $gradeitem->name;
             // If showgradeitemtype-setting is off property module is empty.
             if ($showgradeitemtypes && $gradeitem->module) {
