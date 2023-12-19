@@ -135,11 +135,11 @@ class grade_report_gradedist extends grade_report_grader {
         if (empty($this->users)) {
             $this->userselect = '';
             $this->users = [];
-            $this->userselect_params = [];
+            $this->userselectparams = [];
         } else {
             list($usql, $uparams) = $DB->get_in_or_equal(array_keys($this->users), SQL_PARAMS_NAMED, 'usid0');
             $this->userselect = "AND g.userid $usql";
-            $this->userselect_params = $uparams;
+            $this->userselectparams = $uparams;
 
             // Add a flag to each user indicating whether their enrolment is active.
             $sql = "SELECT ue.userid
