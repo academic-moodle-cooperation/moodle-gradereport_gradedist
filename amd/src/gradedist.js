@@ -154,8 +154,6 @@ function($, log, str) {
             window.submit.prop('disabled', error || erremp);
         }
 
-        $('#id_grp_export_export').prop('disabled', false);
-
         return !error;
     };
 
@@ -496,6 +494,24 @@ function($, log, str) {
                     saveAs(blob, "chart.jpg");
                 }, "image/jpeg");
             });
+        });
+
+        var toxlsx = $('.grgd_xlsx');
+        toxlsx.click(instance, function() {
+            $("input[name='grp_export']").val('xlsx');
+            $('#letterform').submit();
+        });
+
+        var toods = $('.grgd_ods');
+        toods.click(instance, function() {
+            $("input[name='grp_export']").val('ods');
+            $('#letterform').submit();
+        });
+
+        var tocsv = $('.grgd_csv');
+        tocsv.click(instance, function() {
+            $("input[name='grp_export']").val('csv');
+            $('#letterform').submit();
         });
 
         $('#letterform input[type="submit"]').click(function() {

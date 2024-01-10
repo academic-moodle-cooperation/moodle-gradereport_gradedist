@@ -108,7 +108,7 @@ class grade_export_gradedist {
     public function print_grades() {
         global $DB, $USER;
 
-        $export = new MTablePDF(MTablePDF::PORTRAIT, array_fill(0, 6, array('mode' => 'Fixed', 'value' => 20)));
+        $export = new MTablePDF(MTablePDF::PORTRAIT, array_fill(0, 6, ['mode' => 'Fixed', 'value' => 20]));
 
         // Set document information.
         $export->SetCreator('TUWEL');
@@ -135,23 +135,23 @@ class grade_export_gradedist {
                                '', '', '', '', '', '');
 
         // Set a specific override format for the header title and description if default is not ok.
-        $headertitleformat = array(
+        $headertitleformat = [
             'size' => 12,
             'bold' => 1,
             'align' => 'left',
-            'v_align' => 'vcenter');
-        $headerdescformat = array();
+            'v_align' => 'vcenter', ];
+        $headerdescformat = [];
         $export->set_headerformat($headertitleformat, $headerdescformat);
 
         // Gradedist data.
-        $export->settitles(array(
+        $export->settitles([
             get_string('category', 'gradereport_gradedist'),
             get_string('actualcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
             get_string('actualcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
             get_string('newcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
             get_string('newcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
-            '' // Fit number of columns.
-        ));
+            '', // Fit number of columns.
+        ]);
 
         $acttotal = 0;
         $newtotal = 0;
@@ -162,60 +162,63 @@ class grade_export_gradedist {
             $acttotal += $actdist->distribution[$letter]->percentage;
             $newtotal += $newdist->distribution[$letter]->percentage;
 
-            $export->addrow(array(
+            $export->addrow([
                 $letter,
                 number_format($actdist->distribution[$letter]->percentage, 2, ',', ' '),
                 $actdist->distribution[$letter]->count,
                 number_format($newdist->distribution[$letter]->percentage, 2, ',', ' '),
                 $newdist->distribution[$letter]->count,
-                ''
-            ));
+                '',
+            ]);
         }
-        $export->addrow(array(
+        $export->addrow([
             get_string('sum', 'gradereport_gradedist'),
             number_format($acttotal, 2, ',', ' '),
             $actdist->coverage[1] - $actdist->coverage[0],
             number_format($newtotal, 2, ',', ' '),
             $newdist->coverage[1] - $newdist->coverage[0],
-            ''
-        ));
+            '',
+        ]);
 
-        $export->addrow(array('', '', '', '', '', ''));
+        $export->addrow(['', '', '', '', '', '']);
 
-        $export->addrow(array(
+        $export->addrow([
             get_string('coverage_export', 'gradereport_gradedist'),
             number_format($actdist->coverage[2], 2, ',', ' '),
             $actdist->coverage[0],
             number_format($newdist->coverage[2], 2, ',', ' '),
             $newdist->coverage[0],
-            ''
-        ));
+            '',
+        ]);
 
         // Student data.
-        $export->addrow(array('', '', '', '', '', ''));
+        $export->addrow(['', '', '', '', '', '']);
 
-        $gradeitem = $DB->get_record('grade_items', array('id' => $this->gradeitem->id));
-        $gui = new graded_users_iterator($this->course, array($this->gradeitem->id => $gradeitem));
+        $gradeitem = $DB->get_record('grade_items', ['id' => $this->gradeitem->id]);
+        $gui = new graded_users_iterator($this->course, [$this->gradeitem->id => $gradeitem]);
         $gui->init();
 
-        $userdatatitleformat = array('size' => 12,
+        $userdatatitleformat = ['size' => 12,
             'bold' => 1,
             'align' => 'center',
             'bottom' => 1,
-            'v_align' => 'vcenter');
+            'v_align' => 'vcenter',
+        ];
 
-        $export->addrow(array(
-            array("data" => get_string('idnumber'), "format" => $userdatatitleformat),
-            array("data" => get_string('lastname'), "format" => $userdatatitleformat),
-            array("data" => get_string('firstname'), "format" => $userdatatitleformat),
-            array("data" => get_string('actualgrade', 'gradereport_gradedist'), "format" => $userdatatitleformat),
-            array("data" => get_string('newgrade', 'gradereport_gradedist'), "format" => $userdatatitleformat),
-            array("data" => get_string('points', 'gradereport_gradedist',
-                    number_format($gradeitem->grademax, 2, ',', ' ')), "format" => $userdatatitleformat)
-        ));
+        $export->addrow([
+            ["data" => get_string('idnumber'), "format" => $userdatatitleformat],
+            ["data" => get_string('lastname'), "format" => $userdatatitleformat],
+            ["data" => get_string('firstname'), "format" => $userdatatitleformat],
+            ["data" => get_string('actualgrade', 'gradereport_gradedist'), "format" => $userdatatitleformat],
+            ["data" => get_string('newgrade', 'gradereport_gradedist'), "format" => $userdatatitleformat],
+            ["data" => get_string('points', 'gradereport_gradedist',
+                    number_format($gradeitem->grademax, 2, ',', ' ')),
+                    "format" => $userdatatitleformat,
+            ],
+        ]);
 
         // Create an array of ids of the groups we want to see.
-        $selectedgroupids = array();
+        $selectedgroupids = [];
         if ($this->groupingid != 0) {
             $groupsofgrouping = groups_get_all_groups($this->course->id, 0, $this->groupingid);
             foreach ($groupsofgrouping as $onegroup) {
@@ -248,14 +251,14 @@ class grade_export_gradedist {
             $actualgrade = $this->grader->get_gradeletter($this->letters, $grade);
             $newgrade = $this->grader->get_gradeletter($this->newletters, $grade);
 
-            $export->addrow(array(
+            $export->addrow([
                 $user->idnumber,
                 $user->lastname,
                 $user->firstname,
                 $actualgrade,
                 (!is_null($newgrade)) ? $newgrade : '',
-                (!is_null($grade->finalgrade)) ? number_format($grade->finalgrade, 2, ',', ' ') : ''
-            ));
+                (!is_null($grade->finalgrade)) ? number_format($grade->finalgrade, 2, ',', ' ') : '',
+            ]);
         }
 
         $export->generate($this->filename);

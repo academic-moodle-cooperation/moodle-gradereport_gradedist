@@ -26,8 +26,6 @@
 
 namespace gradereport_gradedist\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class gradedist_viewed
  *
@@ -76,15 +74,5 @@ class gradedist_viewed extends \core\event\base {
      */
     public function get_url() {
         return new \moodle_url($this->other['url']);
-    }
-
-    /**
-     * Returns legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        return array($this->courseid, 'course', get_string('pluginname', 'gradereport_gradedist'),
-            $this->other['url'], $this->courseid);
     }
 }

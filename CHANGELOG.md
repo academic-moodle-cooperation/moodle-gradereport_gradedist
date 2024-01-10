@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+4.3 (2023-11-14)
+* [FIXED] #7722 Resolved Code Checker Issues
+* [FIXED] #7792 Fix duplicates in dropdown menu
+* #7730 Moodle 4.3 compatible version
+
+4.2 (2023-05-17)
+------------------
+* [FEATURE] #7574 Improve design of download data functions
+* [FEATURE] #7573 Grade columns like in grader report, displaying module type
+* #7490 Moodle 4.2 compatible version
+
 4.1 (2022-11-17)
 ------------------
 * [FEATURE] #7418 Optimize page structure

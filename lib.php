@@ -64,6 +64,8 @@ class grade_report_gradedist extends grade_report_grader {
 
     /**
      * Pulls out the userids of the users to be display, and sorts them.
+     * @param bool $allusers
+     * @return array|void
      */
     public function load_users(bool $allusers = false) {
         global $CFG, $DB;
@@ -88,7 +90,7 @@ class grade_report_gradedist extends grade_report_grader {
 
         // If the user has clicked one of the sort asc/desc arrows.
         if (is_numeric($this->sortitemid)) {
-            $params = array_merge(array('gitemid' => $this->sortitemid),
+            $params = array_merge(['gitemid' => $this->sortitemid],
                       $gradebookrolesparams, $this->groupwheresql_params, $enrolledparams, $relatedctxparams);
 
             $sortjoin = "LEFT JOIN {grade_grades} g ON g.userid = u.id AND g.itemid = $this->sortitemid";
@@ -132,12 +134,12 @@ class grade_report_gradedist extends grade_report_grader {
 
         if (empty($this->users)) {
             $this->userselect = '';
-            $this->users = array();
-            $this->userselect_params = array();
+            $this->users = [];
+            $this->userselectparams = [];
         } else {
             list($usql, $uparams) = $DB->get_in_or_equal(array_keys($this->users), SQL_PARAMS_NAMED, 'usid0');
             $this->userselect = "AND g.userid $usql";
-            $this->userselect_params = $uparams;
+            $this->userselectparams = $uparams;
 
             // Add a flag to each user indicating whether their enrolment is active.
             $sql = "SELECT ue.userid
@@ -149,10 +151,11 @@ class grade_report_gradedist extends grade_report_grader {
                            AND e.courseid = :courseid
                   GROUP BY ue.userid";
             $coursecontext = $this->context->get_course_context(true);
-            $params = array_merge($uparams, array(
+            $params = array_merge($uparams, [
                 'estatus' => ENROL_INSTANCE_ENABLED,
                 'uestatus' => ENROL_USER_ACTIVE,
-                'courseid' => $coursecontext->instanceid));
+                'courseid' => $coursecontext->instanceid,
+            ]);
             $useractiveenrolments = $DB->get_records_sql($sql, $params);
 
             $defaultgradeshowactiveenrol = !empty($CFG->grade_report_showonlyactiveenrol);
@@ -177,8 +180,9 @@ class grade_report_gradedist extends grade_report_grader {
     public function get_gradeitems() {
         global $CFG, $DB;
 
-        $gradeitems = array();
-        $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : array();
+        $gradeitems = [];
+        $gradetypes = (!empty($CFG->gradedist_showgradeitem)) ? explode(',', $CFG->gradedist_showgradeitem) : [];
+        $showgradeitemtypes = (isset($CFG->gradedist_showgradeitemtype)) ? $CFG->gradedist_showgradeitemtype : 0;
 
         foreach ($this->gtree->get_items() as $g) {
             if ($g->gradetype != GRADE_TYPE_VALUE) {
@@ -187,8 +191,8 @@ class grade_report_gradedist extends grade_report_grader {
 
             $gradeitem = new stdClass();
             if ($g->display == 0) { // If display type is "default" check what default is.
-                if ($coursedefault = $DB->get_field('grade_settings', 'value', array('courseid' => $g->courseid,
-                    'name' => 'displaytype'))) { // If course default exists take it.
+                if ($coursedefault = $DB->get_field('grade_settings', 'value', ['courseid' => $g->courseid,
+                    'name' => 'displaytype', ])) { // If course default exists take it.
                     $g->display = $coursedefault;
                 } else { // Else take system default.
                     $g->display = $CFG->grade_displaytype;
@@ -198,18 +202,25 @@ class grade_report_gradedist extends grade_report_grader {
 
             if (strcmp($g->itemtype, 'course') == 0) { // Item for the whole course.
                 $gradeitem->name = get_string('coursesum', 'gradereport_gradedist');
-                // Small hack to get coursesum in front.
-                $gradeitems = array_reverse($gradeitems, true);
-                $gradeitems[$g->id] = $gradeitem;
-                $gradeitems = array_reverse($gradeitems, true);
+                $gradeitem->sortorder = 0;
+                $gradeitem->type = $g->itemtype;
+                $gradeitem->module = '';
+                $gradeitem->gid = $g->id;
             } else if (strcmp($g->itemtype, 'category') == 0) {  // Category item.
-                $gc = $DB->get_record('grade_categories', array('id' => $g->iteminstance ));
+                $gc = $DB->get_record('grade_categories', ['id' => $g->iteminstance ]);
                 $gradeitem->name = $gc->fullname;
-                $gradeitems[$g->id] = $gradeitem;
+                $gradeitem->sortorder = $g->sortorder;
+                $gradeitem->type = get_string('gradecategory', 'grades');
+                $gradeitem->module = '';
+                $gradeitem->gid = $g->id;
             } else {
                 $gradeitem->name = $g->itemname;
-                $gradeitems[$g->id] = $gradeitem;
+                $gradeitem->sortorder = $g->sortorder;
+                $gradeitem->type = $g->itemtype;
+                $gradeitem->module = $showgradeitemtypes ? $g->itemmodule : '';
+                $gradeitem->gid = $g->id;
             }
+            $gradeitems[] = $gradeitem;
         }
         return $gradeitems;
     }
@@ -219,7 +230,7 @@ class grade_report_gradedist extends grade_report_grader {
      */
     public function get_grouplist() {
 
-        $groups = array();
+        $groups = [];
         $groups = groups_get_all_groups($this->courseid);
 
         $allgroupentry = new StdClass();
@@ -239,7 +250,7 @@ class grade_report_gradedist extends grade_report_grader {
      */
     public function get_groupinglist() {
 
-        $groupings = array();
+        $groupings = [];
         $groupings = groups_get_all_groupings($this->courseid);
 
         $nogroupingentry = new StdClass();
@@ -269,7 +280,7 @@ class grade_report_gradedist extends grade_report_grader {
         global $DB;
 
         $this->load_users();
-        $selectedusers = array();
+        $selectedusers = [];
         if ($groupingid == 0) {
             if ($groupid == 0) { // Tackle all users.
                 $selectedusers = $this->users;
@@ -289,7 +300,7 @@ class grade_report_gradedist extends grade_report_grader {
                        {grade_grades} g
                 WHERE g.itemid = gi.id AND gi.courseid = :courseid
                 AND g.itemid = :gradeitem";
-        $params = array('gradeitem' => $gradeitem, 'courseid' => $this->courseid);
+        $params = ['gradeitem' => $gradeitem, 'courseid' => $this->courseid];
 
         krsort($this->letters); // Just to be sure.
 
@@ -298,7 +309,7 @@ class grade_report_gradedist extends grade_report_grader {
 
         $return = new stdClass();
         $return->distribution = array_fill_keys($this->letters, null);
-        $return->coverage = array(0, 0);
+        $return->coverage = [0, 0];
 
         foreach ($this->letters as $letter) {
             $gradedist = new stdClass();
@@ -329,7 +340,7 @@ class grade_report_gradedist extends grade_report_grader {
                 $gradedist->percentage = ($total > 0) ? round($gradedist->count * 100 / $total, 2) : 0;
             }
         }
-        $return->coverage = array($total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0);
+        $return->coverage = [$total - $count, $total, ($total > 0) ? round(($total - $count) * 100 / $total, 2) : 0];
         return $return;
     }
 
@@ -341,7 +352,7 @@ class grade_report_gradedist extends grade_report_grader {
      * @return string
      */
     public function get_gradeletter($letters, $grade) {
-        if (is_null($grade->finalgrade) || !$gradeitem = grade_item::fetch(array('id' => $grade->itemid))) {
+        if (is_null($grade->finalgrade) || !$gradeitem = grade_item::fetch(['id' => $grade->itemid])) {
             return '-';
         }
 

@@ -24,9 +24,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.'); // It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
@@ -54,9 +52,9 @@ class confirm_letter_form extends moodleform {
         $tabledata = $this->_customdata['tabledata'];
 
         $table = new html_table();
-        $table->head  = array(get_string('max', 'grades'), get_string('min', 'grades'), get_string('letter', 'grades'));
-        $table->size  = array('30%', '30%', '40%');
-        $table->align = array('left', 'left', 'left');
+        $table->head  = [get_string('max', 'grades'), get_string('min', 'grades'), get_string('letter', 'grades')];
+        $table->size  = ['30%', '30%', '40%'];
+        $table->align = ['left', 'left', 'left'];
         $table->width = '30%';
         $table->data  = $tabledata;
         $table->tablealign  = 'center';
