@@ -3,9 +3,9 @@ Grade Distribution
 
 This file is part of the gradereport_gradedist plugin for Moodle - <http://moodle.org/>
 
-*Author:*    Thomas Niedermaier, Andreas Krieger, Günther Bernsteiner, Simeon Naydenov
+*Author:*    Clemens Marx, Thomas Niedermaier, Andreas Krieger, Günther Bernsteiner, Simeon Naydenov
 
-*Copyright:* 2019 [Academic Moodle Cooperation](http://www.academic-moodle-cooperation.org)
+*Copyright:* [Academic Moodle Cooperation](http://www.academic-moodle-cooperation.org)
 
 *License:*   [GNU GPL v3 or later](http://www.gnu.org/copyleft/gpl.html)
 
@@ -13,55 +13,35 @@ This file is part of the gradereport_gradedist plugin for Moodle - <http://moodl
 Description
 -----------
 
-The Grade Distribution report visualizes the grades of students in a course. Changes to letter
-grades (i.e. the boundary of a grade) can be analysed visually, saved and therefore overwritten if
-necessary.
+The grade distribution visualizes the distribution of the participants' letter grades in the grades overview. Changes to letter grades can be visually analysed, saved and overwritten if necessary.
 
 
-Example
+Usage
 -------
 
-Usually letter grades of a course should be communicated to the students at the beginning of a
-term. Occasionally it occurs that changes to letter grades are necessary. The grade distribution
-visualizes the grades of students. Changes to letter grades (i.e. the boundary of a grade) can be
-analysed visually, saved and therefore overwritten if necessary. By means of an alternating graphic
-chart changes can be seen immediately.
+As a rule, letter grades for a course must be determined at the beginning of the semester and communicated to the students!
+As a teacher, you can use the diagram displayed to check how the grades for an examination are distributed out. You can display the grade distribution for the course in total or any grading column with grade type "value". If grade levels have been selected unfavorably and readjustment is necessary, you can simulate changes to existing grade levels to see possible shifts in the distribution of results.
 
 
 Installation
 ------------
 
-* Copy the module code directly to the *moodleroot/grade/report/gradedist* directory.
+* Copy the  code directly to the *grade/report/gradedist* directory.
 * Log into Moodle as administrator.
 * Open the administration area (*http://your-moodle-site/admin*) to start the installation
   automatically.
 
 
-Admin Settings
+Privacy API
 --------------
-
-An administrator can adjust the default settings instance-wide for the grade distribution in the
-general settings page. The type of grade display can be specified and one can choose from the
-following:
-
-* Letter
-* Letter (percentage)
-* Letter (real)
-* Percentage
-* Percentage (letter)
-* Percentage (real)
-* Real
-* Real (letter)
-* Real (percentage)
+The plugin fully implements the Moodle Privacy API.
 
 
 Documentation
 --------------
 
-You can find a cheat sheet for the plugin on the [AMC
-website](http://www.academic-moodle-cooperation.org/en/module/grade-distribution/) and a video
-tutorial in german only in the [AMC YouTube
-Channel](https://www.youtube.com/c/AMCAcademicMoodleCooperation).
+You can find a documentation for the plugin on the [AMC website](https://academic-moodle-cooperation.org/gradereport_gradedist/)
+
 
 
 Bug Reports / Support
