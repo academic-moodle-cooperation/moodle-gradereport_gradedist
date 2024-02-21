@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace gradereport_gradedist;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -33,12 +35,12 @@ require_once($CFG->dirroot . '/grade/report/gradedist/lib.php');
 class lib_test extends \advanced_testcase {
     /**
      * report to test
-     * @var grade_report_gradedist $report
+     * @var \grade_report_gradedist $report
      */
     protected $report;
     /**
      * course to test
-     * @var stdClass $course
+     * @var \stdClass $course
      */
     protected $course;
 
@@ -46,13 +48,13 @@ class lib_test extends \advanced_testcase {
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course();
-        $gpr = new grade_plugin_return();
-        $context = context_course::instance($this->course->id);
+        $gpr = new \grade_plugin_return();
+        $context = \context_course::instance($this->course->id);
         $letters = [1, 2, 3, 4, 5];
         $page = 0;
         $sortitemid = 0;
 
-        $this->report = new grade_report_gradedist($this->course->id, $gpr, $context, $letters, $page, $sortitemid);
+        $this->report = new \grade_report_gradedist($this->course->id, $gpr, $context, $letters, $page, $sortitemid);
     }
 
     /**
@@ -123,10 +125,10 @@ class lib_test extends \advanced_testcase {
         ]);
 
         // Reinstantiate the report to update gtree.
-        $this->report = new grade_report_gradedist(
+        $this->report = new \grade_report_gradedist(
             $this->course->id,
-            new grade_plugin_return(),
-            context_course::instance($this->course->id),
+            new \grade_plugin_return(),
+            \context_course::instance($this->course->id),
             [1, 2, 3, 4, 5],
             0,
             0
@@ -226,19 +228,19 @@ class lib_test extends \advanced_testcase {
         ]);
 
         // Grade the users.
-        $grade = new grade_grade([
+        $grade = new \grade_grade([
             'itemid' => $gradeitem1->id,
             'userid' => $user1->id,
             'finalgrade' => 24,
         ], false);
         $grade->insert();
-        $grade = new grade_grade([
+        $grade = new \grade_grade([
             'itemid' => $gradeitem1->id,
             'userid' => $user2->id,
             'finalgrade' => 60,
         ], false);
         $grade->insert();
-        $grade = new grade_grade([
+        $grade = new \grade_grade([
             'itemid' => $gradeitem1->id,
             'userid' => $user3->id,
             'finalgrade' => 85,
@@ -246,10 +248,10 @@ class lib_test extends \advanced_testcase {
         $grade->insert();
 
         // Reinstantiate the report to update gtree.
-        $this->report = new grade_report_gradedist(
+        $this->report = new \grade_report_gradedist(
             $this->course->id,
-            new grade_plugin_return(),
-            context_course::instance($this->course->id),
+            new \grade_plugin_return(),
+            \context_course::instance($this->course->id),
             [1, 2, 3, 4, 5],
             0,
             0
@@ -287,7 +289,7 @@ class lib_test extends \advanced_testcase {
             'courseid' => $this->course->id,
         ]);
 
-        $grade1 = new stdClass ();
+        $grade1 = new \stdClass();
         $grade1->finalgrade = null;
         $grade1->itemid = $gradeitem1->id;
         $grade1->userid = 1;
