@@ -16,12 +16,11 @@
 
 namespace gradereport_gradedist;
 
-use grade_plugin_return;
-
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/grade/report/gradedist/lib.php');
+require_once $CFG->dirroot . '/grade/lib.php';
 
 /**
  * Tests for Grade distribution
@@ -50,7 +49,7 @@ class lib_test extends \advanced_testcase {
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course();
-        $gpr = new grade_plugin_return();
+        $gpr = new \grade_plugin_return();
         $context = \context_course::instance($this->course->id);
         $letters = [1, 2, 3, 4, 5];
         $page = 0;
