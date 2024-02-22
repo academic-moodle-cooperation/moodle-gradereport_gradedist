@@ -31,7 +31,7 @@ require_once($CFG->dirroot . '/grade/lib.php');
  * @copyright  2024 Academic Moodle Cooperation {@link http://www.academic-moodle-cooperation.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @covers     \gradereport_gradedist\lib
+ * @covers     \gradereport_gradedist\lib.php
  */
 class lib_test extends \advanced_testcase {
     /**
@@ -259,7 +259,7 @@ class lib_test extends \advanced_testcase {
         );
 
         $result = $this->report->load_distribution($letters, $gradeitem1->id);
-        // Used for debugging (@code): print_r($result);.
+        // Used for debugging: print the result.
 
         // Check coverage (items not included by new letters).
         $this->assertEquals([0, 3, 0], $result->coverage);
@@ -311,6 +311,6 @@ class lib_test extends \advanced_testcase {
 
         // Test wrong/no item id.
         $grade1->itemid = null;
-        $this->assertEquals('-', $this->report->get_gradeletter($letters, $grade1));  
+        $this->assertEquals('-', $this->report->get_gradeletter($letters, $grade1));
     }
 }
