@@ -20,7 +20,7 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/grade/report/gradedist/lib.php');
-require_once $CFG->dirroot . '/grade/lib.php';
+require_once($CFG->dirroot . '/grade/lib.php');
 
 /**
  * Tests for Grade distribution
