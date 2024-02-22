@@ -369,5 +369,7 @@ class grade_report_gradedist extends grade_report_grader {
                 return format_string($letter);
             }
         }
+
+        return '-';
     }
 }

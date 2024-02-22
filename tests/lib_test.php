@@ -306,8 +306,11 @@ class lib_test extends \advanced_testcase {
         $grade1->finalgrade = 100;
         $this->assertEquals('1', $this->report->get_gradeletter($letters, $grade1));
 
+        // Test no letters.
+        $this->assertEquals('-', $this->report->get_gradeletter([], $grade1));
+
         // Test wrong/no item id.
         $grade1->itemid = null;
-        $this->assertEquals('-', $this->report->get_gradeletter($letters, $grade1));
+        $this->assertEquals('-', $this->report->get_gradeletter($letters, $grade1));  
     }
 }
