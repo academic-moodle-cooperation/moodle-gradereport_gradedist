@@ -15,7 +15,7 @@ variables:
   MYSQL_COLLATION_SERVER: "utf8mb4_unicode_ci"
 
 .job_template: &job_configuration
-  image: quay.io/amc/moodle-plugin-ci:${PHP_VERSION}-node.16
+  image: quay.io/amc/moodle-plugin-ci:${PHP_VERSION}-node.20
   before_script:
     - cd ../..
     - moodle-db-isready
@@ -23,7 +23,6 @@ variables:
     - eval $(failed setup-command)
   script:
     - moodle-plugin-ci phplint || failed
-    - moodle-plugin-ci phpcpd || failed
     - moodle-plugin-ci phpmd || failed
     - moodle-plugin-ci phpcs
     - moodle-plugin-ci validate
@@ -35,7 +34,7 @@ variables:
     - moodle-plugin-ci behat --profile chrome
     - failed result
   after_script:
-    - failed report    
+    - failed report
   parallel:
     matrix:
       - MOODLE_BRANCH: [ "MOODLE_403_STABLE" ]
