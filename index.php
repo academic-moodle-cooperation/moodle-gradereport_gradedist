@@ -41,7 +41,7 @@ $saved = optional_param('saved', false, PARAM_BOOL);
 
 // Basic access checks.
 if (!$course = $DB->get_record('course', ['id' => $courseid])) {
-    throw new moodle_exception('nocourseid');
+    throw new moodle_exception('invalidcourseid');
 }
 require_login($course);
 $context = context_course::instance($course->id);

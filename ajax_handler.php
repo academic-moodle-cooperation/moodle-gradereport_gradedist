@@ -44,7 +44,7 @@ $boundariesnew = optional_param_array('grp_gradeboundaries_new', [], PARAM_TEXT)
 
 // Basic access checks.
 if (!$course = $DB->get_record('course', ['id' => $courseid])) {
-    throw new moodle_exception('nocourseid');
+    throw new moodle_exception('invalidcourseid');
 }
 require_login($course);
 $context = context_course::instance($course->id);
