@@ -42,7 +42,7 @@ class gradedist_viewed extends \core\event\base {
      */
     protected function init() {
         $this->data['crud'] = 'r';
-        $this->data['edulevel'] = self::LEVEL_TEACHING;
+        $this->data['edulevel'] = \core\event\base::LEVEL_TEACHING;
     }
 
     /**
@@ -70,7 +70,7 @@ class gradedist_viewed extends \core\event\base {
     /**
      * Returns the url to the visited page.
      *
-     * @return moodle_url
+     * @return \moodle_url
      */
     public function get_url() {
         return new \moodle_url($this->other['url']);

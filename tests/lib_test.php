@@ -63,7 +63,7 @@ class lib_test extends \advanced_testcase {
      *
      * 2 Assertions
      */
-    public function test_constructor() {
+    public function test_constructor(): void {
         $noreport = null;
 
         // Assert: Check if the instance is created.
@@ -79,7 +79,7 @@ class lib_test extends \advanced_testcase {
      *
      * 4 Assertions
      */
-    public function test_load_users() {
+    public function test_load_users(): void {
         // Test no users.
         $this->assertEquals([], $this->report->load_users());
         $this->assertEmpty($this->report->load_users());
@@ -105,7 +105,7 @@ class lib_test extends \advanced_testcase {
      *
      * 2 Assertions
      */
-    public function test_get_gradeitems() {
+    public function test_get_gradeitems(): void {
         // Test only 1 grade item (course sum).
         $result = $this->report->get_gradeitems();
         $this->assertEquals(1, count($result));
@@ -145,7 +145,7 @@ class lib_test extends \advanced_testcase {
      *
      * 4 Assertions
      */
-    public function test_get_grouplist() {
+    public function test_get_grouplist(): void {
         // Create a course.
         $course = $this->getDataGenerator()->create_course();
 
@@ -172,7 +172,7 @@ class lib_test extends \advanced_testcase {
      *
      * 3 Assertions
      */
-    public function test_get_groupinglist() {
+    public function test_get_groupinglist(): void {
         // Create a course.
         $course = $this->getDataGenerator()->create_course();
 
@@ -198,7 +198,7 @@ class lib_test extends \advanced_testcase {
      *
      * 6 Assertions
      */
-    public function test_load_distribution() {
+    public function test_load_distribution(): void {
         // Test no distribution.
         $letters = [
             90 => 1,
@@ -277,7 +277,7 @@ class lib_test extends \advanced_testcase {
      *
      * 4 Assertions
      */
-    public function test_get_gradeletter() {
+    public function test_get_gradeletter(): void {
         $letters = [
             90 => 1,
             80 => 2,

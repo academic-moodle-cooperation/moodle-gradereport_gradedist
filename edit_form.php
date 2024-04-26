@@ -107,14 +107,14 @@ class edit_letter_form extends moodleform {
         }
 
         $mform->addGroup($gradeletters, 'grp_gradeletters',
-                get_string('gradeletter', 'gradereport_gradedist'), ['']);
+                get_string('gradeletter', 'gradereport_gradedist'), '');
         $mform->setType('grp_gradeletters', PARAM_TEXT);
         $mform->addGroup($gradeboundaries, 'grp_gradeboundaries',
-                get_string('gradeboundary', 'gradereport_gradedist'), ['']);
+                get_string('gradeboundary', 'gradereport_gradedist'), '');
         $mform->setType('grp_gradeboundaries', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries', 'gradeboundary', 'gradereport_gradedist');
         $mform->addGroup($gradeboundariesnew, 'grp_gradeboundaries_new',
-                get_string('gradeboundary_new', 'gradereport_gradedist'), ['']);
+                get_string('gradeboundary_new', 'gradereport_gradedist'), '');
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries_new', 'gradeboundary_new', 'gradereport_gradedist');
 
@@ -132,7 +132,7 @@ class edit_letter_form extends moodleform {
         $description[] =& $mform->createElement('radio', 'description', '', get_string('percent', 'gradereport_gradedist'), true);
         $mform->setDefault('description', 0);
 
-        $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), ['']);
+        $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), '');
 
         $columns = [];
         $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '',
@@ -142,7 +142,7 @@ class edit_letter_form extends moodleform {
         $mform->setDefault('grp_columns[actualcolumns]', true);
         $mform->setDefault('grp_columns[newcolumns]', true);
 
-        $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), ['']);
+        $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), '');
 
         $mform->addElement('html', '<canvas height="100" id="chart_container" class="hey"></canvas>');
 
