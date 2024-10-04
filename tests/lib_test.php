@@ -47,7 +47,7 @@ final class lib_test extends \advanced_testcase {
 
     protected function setUp(): void {
         parent::setUp();
-        
+
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course();
@@ -112,14 +112,14 @@ final class lib_test extends \advanced_testcase {
         $result = $this->report->get_gradeitems();
         $this->assertEquals(1, count($result));
 
-        $gradeitem1 = $this->getDataGenerator()->create_grade_item([
+        $this->getDataGenerator()->create_grade_item([
             'courseid' => $this->course->id,
             'itemtype' => 'manual',
             'itemname' => 'Test grade item 1',
             'sortorder' => 1,
             'gradetype' => 1,
         ]);
-        $gradeitem2 = $this->getDataGenerator()->create_grade_item([
+        $this->getDataGenerator()->create_grade_item([
             'courseid' => $this->course->id,
             'itemtype' => 'manual',
             'itemname' => 'Test grade item 2',
