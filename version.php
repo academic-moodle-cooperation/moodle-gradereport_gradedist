@@ -27,8 +27,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2024042200;
-$plugin->requires  = 2024020800;
+$plugin->version  = 2024100400;
+$plugin->requires  = 2024092700;
 $plugin->component = 'gradereport_gradedist';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = "v4.4.0";
+$plugin->release   = "v4.5.0";

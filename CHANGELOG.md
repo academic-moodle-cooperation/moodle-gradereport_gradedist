@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+4.5.0 (2024-10-04)
+------------------
+* #8061 Moodle 4.5 compatible version
+
 4.4.0 (2024-04-22)
 ------------------
 * [FEATURE] #2574 Added PHPUnit tests for lib.php

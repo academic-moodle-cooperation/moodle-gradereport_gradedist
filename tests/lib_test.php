@@ -33,7 +33,7 @@ require_once($CFG->dirroot . '/grade/lib.php');
  *
  * @covers     \gradereport_gradedist\lib.php
  */
-class lib_test extends \advanced_testcase {
+final class lib_test extends \advanced_testcase {
     /**
      * report to test
      * @var \grade_report_gradedist $report
@@ -46,6 +46,8 @@ class lib_test extends \advanced_testcase {
     protected $course;
 
     protected function setUp(): void {
+        parent::setUp();
+        
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course();
