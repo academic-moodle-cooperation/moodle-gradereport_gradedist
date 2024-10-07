@@ -33,7 +33,7 @@ require_once($CFG->dirroot . '/grade/lib.php');
  *
  * @covers     \gradereport_gradedist\lib.php
  */
-class lib_test extends \advanced_testcase {
+final class lib_test extends \advanced_testcase {
     /**
      * report to test
      * @var \grade_report_gradedist $report
@@ -46,6 +46,8 @@ class lib_test extends \advanced_testcase {
     protected $course;
 
     protected function setUp(): void {
+        parent::setUp();
+
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course();
@@ -110,14 +112,14 @@ class lib_test extends \advanced_testcase {
         $result = $this->report->get_gradeitems();
         $this->assertEquals(1, count($result));
 
-        $gradeitem1 = $this->getDataGenerator()->create_grade_item([
+        $this->getDataGenerator()->create_grade_item([
             'courseid' => $this->course->id,
             'itemtype' => 'manual',
             'itemname' => 'Test grade item 1',
             'sortorder' => 1,
             'gradetype' => 1,
         ]);
-        $gradeitem2 = $this->getDataGenerator()->create_grade_item([
+        $this->getDataGenerator()->create_grade_item([
             'courseid' => $this->course->id,
             'itemtype' => 'manual',
             'itemname' => 'Test grade item 2',
