@@ -24,6 +24,8 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\output\notification;
+
 require_once('../../../config.php');
 require_once($CFG->libdir.'/gradelib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
@@ -262,7 +264,7 @@ if ($confirm && !$boundaryerror) {
         // Show confirmation table.
         print_grade_page_head($course->id, 'report', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
 
-        echo $OUTPUT->notification(get_string('notification', 'gradereport_gradedist'));
+        echo $OUTPUT->notification(get_string('notification', 'gradereport_gradedist'), notification::NOTIFY_WARNING);
 
         $cform->display();
         // Confirmation table event.
