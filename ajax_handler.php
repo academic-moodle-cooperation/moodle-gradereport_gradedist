@@ -72,7 +72,16 @@ $data   = new stdClass();
 
 $actdist = $grader->load_distribution($letters, $gradeitem, $groupid, $groupingid);
 $newdist = $grader->load_distribution($newletters, $gradeitem, $groupid, $groupingid);
-$gradeitems = $grader->get_gradeitems();
+// The grade items are sorted by the id when displayed in the edit letter form.
+// We need to sort them here as well to getthe correct item
+$gradeitemsunsorted = $grader->get_gradeitems();
+usort($gradeitemsunsorted, function($a, $b) {
+    return (int)$a->sortorder - (int)$b->sortorder;
+});
+$gradeitems = [];
+foreach ($gradeitemsunsorted as $gi) {
+    $gradeitems[$gi->gid] = $gi;
+}
 
 $coursegroups = groups_get_all_groups($course->id);
 $coursegroupings = groups_get_all_groupings($course->id);
