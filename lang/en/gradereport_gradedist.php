@@ -72,15 +72,13 @@ $string['newcoverage'] = 'Items not included by new letters: ';
 $string['newgrade'] = 'Grade (new)';
 $string['newletterssubmitted'] = 'New grade letters submitted';
 $string['newletterssubmitted_description'] = 'The user with id {$a->userid} submitted the new grade letters.';
-
 $string['nogroupingentry'] = 'No grouping';
 $string['notification'] = 'Note: The definition of grade letters applies to all grade items in the course.';
 $string['ods'] = 'ods';
 $string['p'] = ' (%)';
 $string['percent'] = 'Percent';
 $string['pluginname'] = 'Grade distribution';
-$string['pluginname_help'] = 'This report shows the distribution of grades over a particular grade item depending on the lower bounds defined for the grade letters. The preview functionality allows you to see immediately how changes to the lower boundaries of grade letters affect the grade distribution. If you are satisfied with the new lower boundaries the definitions of the grade letters can be permanently changed.
-Note: The definition of grade letters applies to all grade items in the course.';
+$string['pluginname_help'] = 'This report shows the distribution of grades over a particular grade item depending on the lower bounds defined for the grade letters. The preview functionality allows you to see immediately how changes to the lower boundaries of grade letters affect the grade distribution. If you are satisfied with the new lower boundaries the definitions of the grade letters can be permanently changed. Note: The definition of grade letters applies to all grade items in the course.';
 $string['points'] = 'Points ({$a})';
 $string['predecessor'] = 'The lower boundary of a grade letter has to be smaller than the boundary of his predecessor.';
 $string['printchart'] = 'Print chart';
