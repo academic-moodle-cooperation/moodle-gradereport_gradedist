@@ -33,10 +33,11 @@ function($, log, str) {
      * @alias module:gradereport_gradedist/gradedist
      */
     var Gradedist = function() {
+        // Constructor intentionally left empty as it is initialized without properties.
     };
 
     /*
-     * update() updates the chart according to the values currently set in the form
+     * Function update() updates the chart according to the values currently set in the form
      *
      * @return true if everything's allright (no error handling by now)
      */
@@ -76,7 +77,7 @@ function($, log, str) {
     };
 
     /*
-     * validate() checks if the current boundaries given in the form data are
+     * Function validate() checks if the current boundaries given in the form data are
      * syntactically and semantically correct and displays warnings based on this
      *
      * @return true if everything's allright, false on detected error
@@ -158,7 +159,7 @@ function($, log, str) {
     };
 
     /*
-     * coverage() determines how many grades are covered/not covered by
+     * Function coverage() determines how many grades are covered/not covered by
      * the current forms grade distribution and displays this information
      *
      * @return true if everything's allright, false on detected error
@@ -211,7 +212,6 @@ function($, log, str) {
         ];
 
 
-
         str.get_strings(tofetch).done(function(s) {
             window.chart = new window.Chart($("#chart_container"), {
                 type: 'bar',
@@ -239,7 +239,6 @@ function($, log, str) {
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true,
-                                //maxTicksLimit: 6,
                                 padding: 10
                             },
                             scaleLabel: {
@@ -287,13 +286,13 @@ function($, log, str) {
     var instance = new Gradedist();
 
     /*
-     * initializer(config) prepares settings form for JS-functionality
+     * Function initializer(config) prepares settings form for JS-functionality
      */
     instance.initializer = function(config) {
 
         log.info('Initialize settings JS', 'gradedist');
 
-        require(['canvastoBlob']); // load canvastoBlob
+        require(['canvastoBlob']); // Load canvastoBlob
         var initdata = config.data;
 
         window.mode = 0;
@@ -337,7 +336,9 @@ function($, log, str) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             },
-            complete: function(arg1) { instance.update(arg1); },
+            complete: function(arg1) {
+                instance.update(arg1);
+            },
             url: uri
         };
 
@@ -400,28 +401,28 @@ function($, log, str) {
         var desc = $('input[name^="grp_description"]');
         desc.change(instance, function() {
             window.mode = this.value;
-            var values, values_new;
+            var values, valuesNew;
 
-            var s_y;
-            var ext_y;
+            var yAxisLabel;
+            var yAxisMax;
             if (window.mode == 1) {
                 values = window.percent;
-                values_new = window.percentnew;
-                s_y = 'percent';
-                ext_y = 100;
+                valuesNew = window.percentnew;
+                yAxisLabel = 'percent';
+                yAxisMax = 100;
             } else {
                 values = window.absolut;
-                values_new = window.absolutnew;
-                s_y = 'absolut';
-                ext_y = Math.max(Math.max.apply(this, window.absolut),Math.max.apply(this, window.absolutnew));
+                valuesNew = window.absolutnew;
+                yAxisLabel = 'absolut';
+                yAxisMax = Math.max(Math.max.apply(this, window.absolut), Math.max.apply(this, window.absolutnew));
             }
 
-            str.get_string(s_y, 'gradereport_gradedist').done(function(s) {
+            str.get_string(yAxisLabel, 'gradereport_gradedist').done(function(s) {
                 window.chart.options.scales.yAxes[0].scaleLabel.labelString = s;
-                window.chart.options.scales.yAxes[0].ticks.suggestedMax = ext_y;
+                window.chart.options.scales.yAxes[0].ticks.suggestedMax = yAxisMax;
 
                 window.chart.data.datasets[0].data = values;
-                window.chart.data.datasets[1].data = values_new;
+                window.chart.data.datasets[1].data = valuesNew;
                 window.chart.update();
             });
         });
@@ -450,7 +451,9 @@ function($, log, str) {
                   '</body>' +
                   '</html>';
             $printframe[0].contentWindow.document.write(content);
-            setTimeout(function() { $printframe[0].contentWindow.print();}, 200);
+            setTimeout(function() {
+                $printframe[0].contentWindow.print();
+            }, 200);
         });
 
 
@@ -464,10 +467,10 @@ function($, log, str) {
                 var opt = {
                   margin:       1,
                   filename:     'chart.pdf',
-                  image:        { type: 'png'},
-                  pagebreak:    { mode: 'avoid-all' },
-                  html2canvas:  { backgroundColor: '#ffffff'},
-                  jsPDF:        { unit: 'px', format: [contwidth,contheight*1.1], orientation: 'landscape' }
+                  image:        {type: 'png'},
+                  pagebreak:    {mode: 'avoid-all'},
+                  html2canvas:  {backgroundColor: '#ffffff'},
+                  jsPDF:        {unit: 'px', format: [contwidth, contheight * 1.1], orientation: 'landscape'}
                 };
                 html2pdf(container, opt);
             });
@@ -515,7 +518,9 @@ function($, log, str) {
         });
 
         $('#letterform input[type="submit"]').click(function() {
-            setTimeout(function() {instance.validate();}, 1000);
+            setTimeout(function() {
+                instance.validate();
+            }, 1000);
         });
 
         instance.validate();

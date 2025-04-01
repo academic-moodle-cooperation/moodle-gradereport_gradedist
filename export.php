@@ -158,7 +158,7 @@ class grade_export_gradedist {
         $actdist = $this->grader->load_distribution($this->letters, $this->gradeitem->id, $this->groupid, $this->groupingid);
         $newdist = $this->grader->load_distribution($this->newletters, $this->gradeitem->id, $this->groupid, $this->groupingid);
 
-        foreach ($actdist->distribution as $letter => $gradedist) {
+        foreach (array_keys($actdist->distribution) as $letter) {
             $acttotal += $actdist->distribution[$letter]->percentage;
             $newtotal += $newdist->distribution[$letter]->percentage;
 
