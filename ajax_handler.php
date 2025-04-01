@@ -73,7 +73,7 @@ $data   = new stdClass();
 $actdist = $grader->load_distribution($letters, $gradeitem, $groupid, $groupingid);
 $newdist = $grader->load_distribution($newletters, $gradeitem, $groupid, $groupingid);
 // The grade items are sorted by the id when displayed in the edit letter form.
-// We need to sort them here as well to getthe correct item
+// We need to sort them here as well to get the correct item.
 $gradeitemsunsorted = $grader->get_gradeitems();
 usort($gradeitemsunsorted, function($a, $b) {
     return (int)$a->sortorder - (int)$b->sortorder;
