@@ -79,18 +79,18 @@ class edit_letter_form extends moodleform {
         $mform->addElement($select);
 
         if (($groupmode != NOGROUPS)) {
-            $selectgroup = $mform->createElement('select', 'coursegroup', get_string('labelgroup', 'gradereport_gradedist'));
-            foreach ($coursegroups as $index => $curgroup) {
-                $selectgroup->addOption($curgroup->name, $index, null);
-            }
-            $mform->addElement($selectgroup);
-
             $selectgrouping = $mform->createElement('select', 'coursegrouping',
                     get_string('labelgrouping', 'gradereport_gradedist'));
             foreach ($coursegroupings as $index => $curgrouping) {
                 $selectgrouping->addOption($curgrouping->name, $index, null);
             }
             $mform->addElement($selectgrouping);
+
+            $selectgroup = $mform->createElement('select', 'coursegroup', get_string('labelgroup', 'gradereport_gradedist'));
+            foreach ($coursegroups as $index => $curgroup) {
+                $selectgroup->addOption($curgroup->name, $index, null);
+            }
+            $mform->addElement($selectgroup);
         }
         $gradeletters = [];
         $gradeboundaries = [];
