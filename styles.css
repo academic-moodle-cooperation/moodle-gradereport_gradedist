@@ -88,6 +88,7 @@
     display: inline-block;
     width: 400px;
     white-space: nowrap;
+    margin-left: 25px;
 }
 
 #page-grade-report-gradedist-index .grgd {

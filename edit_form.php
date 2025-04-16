@@ -127,6 +127,19 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('header', 'chartheader', get_string('chart', 'gradereport_gradedist'));
 
+        $mform->addElement('html', '<canvas height="80" id="chart_container" class="hey"></canvas>');
+
+        $mform->addElement('html', html_writer::div(
+            html_writer::span(get_string('actcoverage', 'gradereport_gradedist') . "&nbsp;", 'coveragetext')
+            . html_writer::span($actcoverage[0] . '/' . $actcoverage[1] . ' (' . $actcoverage[2] . '%)', 'actcoverage')
+        ));
+        $mform->addElement('html', html_writer::div(
+            html_writer::span(get_string('newcoverage', 'gradereport_gradedist') . "&nbsp;", 'coveragetext')
+            . html_writer::span($newcoverage[0] . '/' . $newcoverage[1] . ' (' . $newcoverage[2] . '%)', 'newcoverage')
+        ));
+
+        $mform->addElement('html', '<div>&nbsp;</div>');
+
         $description = [];
         $description[] =& $mform->createElement('radio', 'description', '', get_string('absolut', 'gradereport_gradedist'), false);
         $description[] =& $mform->createElement('radio', 'description', '', get_string('percent', 'gradereport_gradedist'), true);
@@ -143,17 +156,6 @@ class edit_letter_form extends moodleform {
         $mform->setDefault('grp_columns[newcolumns]', true);
 
         $mform->addGroup($columns, 'grp_columns', get_string('columns', 'gradereport_gradedist'), '');
-
-        $mform->addElement('html', '<canvas height="100" id="chart_container" class="hey"></canvas>');
-
-        $mform->addElement('html', html_writer::div(
-            html_writer::span(get_string('actcoverage', 'gradereport_gradedist')."&nbsp;", 'coveragetext')
-                .html_writer::span($actcoverage[0].'/'.$actcoverage[1].' ('.$actcoverage[2].'%)', 'actcoverage')));
-        $mform->addElement('html', html_writer::div(
-            html_writer::span(get_string('newcoverage', 'gradereport_gradedist')."&nbsp;", 'coveragetext')
-                .html_writer::span($newcoverage[0].'/'.$newcoverage[1].' ('.$newcoverage[2].'%)', 'newcoverage')));
-
-        $mform->addElement('html', '<div>&nbsp;</div>');
 
         // Hidden params.
         $mform->addElement('hidden', 'id', $id);
