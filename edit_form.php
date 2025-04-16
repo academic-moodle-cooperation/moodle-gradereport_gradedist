@@ -95,7 +95,7 @@ class edit_letter_form extends moodleform {
         $gradeletters = [];
         $gradeboundaries = [];
         $gradeboundariesnew = [];
-        $attributes = ['style' => 'width:65px;margin-right:10px'];
+        $attributes = ['style' => 'width:150px;margin-right:10px'];
 
         for ($i = 1; $i < $num + 1; $i++) {
             $gradeletters[] =& $mform->createElement('text', $i, false,
