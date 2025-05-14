@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+5.0.0 (2025-05-07)
+------------------
+* #8284 Moodle 5.0 compatible version
+
 4.5.0 (2024-10-04)
 ------------------
 * #8061 Moodle 4.5 compatible version
