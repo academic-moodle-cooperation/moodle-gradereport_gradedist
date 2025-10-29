@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 /**
  * Class confirm_letter_form
@@ -38,7 +38,6 @@ require_once($CFG->libdir.'/formslib.php');
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class confirm_letter_form extends moodleform {
-
     /**
      * defines the form
      *
@@ -69,8 +68,8 @@ class confirm_letter_form extends moodleform {
         $mform->setType('gradeitem', PARAM_INT);
 
         for ($i = 1; $i < $num + 1; $i++) {
-            $mform->addElement('hidden', 'grp_gradeboundaries_new['.$i.']', '');
-            $mform->setType('grp_gradeboundaries_new['.$i.']', PARAM_TEXT);
+            $mform->addElement('hidden', 'grp_gradeboundaries_new[' . $i . ']', '');
+            $mform->setType('grp_gradeboundaries_new[' . $i . ']', PARAM_TEXT);
         }
 
         // Buttons.

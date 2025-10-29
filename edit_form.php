@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 /**
  * Class edit_letter_form
@@ -37,7 +37,6 @@ require_once($CFG->libdir.'/formslib.php');
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class edit_letter_form extends moodleform {
-
     /**
      * form definition
      *
@@ -68,19 +67,22 @@ class edit_letter_form extends moodleform {
             // If showgradeitemtype-setting is off property module is empty.
             if ($showgradeitemtypes && $gradeitem->module) {
                 $modname = 'mod_'.$gradeitem->module;
-                $name .= " (".get_string('pluginname', $modname).")";
+                $name .= " (" . get_string('pluginname', $modname) . ")";
             } else if ($showgradeitemtypes && $gradeitem->type == "manual") {
-                $name .= " (".get_string('manualitem', 'grades').")";
+                $name .= " (" . get_string('manualitem', 'grades') . ")";
             } else if ($gradeitem->type == get_string('gradecategory', 'grades')) {
-                $name .= " (".get_string('gradecategory', 'grades').")";
+                $name .= " (" . get_string('gradecategory', 'grades') . ")";
             }
             $select->addOption($name, $index, ($gradeitem->disable) ? [ 'disabled' => 'disabled' ] : null);
         }
         $mform->addElement($select);
 
         if (($groupmode != NOGROUPS)) {
-            $selectgrouping = $mform->createElement('select', 'coursegrouping',
-                    get_string('labelgrouping', 'gradereport_gradedist'));
+            $selectgrouping = $mform->createElement(
+                'select',
+                'coursegrouping',
+                get_string('labelgrouping', 'gradereport_gradedist')
+            );
             foreach ($coursegroupings as $index => $curgrouping) {
                 $selectgrouping->addOption($curgrouping->name, $index, null);
             }
