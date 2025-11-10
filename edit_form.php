@@ -45,16 +45,16 @@ class edit_letter_form extends moodleform {
     public function definition() {
         global $CFG;
 
-        $mform            =&$this->_form;
-        $id               = $this->_customdata['id'];
-        $num              = $this->_customdata['num'];
-        $edit             = $this->_customdata['edit'];
-        $gradeitems       = $this->_customdata['gradeitems'];
-        $coursegroups     = $this->_customdata['coursegroups'];
-        $coursegroupings  = $this->_customdata['coursegroupings'];
-        $groupmode        = $this->_customdata['groupmode'];
-        $actcoverage      = $this->_customdata['actcoverage'];
-        $newcoverage      = $this->_customdata['newcoverage'];
+        $mform =& $this->_form;
+        $id = $this->_customdata['id'];
+        $num = $this->_customdata['num'];
+        $edit = $this->_customdata['edit'];
+        $gradeitems = $this->_customdata['gradeitems'];
+        $coursegroups = $this->_customdata['coursegroups'];
+        $coursegroupings = $this->_customdata['coursegroupings'];
+        $groupmode = $this->_customdata['groupmode'];
+        $actcoverage = $this->_customdata['actcoverage'];
+        $newcoverage = $this->_customdata['newcoverage'];
 
         $showgradeitemtypes = (isset($CFG->gradedist_showgradeitemtype)) ? $CFG->gradedist_showgradeitemtype : 0;
 
@@ -66,14 +66,14 @@ class edit_letter_form extends moodleform {
             $name = $gradeitem->name;
             // If showgradeitemtype-setting is off property module is empty.
             if ($showgradeitemtypes && $gradeitem->module) {
-                $modname = 'mod_'.$gradeitem->module;
+                $modname = 'mod_' . $gradeitem->module;
                 $name .= " (" . get_string('pluginname', $modname) . ")";
             } else if ($showgradeitemtypes && $gradeitem->type == "manual") {
                 $name .= " (" . get_string('manualitem', 'grades') . ")";
             } else if ($gradeitem->type == get_string('gradecategory', 'grades')) {
                 $name .= " (" . get_string('gradecategory', 'grades') . ")";
             }
-            $select->addOption($name, $index, ($gradeitem->disable) ? [ 'disabled' => 'disabled' ] : null);
+            $select->addOption($name, $index, ($gradeitem->disable) ? ['disabled' => 'disabled'] : null);
         }
         $mform->addElement($select);
 
@@ -100,23 +100,47 @@ class edit_letter_form extends moodleform {
         $attributes = ['style' => 'width:150px;margin-right:10px'];
 
         for ($i = 1; $i < $num + 1; $i++) {
-            $gradeletters[] =& $mform->createElement('text', $i, false,
-                    array_merge(['class' => 'gradeletters', 'disabled' => 'disabled'], $attributes));
-            $gradeboundaries[] =& $mform->createElement('text', $i, false,
-                    array_merge(['class' => 'gradeboundaries', 'disabled' => 'disabled'], $attributes));
-            $gradeboundariesnew[] =& $mform->createElement('text', $i, false,
-                    array_merge(['class' => 'gradeboundaries_new'], $attributes));
+            $gradeletters[] =& $mform->createElement(
+                'text',
+                $i,
+                false,
+                array_merge(['class' => 'gradeletters', 'disabled' => 'disabled'], $attributes)
+            );
+            $gradeboundaries[] =& $mform->createElement(
+                'text',
+                $i,
+                false,
+                array_merge(['class' => 'gradeboundaries', 'disabled' => 'disabled'], $attributes)
+            );
+            $gradeboundariesnew[] =& $mform->createElement(
+                'text',
+                $i,
+                false,
+                array_merge(['class' => 'gradeboundaries_new'], $attributes)
+            );
         }
 
-        $mform->addGroup($gradeletters, 'grp_gradeletters',
-                get_string('gradeletter', 'gradereport_gradedist'), '');
+        $mform->addGroup(
+            $gradeletters,
+            'grp_gradeletters',
+            get_string('gradeletter', 'gradereport_gradedist'),
+            ''
+        );
         $mform->setType('grp_gradeletters', PARAM_TEXT);
-        $mform->addGroup($gradeboundaries, 'grp_gradeboundaries',
-                get_string('gradeboundary', 'gradereport_gradedist'), '');
+        $mform->addGroup(
+            $gradeboundaries,
+            'grp_gradeboundaries',
+            get_string('gradeboundary', 'gradereport_gradedist'),
+            ''
+        );
         $mform->setType('grp_gradeboundaries', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries', 'gradeboundary', 'gradereport_gradedist');
-        $mform->addGroup($gradeboundariesnew, 'grp_gradeboundaries_new',
-                get_string('gradeboundary_new', 'gradereport_gradedist'), '');
+        $mform->addGroup(
+            $gradeboundariesnew,
+            'grp_gradeboundaries_new',
+            get_string('gradeboundary_new', 'gradereport_gradedist'),
+            ''
+        );
         $mform->setType('grp_gradeboundaries_new', PARAM_TEXT);
         $mform->addHelpButton('grp_gradeboundaries_new', 'gradeboundary_new', 'gradereport_gradedist');
 
@@ -150,10 +174,18 @@ class edit_letter_form extends moodleform {
         $mform->addGroup($description, 'grp_description', get_string('description', 'gradereport_gradedist'), '');
 
         $columns = [];
-        $columns[] =& $mform->createElement('advcheckbox', 'actualcolumns', '',
-                get_string('actualcolumns', 'gradereport_gradedist'));
-        $columns[] =& $mform->createElement('advcheckbox', 'newcolumns', '',
-                get_string('newcolumns', 'gradereport_gradedist'));
+        $columns[] =& $mform->createElement(
+            'advcheckbox',
+            'actualcolumns',
+            '',
+            get_string('actualcolumns', 'gradereport_gradedist')
+        );
+        $columns[] =& $mform->createElement(
+            'advcheckbox',
+            'newcolumns',
+            '',
+            get_string('newcolumns', 'gradereport_gradedist')
+        );
         $mform->setDefault('grp_columns[actualcolumns]', true);
         $mform->setDefault('grp_columns[newcolumns]', true);
 
@@ -169,24 +201,27 @@ class edit_letter_form extends moodleform {
 
         $mform->addElement('header', 'downloadheader', get_string('download', 'gradereport_gradedist'));
 
-        $mform->addElement('html', '<div class="grgd">'.
-            get_string('exportasimage', 'gradereport_gradedist').'&nbsp;'.
-            '&nbsp;<a href="#png" class="grgd_png">'.get_string('downloadpng', 'gradereport_gradedist').'</a>&nbsp;|'.
-            '&nbsp;<a href="#jpg" class="grgd_jpg">'.get_string('downloadjpeg', 'gradereport_gradedist').'</a>&nbsp;|'.
-            '&nbsp;<a href="#pdf" class="grgd_pdf">'.get_string('downloadpdf', 'gradereport_gradedist').'</a>&nbsp;|'.
-            '&nbsp;<a href="#print" class="grgd_print">'.get_string('printchart', 'gradereport_gradedist').'</a>'.
+        $mform->addElement(
+            'html',
+            '<div class="grgd">' .
+            get_string('exportasimage', 'gradereport_gradedist') . '&nbsp;' .
+            '&nbsp;<a href="#png" class="grgd_png">' . get_string('downloadpng', 'gradereport_gradedist') . '</a>&nbsp;|' .
+            '&nbsp;<a href="#jpg" class="grgd_jpg">' . get_string('downloadjpeg', 'gradereport_gradedist') . '</a>&nbsp;|' .
+            '&nbsp;<a href="#pdf" class="grgd_pdf">' . get_string('downloadpdf', 'gradereport_gradedist') . '</a>&nbsp;|' .
+            '&nbsp;<a href="#print" class="grgd_print">' . get_string('printchart', 'gradereport_gradedist') . '</a>' .
             '</div>'
         );
 
-        $mform->addElement('html', '<div class="grgd">'.
-            get_string('export', 'gradereport_gradedist').'&nbsp;'.
-            '&nbsp;<a href="#xlsx" class="grgd_xlsx">'.get_string('xlsx', 'gradereport_gradedist').'</a>&nbsp;|'.
-            '&nbsp;<a href="#ods" class="grgd_ods">'.get_string('ods', 'gradereport_gradedist').'</a>&nbsp;|'.
-            '&nbsp;<a href="#csv" class="grgd_csv">'.get_string('csv', 'gradereport_gradedist').'</a>'.
+        $mform->addElement(
+            'html',
+            '<div class="grgd">' .
+            get_string('export', 'gradereport_gradedist') . '&nbsp;' .
+            '&nbsp;<a href="#xlsx" class="grgd_xlsx">' . get_string('xlsx', 'gradereport_gradedist') . '</a>&nbsp;|' .
+            '&nbsp;<a href="#ods" class="grgd_ods">' . get_string('ods', 'gradereport_gradedist') . '</a>&nbsp;|' .
+            '&nbsp;<a href="#csv" class="grgd_csv">' . get_string('csv', 'gradereport_gradedist') . '</a>' .
             '</div>'
         );
 
         $mform->setExpanded('chartheader');
-
     }
 }

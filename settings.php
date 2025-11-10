@@ -27,28 +27,34 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-
-    require_once($CFG->libdir.'/grade/constants.php');
-    $displaytypes = [GRADE_DISPLAY_TYPE_REAL => new lang_string('real', 'grades'),
-                           GRADE_DISPLAY_TYPE_PERCENTAGE => new lang_string('percentage', 'grades'),
-                           GRADE_DISPLAY_TYPE_LETTER => new lang_string('letter', 'grades'),
-                           GRADE_DISPLAY_TYPE_REAL_PERCENTAGE => new lang_string('realpercentage', 'grades'),
-                           GRADE_DISPLAY_TYPE_REAL_LETTER => new lang_string('realletter', 'grades'),
-                           GRADE_DISPLAY_TYPE_LETTER_REAL => new lang_string('letterreal', 'grades'),
-                           GRADE_DISPLAY_TYPE_LETTER_PERCENTAGE => new lang_string('letterpercentage', 'grades'),
-                           GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER => new lang_string('percentageletter', 'grades'),
-                           GRADE_DISPLAY_TYPE_PERCENTAGE_REAL => new lang_string('percentagereal', 'grades'),
-                    ];
+    require_once($CFG->libdir . '/grade/constants.php');
+    $displaytypes = [
+        GRADE_DISPLAY_TYPE_REAL => new lang_string('real', 'grades'),
+        GRADE_DISPLAY_TYPE_PERCENTAGE => new lang_string('percentage', 'grades'),
+        GRADE_DISPLAY_TYPE_LETTER => new lang_string('letter', 'grades'),
+        GRADE_DISPLAY_TYPE_REAL_PERCENTAGE => new lang_string('realpercentage', 'grades'),
+        GRADE_DISPLAY_TYPE_REAL_LETTER => new lang_string('realletter', 'grades'),
+        GRADE_DISPLAY_TYPE_LETTER_REAL => new lang_string('letterreal', 'grades'),
+        GRADE_DISPLAY_TYPE_LETTER_PERCENTAGE => new lang_string('letterpercentage', 'grades'),
+        GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER => new lang_string('percentageletter', 'grades'),
+        GRADE_DISPLAY_TYPE_PERCENTAGE_REAL => new lang_string('percentagereal', 'grades'),
+    ];
     asort($displaytypes);
 
     $selection = array_fill_keys(array_keys($displaytypes), true);
 
-    $settings->add(new admin_setting_configmulticheckbox('gradedist_showgradeitem',
+    $settings->add(new admin_setting_configmulticheckbox(
+        'gradedist_showgradeitem',
         get_string('showgradeitem', 'gradereport_gradedist'),
-        get_string('showgradeitem_description', 'gradereport_gradedist'), $selection, $displaytypes));
+        get_string('showgradeitem_description', 'gradereport_gradedist'),
+        $selection,
+        $displaytypes
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('gradedist_showgradeitemtype',
+    $settings->add(new admin_setting_configcheckbox(
+        'gradedist_showgradeitemtype',
         get_string('showgradeitemtype', 'gradereport_gradedist'),
-        get_string('showgradeitemtype_help', 'gradereport_gradedist'), 0));
-
+        get_string('showgradeitemtype_help', 'gradereport_gradedist'),
+        0
+    ));
 }

@@ -26,8 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot.'/grade/report/grader/lib.php');
-require_once($CFG->libdir.'/grade/constants.php');
+require_once($CFG->dirroot . '/grade/report/grader/lib.php');
+require_once($CFG->libdir . '/grade/constants.php');
 
 /**
  * Class providing an API for the overview report building and displaying.
@@ -40,7 +40,6 @@ require_once($CFG->libdir.'/grade/constants.php');
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class grade_report_gradedist extends grade_report_grader {
-
     /**
      * The grade letters
      * @var array $letters
@@ -56,7 +55,7 @@ class grade_report_gradedist extends grade_report_grader {
      * @param int $page The current page being viewed (when report is paged)
      * @param int $sortitemid The id of the grade_item by which to sort the table
      */
-    public function __construct($courseid, $gpr, $context, $letters, $page=null, $sortitemid=null) {
+    public function __construct($courseid, $gpr, $context, $letters, $page = null, $sortitemid = null) {
         parent::__construct($courseid, $gpr, $context, $page, $sortitemid);
 
         $this->letters = $letters;
@@ -75,30 +74,40 @@ class grade_report_gradedist extends grade_report_grader {
         }
 
         // Limit to users with a gradeable role.
-        list($gradebookrolessql, $gradebookrolesparams) = $DB->get_in_or_equal(explode(',', $this->gradebookroles),
-                SQL_PARAMS_NAMED, 'grbr0');
+        [$gradebookrolessql, $gradebookrolesparams] = $DB->get_in_or_equal(
+            explode(',', $this->gradebookroles),
+            SQL_PARAMS_NAMED,
+            'grbr0'
+        );
 
         // Limit to users with an active enrollment.
-        list($enrolledsql, $enrolledparams) = get_enrolled_sql($this->context);
+        [$enrolledsql, $enrolledparams] = get_enrolled_sql($this->context);
 
         // Fields we need from the user table.
         $userfields = "u.id";
 
         // We want to query both the current context and parent contexts.
-        list($relatedctxsql, $relatedctxparams) = $DB->get_in_or_equal($this->context->get_parent_context_ids(true),
-                SQL_PARAMS_NAMED, 'relatedctx');
+        [$relatedctxsql, $relatedctxparams] = $DB->get_in_or_equal(
+            $this->context->get_parent_context_ids(true),
+            SQL_PARAMS_NAMED,
+            'relatedctx'
+        );
 
         // If the user has clicked one of the sort asc/desc arrows.
         if (is_numeric($this->sortitemid)) {
-            $params = array_merge(['gitemid' => $this->sortitemid],
-                      $gradebookrolesparams, $this->groupwheresql_params, $enrolledparams, $relatedctxparams);
+            $params = array_merge(
+                ['gitemid' => $this->sortitemid],
+                $gradebookrolesparams,
+                $this->groupwheresql_params,
+                $enrolledparams,
+                $relatedctxparams
+            );
 
             $sortjoin = "LEFT JOIN {grade_grades} g ON g.userid = u.id AND g.itemid = $this->sortitemid";
             $sort = "g.finalgrade $this->sortorder";
-
         } else {
             $sortjoin = '';
-            switch($this->sortitemid) {
+            switch ($this->sortitemid) {
                 case 'lastname':
                     $sort = "u.lastname $this->sortorder, u.firstname $this->sortorder";
                     break;
@@ -137,7 +146,7 @@ class grade_report_gradedist extends grade_report_grader {
             $this->users = [];
             $this->userselectparams = [];
         } else {
-            list($usql, $uparams) = $DB->get_in_or_equal(array_keys($this->users), SQL_PARAMS_NAMED, 'usid0');
+            [$usql, $uparams] = $DB->get_in_or_equal(array_keys($this->users), SQL_PARAMS_NAMED, 'usid0');
             $this->userselect = "AND g.userid $usql";
             $this->userselectparams = $uparams;
 
@@ -191,8 +200,12 @@ class grade_report_gradedist extends grade_report_grader {
 
             $gradeitem = new stdClass();
             if ($g->display == 0) { // If display type is "default" check what default is.
-                if ($coursedefault = $DB->get_field('grade_settings', 'value', ['courseid' => $g->courseid,
-                    'name' => 'displaytype', ])) { // If course default exists take it.
+                if (
+                    $coursedefault = $DB->get_field('grade_settings', 'value', [
+                        'courseid' => $g->courseid,
+                        'name' => 'displaytype',
+                    ])
+                ) { // If course default exists take it.
                     $g->display = $coursedefault;
                 } else { // Else take system default.
                     $g->display = $CFG->grade_displaytype;
@@ -207,7 +220,7 @@ class grade_report_gradedist extends grade_report_grader {
                 $gradeitem->module = '';
                 $gradeitem->gid = $g->id;
             } else if (strcmp($g->itemtype, 'category') == 0) {  // Category item.
-                $gc = $DB->get_record('grade_categories', ['id' => $g->iteminstance ]);
+                $gc = $DB->get_record('grade_categories', ['id' => $g->iteminstance]);
                 $gradeitem->name = $gc->fullname;
                 $gradeitem->sortorder = $g->sortorder;
                 $gradeitem->type = get_string('gradecategory', 'grades');
@@ -276,7 +289,7 @@ class grade_report_gradedist extends grade_report_grader {
      * @return stdClass
      * @throws dml_exception
      */
-    public function load_distribution($newletters, $gradeitem=0, $groupid=0, $groupingid=0) {
+    public function load_distribution($newletters, $gradeitem = 0, $groupid = 0, $groupingid = 0) {
         global $DB;
 
         $this->load_users();
@@ -313,8 +326,8 @@ class grade_report_gradedist extends grade_report_grader {
 
         foreach ($this->letters as $letter) {
             $gradedist = new stdClass();
-            $gradedist->count       = 0;
-            $gradedist->percentage  = 0;
+            $gradedist->count = 0;
+            $gradedist->percentage = 0;
             $return->distribution[$letter] = $gradedist;
         }
 
@@ -359,7 +372,7 @@ class grade_report_gradedist extends grade_report_grader {
         // Map to range.
         $gradeint = $gradeitem->grademax - $gradeitem->grademin;
         $value = ($gradeint != 100 || $gradeitem->grademin != 0) ? ($grade->finalgrade - $gradeitem->grademin
-                ) * 100 / $gradeint : $grade->finalgrade;
+        ) * 100 / $gradeint : $grade->finalgrade;
 
         // Calculate gradeletter.
         $value = bounded_number(0, $value, 100); // Just in case.
