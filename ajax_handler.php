@@ -27,10 +27,10 @@
 define('AJAX_SCRIPT', true);
 
 require_once('../../../config.php');
-require_once($CFG->libdir.'/gradelib.php');
-require_once($CFG->dirroot.'/grade/lib.php');
-require_once($CFG->dirroot.'/grade/report/gradedist/lib.php');
-require_once($CFG->dirroot.'/grade/report/gradedist/edit_form.php');
+require_once($CFG->libdir . '/gradelib.php');
+require_once($CFG->dirroot . '/grade/lib.php');
+require_once($CFG->dirroot . '/grade/report/gradedist/lib.php');
+require_once($CFG->dirroot . '/grade/report/gradedist/edit_form.php');
 
 $courseid  = required_param('id', PARAM_INT);
 $gradeitem = optional_param('gradeitem', null, PARAM_INT);
@@ -75,7 +75,7 @@ $newdist = $grader->load_distribution($newletters, $gradeitem, $groupid, $groupi
 // The grade items are sorted by the id when displayed in the edit letter form.
 // We need to sort them here as well to get the correct item.
 $gradeitemsunsorted = $grader->get_gradeitems();
-usort($gradeitemsunsorted, function($a, $b) {
+usort($gradeitemsunsorted, function ($a, $b) {
     return (int)$a->sortorder - (int)$b->sortorder;
 });
 $gradeitems = [];
@@ -88,9 +88,9 @@ $coursegroupings = groups_get_all_groupings($course->id);
 $chartsubtitle = "";
 // Depends on "0" as hardcoded and available (ToDo)!
 if (($groupingid == 0) && ($groupid != 0)) {
-    $chartsubtitle = " - ".$coursegroups[$groupid]->name;
+    $chartsubtitle = " - " . $coursegroups[$groupid]->name;
 } else if (($groupid == 0) && ($groupingid != 0)) {
-    $chartsubtitle = " - ".$coursegroupings[$groupingid]->name;
+    $chartsubtitle = " - " . $coursegroupings[$groupingid]->name;
 }
 
 $data->actdist = $actdist->distribution;

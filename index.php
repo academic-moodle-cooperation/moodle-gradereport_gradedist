@@ -27,8 +27,8 @@
 use core\output\notification;
 
 require_once('../../../config.php');
-require_once($CFG->libdir.'/gradelib.php');
-require_once($CFG->dirroot.'/grade/lib.php');
+require_once($CFG->libdir . '/gradelib.php');
+require_once($CFG->dirroot . '/grade/lib.php');
 
 require_once('lib.php');
 require_once('edit_form.php');
@@ -56,10 +56,10 @@ $PAGE->set_url('/grade/report/gradedist/index.php', ['id' => $courseid]);
 $PAGE->set_pagelayout('standard'); // Calling this here to make blocks display.
 $PAGE->requires->jquery();
 
-$highchartssrc = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.src.js') &&
-        file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.src.js');
-$highchartsmin = file_exists($CFG->dirroot.'/grade/report/gradedist/js/highcharts.js') &&
-        file_exists($CFG->dirroot.'/grade/report/gradedist/js/exporting.js');
+$highchartssrc = file_exists($CFG->dirroot . '/grade/report/gradedist/js/highcharts.src.js') &&
+    file_exists($CFG->dirroot . '/grade/report/gradedist/js/exporting.src.js');
+$highchartsmin = file_exists($CFG->dirroot . '/grade/report/gradedist/js/highcharts.js') &&
+    file_exists($CFG->dirroot . '/grade/report/gradedist/js/exporting.js');
 
 if ($highchartssrc) {
     $PAGE->requires->js('/grade/report/gradedist/js/highcharts.src.js');
@@ -76,8 +76,8 @@ $boundaryerror = false;
 
 $grader = new grade_report_gradedist($course->id, $gpr, $context, $letters);
 $gradeitemsunsorted = $grader->get_gradeitems();
-usort($gradeitemsunsorted, function($a, $b) {
-    return (int)$a->sortorder - (int)$b->sortorder;
+usort($gradeitemsunsorted, function ($a, $b) {
+    return (int) $a->sortorder - (int) $b->sortorder;
 });
 $gradeitems = [];
 foreach ($gradeitemsunsorted as $gi) {
@@ -90,72 +90,84 @@ $coursegroups = $grader->get_grouplist();
 
 $coursegroupings = $grader->get_groupinglist();
 
-$gradeitem = optional_param('gradeitem',
-        (isset($SESSION->gradereport_gradedist_gradeitem)) ? $SESSION->gradereport_gradedist_gradeitem : key($gradeitems),
-        PARAM_INT);
-$boundariesnew = optional_param_array('grp_gradeboundaries_new',
-        (isset($SESSION->gradereport_gradedist_boundariesnew)) ? $SESSION->gradereport_gradedist_boundariesnew : [],
-        PARAM_TEXT);
+$gradeitem = optional_param(
+    'gradeitem',
+    (isset($SESSION->gradereport_gradedist_gradeitem)) ? $SESSION->gradereport_gradedist_gradeitem : key($gradeitems),
+    PARAM_INT
+);
+$boundariesnew = optional_param_array(
+    'grp_gradeboundaries_new',
+    (isset($SESSION->gradereport_gradedist_boundariesnew)) ? $SESSION->gradereport_gradedist_boundariesnew : [],
+    PARAM_TEXT
+);
 
 $newletters = empty($boundariesnew) ? $letters : [];
 
 $mdata = new stdClass();
 $mdata->gradeitem = $gradeitem;
-$i = 1; $max = 100.01;
+$i = 1;
+$max = 100.01;
 foreach ($letters as $boundary => $letter) {
     $boundary = format_float($boundary, 2);
     $boundarynew = isset($boundariesnew[$i]) ? $boundariesnew[$i] : $boundary;
 
-    $gradelettername = 'grp_gradeletters['.$i.']';
-    $gradeboundaryname = 'grp_gradeboundaries['.$i.']';
-    $gradeboundarynewname = 'grp_gradeboundaries_new['.$i.']';
+    $gradelettername = 'grp_gradeletters[' . $i . ']';
+    $gradeboundaryname = 'grp_gradeboundaries[' . $i . ']';
+    $gradeboundarynewname = 'grp_gradeboundaries_new[' . $i . ']';
 
-    $mdata->$gradelettername   = $letter;
+    $mdata->$gradelettername = $letter;
     $mdata->$gradeboundaryname = $boundary;
     $mdata->$gradeboundarynewname = $boundarynew;
 
     // Validation fallback if javascript is disabled.
     $boundarynew = str_replace(",", ".", $boundarynew);
     if (isset($boundariesnew[$i])) {
-        if ($boundarynew == ''
-        ||  $boundarynew > 100
-        ||  !preg_match('/^\d+([.,]\d{1,2})?$/', $boundarynew)
-        ||  $boundarynew >= $max) {
-                $boundaryerror = true;
+        if (
+            $boundarynew == ''
+            || $boundarynew > 100
+            || !preg_match('/^\d+([.,]\d{1,2})?$/', $boundarynew)
+            || $boundarynew >= $max
+        ) {
+            $boundaryerror = true;
         } else {
-                $newletters[$boundarynew] = $letter;
+            $newletters[$boundarynew] = $letter;
         }
         $max = $boundarynew;
     }
     $i++;
 }
 
-$groupid = 0; $groupingid = 0;
+$groupid = 0;
+$groupingid = 0;
 $actdist = $grader->load_distribution($letters, $gradeitem, $groupid, $groupingid);
 $newdist = $grader->load_distribution($newletters, $gradeitem, $groupid, $groupingid);
 
 $gsel = $grader->group_selector;
 
-$mform = new edit_letter_form($returnurl, [
-            'id' => $course->id,
-            'num' => count($letters),
-            'edit' => $edit,
-            'gradeitems' => $gradeitems,
-            'coursegroups' => $coursegroups,
-            'coursegroupings' => $coursegroupings,
-            'groupmode' => $groupmode,
-            'actcoverage' => $actdist->coverage,
-            'newcoverage' => $newdist->coverage,
-            ],
-            'post', '', ['id' => 'letterform']
-        );
+$mform = new edit_letter_form(
+    $returnurl,
+    [
+        'id' => $course->id,
+        'num' => count($letters),
+        'edit' => $edit,
+        'gradeitems' => $gradeitems,
+        'coursegroups' => $coursegroups,
+        'coursegroupings' => $coursegroupings,
+        'groupmode' => $groupmode,
+        'actcoverage' => $actdist->coverage,
+        'newcoverage' => $newdist->coverage,
+    ],
+    'post',
+    '',
+    ['id' => 'letterform']
+);
 $mform->set_data($mdata);
 
 if (($data = $mform->get_data()) && isset($data->grp_export) && $data->grp_export) {
     // Export.
     $export = new grade_export_gradedist();
     $exportformat = $data->grp_export;
-    switch($exportformat) {
+    switch ($exportformat) {
         case 'xlsx':
             $efcode = MTablePDF::OUTPUT_FORMAT_XLSX;
             break;
@@ -175,35 +187,38 @@ if (($data = $mform->get_data()) && isset($data->grp_export) && $data->grp_expor
 
     // Export event.
     \gradereport_gradedist\event\gradedist_downloaded::create(
-        ['context' => $context, 'other' => ['url' => $returnurl]])->trigger();
+        ['context' => $context, 'other' => ['url' => $returnurl]]
+    )->trigger();
 
-    $export->init($course,
-                  $grader,
-                  $gradeitem,
-                  $letters,
-                  $newletters,
-                  $efcode,
-                  $course->shortname.'_'.$gradeitems[$data->gradeitem]->name.'_'.userdate(time(), '%d-%m-%Y', 99, false),
-                  $groupid,
-                  $groupingid);
+    $export->init(
+        $course,
+        $grader,
+        $gradeitem,
+        $letters,
+        $newletters,
+        $efcode,
+        $course->shortname . '_' . $gradeitems[$data->gradeitem]->name . '_' . userdate(time(), '%d-%m-%Y', 99, false),
+        $groupid,
+        $groupingid
+    );
     $export->print_grades();
 }
 
 if ($confirm && !$boundaryerror) {
-
     $letters = grade_get_letters($context);
     krsort($letters, SORT_NUMERIC);
 
     $cdata = new stdClass();
     $tabledata = [];
-    $i = 1; $max = 100;
+    $i = 1;
+    $max = 100;
     foreach ($letters as $letter) {
-        $gradeboundarynewname = 'grp_gradeboundaries_new['.$i.']';
+        $gradeboundarynewname = 'grp_gradeboundaries_new[' . $i . ']';
         $boundary = str_replace(',', '.', $boundariesnew[$i]);
 
         $line = [];
-        $line[] = format_float($max, 2).' %';
-        $line[] = format_float($boundary, 2).' %';
+        $line[] = format_float($max, 2) . ' %';
+        $line[] = format_float($boundary, 2) . ' %';
         $line[] = format_string($letter);
         $tabledata[] = $line;
         $max = $boundary - 0.01;
@@ -212,13 +227,15 @@ if ($confirm && !$boundaryerror) {
         $i++;
     }
 
-    $cform = new confirm_letter_form($returnurl, [
-                'id' => $course->id,
-                'num' => count($letters),
-                'gradeitem' => $gradeitem,
-                'tabledata' => $tabledata,
-                ]
-            );
+    $cform = new confirm_letter_form(
+        $returnurl,
+        [
+            'id' => $course->id,
+            'num' => count($letters),
+            'gradeitem' => $gradeitem,
+            'tabledata' => $tabledata,
+        ]
+    );
     $cform->set_data($cdata);
 
     if ($cform->is_cancelled()) {
@@ -226,7 +243,6 @@ if ($confirm && !$boundaryerror) {
         $SESSION->gradereport_gradedist_gradeitem = $gradeitem;
         $SESSION->gradereport_gradedist_boundariesnew = $boundariesnew;
         redirect($returnurl);
-
     } else if ($data = $cform->get_data()) {
         // Save the changes to db.
         $oldids = [];
@@ -239,9 +255,9 @@ if ($confirm && !$boundaryerror) {
             $boundary = str_replace(',', '.', $data->grp_gradeboundaries_new[$i]);
 
             $record = new stdClass();
-            $record->letter        = $letter;
+            $record->letter = $letter;
             $record->lowerboundary = $boundary;
-            $record->contextid     = $context->id;
+            $record->contextid = $context->id;
 
             if ($oldid = array_pop($oldids)) {
                 $record->id = $oldid;
@@ -256,10 +272,10 @@ if ($confirm && !$boundaryerror) {
 
         // New letters submitted event.
         \gradereport_gradedist\event\newletters_submitted::create(
-            ['context' => $context, 'other' => ['url' => $returnurl]])->trigger();
+            ['context' => $context, 'other' => ['url' => $returnurl]]
+        )->trigger();
 
         redirect($returnurl);
-
     } else {
         // Show confirmation table.
         print_grade_page_head($course->id, 'report', 'gradedist', get_string('pluginname', 'gradereport_gradedist'));
@@ -269,9 +285,9 @@ if ($confirm && !$boundaryerror) {
         $cform->display();
         // Confirmation table event.
         \gradereport_gradedist\event\confirmation_table_viewed::create(
-            ['context' => $context, 'other' => ['url' => $returnurl]])->trigger();
+            ['context' => $context, 'other' => ['url' => $returnurl]]
+        )->trigger();
     }
-
 } else {
     // Gradedist main view.
     $data = new stdClass();
@@ -303,7 +319,8 @@ if ($confirm && !$boundaryerror) {
     echo '<iframe id="printframe"></iframe>';
     // View event.
     \gradereport_gradedist\event\gradedist_viewed::create(
-        ['context' => $context, 'other' => ['url' => $returnurl]])->trigger();
+        ['context' => $context, 'other' => ['url' => $returnurl]]
+    )->trigger();
 }
 
 echo $OUTPUT->footer();

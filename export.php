@@ -36,7 +36,6 @@ require_once('mtablepdf.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class grade_export_gradedist {
-
     /**
      * @var stdClass
      */
@@ -87,7 +86,17 @@ class grade_export_gradedist {
      * @param int $groupid
      * @param int $groupingid
      */
-    public function init($course, $grader, $gradeitem, $letters, $newletters, $exportformat, $filename, $groupid=0, $groupingid=0) {
+    public function init(
+        $course,
+        $grader,
+        $gradeitem,
+        $letters,
+        $newletters,
+        $exportformat,
+        $filename,
+        $groupid = 0,
+        $groupingid = 0
+    ) {
         $this->course = $course;
         $this->grader = $grader;
         $this->gradeitem = $gradeitem;
@@ -122,34 +131,45 @@ class grade_export_gradedist {
             $coursegroupings = groups_get_all_groupings($this->course->id);
 
             if (($this->groupingid == 0) && ($this->groupid != 0)) {
-                $titleaddon = " - ".$coursegroups[$this->groupid]->name;
+                $titleaddon = " - " . $coursegroups[$this->groupid]->name;
             } else if (($this->groupid == 0) && ($this->groupingid != 0)) {
-                $titleaddon = " - ".$coursegroupings[$this->groupingid]->name;
+                $titleaddon = " - " . $coursegroupings[$this->groupingid]->name;
             }
         }
 
         // Show course, gradeitem and (optionally) group/grouping title add on in header.
-        $export->setheadertext(get_string('course').':', $this->course->shortname,
-                               '', '',
-                               get_string('gradeitem', 'gradereport_gradedist').':', $this->gradeitem->name . $titleaddon,
-                               '', '', '', '', '', '');
+        $export->setheadertext(
+            get_string('course') . ':',
+            $this->course->shortname,
+            '',
+            '',
+            get_string('gradeitem', 'gradereport_gradedist') . ':',
+            $this->gradeitem->name . $titleaddon,
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
+        );
 
         // Set a specific override format for the header title and description if default is not ok.
         $headertitleformat = [
             'size' => 12,
             'bold' => 1,
             'align' => 'left',
-            'v_align' => 'vcenter', ];
+            'v_align' => 'vcenter',
+        ];
         $headerdescformat = [];
         $export->set_headerformat($headertitleformat, $headerdescformat);
 
         // Gradedist data.
         $export->settitles([
             get_string('category', 'gradereport_gradedist'),
-            get_string('actualcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
-            get_string('actualcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
-            get_string('newcolumns', 'gradereport_gradedist').get_string('p', 'gradereport_gradedist'),
-            get_string('newcolumns', 'gradereport_gradedist').get_string('a', 'gradereport_gradedist'),
+            get_string('actualcolumns', 'gradereport_gradedist') . get_string('p', 'gradereport_gradedist'),
+            get_string('actualcolumns', 'gradereport_gradedist') . get_string('a', 'gradereport_gradedist'),
+            get_string('newcolumns', 'gradereport_gradedist') . get_string('p', 'gradereport_gradedist'),
+            get_string('newcolumns', 'gradereport_gradedist') . get_string('a', 'gradereport_gradedist'),
             '', // Fit number of columns.
         ]);
 
@@ -198,7 +218,8 @@ class grade_export_gradedist {
         $gui = new graded_users_iterator($this->course, [$this->gradeitem->id => $gradeitem]);
         $gui->init();
 
-        $userdatatitleformat = ['size' => 12,
+        $userdatatitleformat = [
+            'size' => 12,
             'bold' => 1,
             'align' => 'center',
             'bottom' => 1,
@@ -211,9 +232,13 @@ class grade_export_gradedist {
             ["data" => get_string('firstname'), "format" => $userdatatitleformat],
             ["data" => get_string('actualgrade', 'gradereport_gradedist'), "format" => $userdatatitleformat],
             ["data" => get_string('newgrade', 'gradereport_gradedist'), "format" => $userdatatitleformat],
-            ["data" => get_string('points', 'gradereport_gradedist',
-                    number_format($gradeitem->grademax, 2, ',', ' ')),
-                    "format" => $userdatatitleformat,
+            [
+                "data" => get_string(
+                    'points',
+                    'gradereport_gradedist',
+                    number_format($gradeitem->grademax, 2, ',', ' ')
+                ),
+                "format" => $userdatatitleformat,
             ],
         ]);
 
@@ -230,7 +255,7 @@ class grade_export_gradedist {
         }
 
         while ($userdata = $gui->next_user()) {
-            $user  = $userdata->user;
+            $user = $userdata->user;
 
             // If a group or grouping is selected, print only their users.
             $ismemberofagroup = true;
